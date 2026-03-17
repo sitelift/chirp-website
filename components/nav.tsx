@@ -27,7 +27,7 @@ export function Nav() {
         <div className="mx-auto flex h-full max-w-[1120px] items-center justify-between px-6">
           <Link href="/" className="flex items-center gap-2">
             <BirdMark size={24} />
-            <span className="font-display text-[15px] font-semibold text-chirp-stone-900">
+            <span className={`font-display text-[15px] font-semibold transition-colors duration-200 ${scrolled ? 'text-chirp-stone-900' : 'text-white'}`}>
               Chirp
             </span>
           </Link>
@@ -36,13 +36,13 @@ export function Nav() {
           <div className="hidden items-center gap-6 md:flex">
             <Link
               href="/changelog"
-              className="text-sm text-chirp-stone-500 transition-colors duration-200 hover:text-chirp-stone-900"
+              className={`text-sm transition-colors duration-200 ${scrolled ? 'text-chirp-stone-500 hover:text-chirp-stone-900' : 'text-chirp-stone-400 hover:text-white'}`}
             >
               Changelog
             </Link>
             <Link
               href="/faq"
-              className="text-sm text-chirp-stone-500 transition-colors duration-200 hover:text-chirp-stone-900"
+              className={`text-sm transition-colors duration-200 ${scrolled ? 'text-chirp-stone-500 hover:text-chirp-stone-900' : 'text-chirp-stone-400 hover:text-white'}`}
             >
               FAQ
             </Link>
@@ -50,7 +50,7 @@ export function Nav() {
               href={PRODUCT.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-chirp-stone-500 transition-colors duration-200 hover:text-chirp-stone-900"
+              className={`transition-colors duration-200 ${scrolled ? 'text-chirp-stone-500 hover:text-chirp-stone-900' : 'text-chirp-stone-400 hover:text-white'}`}
               aria-label="GitHub"
             >
               <svg
@@ -64,7 +64,7 @@ export function Nav() {
             </a>
             <Link
               href="/download"
-              className="inline-flex h-8 items-center rounded-full bg-chirp-amber-500 px-4 font-display text-sm font-bold text-white shadow-amber transition-all duration-200 hover:bg-chirp-amber-600 hover:shadow-amber-hover"
+              className="inline-flex h-8 items-center rounded-lg bg-chirp-amber-400 px-4 font-display text-sm font-bold text-chirp-stone-900 transition-colors duration-200 hover:bg-chirp-amber-300"
             >
               Download
             </Link>
@@ -78,17 +78,17 @@ export function Nav() {
           >
             <div className="flex flex-col gap-1.5">
               <span
-                className={`block h-0.5 w-5 bg-chirp-stone-700 transition-transform duration-200 ${
+                className={`block h-0.5 w-5 transition-transform duration-200 ${scrolled ? 'bg-chirp-stone-700' : 'bg-white'} ${
                   mobileOpen ? "translate-y-[4px] rotate-45" : ""
                 }`}
               />
               <span
-                className={`block h-0.5 w-5 bg-chirp-stone-700 transition-all duration-200 ${
+                className={`block h-0.5 w-5 transition-all duration-200 ${scrolled ? 'bg-chirp-stone-700' : 'bg-white'} ${
                   mobileOpen ? "opacity-0" : ""
                 }`}
               />
               <span
-                className={`block h-0.5 w-5 bg-chirp-stone-700 transition-transform duration-200 ${
+                className={`block h-0.5 w-5 transition-transform duration-200 ${scrolled ? 'bg-chirp-stone-700' : 'bg-white'} ${
                   mobileOpen ? "-translate-y-[4px] -rotate-45" : ""
                 }`}
               />
@@ -131,7 +131,7 @@ export function Nav() {
           </a>
           <Link
             href="/download"
-            className="inline-flex h-12 items-center rounded-full bg-chirp-amber-500 px-8 font-display text-lg font-bold text-white shadow-amber"
+            className="inline-flex h-12 items-center rounded-full bg-chirp-amber-500 px-8 font-display text-lg font-bold text-white"
             onClick={() => setMobileOpen(false)}
           >
             Download

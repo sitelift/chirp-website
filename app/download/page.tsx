@@ -43,23 +43,20 @@ export default function DownloadPage() {
       <AmberWarmth className="top-0 left-1/2 -translate-x-1/2" />
 
       <motion.div className="relative max-w-[480px] w-full" {...reveal}>
-        <div className="flex justify-center mb-6">
-          <BirdMark size={48} />
+        <div className="mx-auto flex max-w-[800px] flex-col items-center">
+          <BirdMark size={48} className="mb-8" />
+          <h1 className="font-display text-4xl font-extrabold tracking-tight text-chirp-stone-900 md:text-5xl">
+            Download Chirp
+          </h1>
+          <p className="mt-4 text-center text-lg text-chirp-stone-500">
+            Local voice-to-text for Mac & Windows
+          </p>
         </div>
-
-        <h1 className="font-display font-bold text-3xl md:text-5xl text-chirp-stone-900 text-center">
-          Download Chirp
-        </h1>
-
-        <p className="text-chirp-stone-500 text-center mt-3">
-          Local voice-to-text for Windows
-        </p>
-
         {/* Download card */}
         <div className="mt-12 rounded-2xl bg-white shadow-elevated p-8">
           <div className="flex items-center gap-3">
             <span className="font-display font-semibold text-xl text-chirp-stone-900">
-              Chirp for Windows
+              Chirp for Mac & Windows
             </span>
             <span className="font-mono text-xs bg-chirp-stone-50 border border-black/[0.06] rounded-full px-3 py-1 text-chirp-stone-500">
               {PRODUCT.version}

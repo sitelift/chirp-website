@@ -25,16 +25,18 @@ const jetbrains = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://trychirp.app"),
   title: {
-    default: "Chirp — Local Voice-to-Text for Windows",
+    default: "Chirp — Local Voice-to-Text for Mac & Windows",
     template: "%s | Chirp",
   },
   description:
-    "Free, open-source voice-to-text that runs entirely on your PC. No cloud, no subscription, no compromise.",
+    "Free, open-source voice-to-text that runs entirely on your PC or Mac. No cloud, no subscription, no compromise.",
   keywords: [
     "voice to text",
     "speech to text",
     "dictation",
     "Windows",
+    "Mac",
+    "macOS",
     "local",
     "privacy",
     "free",
@@ -45,17 +47,17 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://trychirp.app",
-    title: "Chirp — Local Voice-to-Text for Windows",
+    title: "Chirp — Local Voice-to-Text for Mac & Windows",
     description:
-      "Free, open-source voice-to-text that runs entirely on your PC.",
+      "Free, open-source voice-to-text that runs entirely on your computer.",
     siteName: "Chirp",
     images: [{ url: "/og.png", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Chirp — Local Voice-to-Text for Windows",
+    title: "Chirp — Local Voice-to-Text for Mac & Windows",
     description:
-      "Free, open-source voice-to-text that runs entirely on your PC.",
+      "Free, open-source voice-to-text that runs entirely on your computer.",
     images: ["/og.png"],
   },
 };

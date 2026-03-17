@@ -53,36 +53,7 @@ body {
   font-family: var(--font-body), sans-serif;
 }
 
-/* Amber warmth gradient */
-.amber-warmth {
-  position: absolute;
-  width: 800px;
-  height: 800px;
-  background: radial-gradient(
-    circle,
-    rgba(251, 191, 36, 0.06) 0%,
-    rgba(251, 191, 36, 0.02) 40%,
-    transparent 70%
-  );
-  pointer-events: none;
-  filter: blur(60px);
-}
 
-.amber-warmth-tight {
-  background: radial-gradient(
-    circle,
-    rgba(251, 191, 36, 0.10) 0%,
-    transparent 60%
-  );
-  width: 200px;
-  height: 200px;
-}
-
-/* Dot grid background */
-.dot-grid {
-  background-image: radial-gradient(circle, rgba(0,0,0,0.03) 1px, transparent 1px);
-  background-size: 32px 32px;
-}
 
 /* Architecture diagram connector animation */
 @keyframes flow-down {

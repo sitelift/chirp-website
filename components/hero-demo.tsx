@@ -103,12 +103,12 @@ export function HeroDemo() {
   const showOverlay = phase === "listening" || phase === "processing";
 
   return (
-    <div className="mx-auto mt-16 w-full max-w-[720px] overflow-hidden rounded-2xl bg-white shadow-hero">
-      <div className="flex items-center gap-2 rounded-t-2xl bg-chirp-stone-100 px-4 py-3">
+    <div className="mx-auto mt-16 w-full max-w-[720px] overflow-hidden rounded-[20px] bg-white border border-chirp-stone-200 shadow-hero">
+      <div className="flex items-center gap-2 bg-chirp-stone-100 px-4 py-3 border-b border-chirp-stone-200">
         <div className="flex gap-1.5">
-          <span className="h-2 w-2 rounded-full bg-chirp-stone-300" />
-          <span className="h-2 w-2 rounded-full bg-chirp-stone-300" />
-          <span className="h-2 w-2 rounded-full bg-chirp-stone-300" />
+          <span className="h-3 w-3 rounded-full bg-chirp-stone-300" />
+          <span className="h-3 w-3 rounded-full bg-chirp-stone-300" />
+          <span className="h-3 w-3 rounded-full bg-chirp-stone-300" />
         </div>
         <span className="flex-1 text-center font-mono text-xs text-chirp-stone-400">
           Untitled — Editor
@@ -129,7 +129,7 @@ export function HeroDemo() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 4 }}
               transition={{ duration: OVERLAY_FADE_DURATION / 1000 }}
-              className="absolute bottom-4 right-4 flex items-center gap-3 rounded-xl bg-white p-3 shadow-elevated"
+              className="absolute bottom-4 right-4 flex items-center gap-3 rounded-xl bg-white p-3 shadow-overlay border border-chirp-stone-200"
             >
               <BirdMark size={16} />
               <div className="flex items-end gap-[3px]">

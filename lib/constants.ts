@@ -1,8 +1,8 @@
 export const PRODUCT = {
   name: "Chirp",
-  tagline: "Local voice-to-text for Windows",
+  tagline: "Local voice-to-text for Windows & macOS",
   version: "v0.4.0",
-  os: "Windows 10+",
+  os: "Windows 10+ & macOS 13+",
   downloadSize: "~80 MB",
   diskSpace: "~1.5 GB",
   ram: "4 GB RAM (8 GB recommended)",
@@ -20,7 +20,7 @@ export const FAQ_SECTIONS = [
       {
         question: "What is Chirp?",
         answer:
-          "Chirp is a free, open-source voice-to-text app for Windows. Press a hotkey, speak, and your words appear as text wherever your cursor is. Everything runs locally on your PC — no cloud, no account, no subscription.",
+          "Chirp is a free, open-source voice-to-text app for Windows and macOS. Press a hotkey, speak, and your words appear as text wherever your cursor is. Everything runs locally on your computer — no cloud, no account, no subscription.",
       },
       {
         question: "How do I install it?",
