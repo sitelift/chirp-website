@@ -1,58 +1,91 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { reveal } from "@/lib/motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export function CleanupDemo() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  
-  // We track the scroll of the container itself
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start 85%", "end 40%"],
-  });
+  const [activeTab, setActiveTab] = useState<"before" | "after">("before");
 
-  // Wipe from 100% clipped on the right, to 0% clipped
-  const clipPath = useTransform(
-    scrollYProgress,
-    [0.1, 0.9],
-    ["inset(0% 100% 0% 0%)", "inset(0% 0% 0% 0%)"]
-  );
+  // Auto-switch tabs every 4 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveTab((current) => (current === "before" ? "after" : "before"));
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <motion.div {...reveal} className="mx-auto w-full max-w-[560px]" ref={containerRef}>
-      <div className="relative overflow-hidden rounded-[24px] bg-white shadow-hero border border-chirp-stone-200 flex flex-col min-h-[220px]">
+    <div className="mx-auto w-full max-w-[640px] mt-12">
+      <div className="relative overflow-hidden rounded-2xl bg-white shadow-elevated border border-chirp-stone-200">
         
-        {/* Toolbar */}
-        <div className="flex items-center gap-2 border-b border-chirp-stone-100 bg-chirp-stone-50 px-5 py-3">
-           <span className="text-xs font-semibold text-chirp-stone-400 mr-2 uppercase tracking-wide">Tone</span>
-           {["Message", "Email", "Formal", "Casual"].map((tone, i) => (
-             <button key={tone} className={`px-3 py-1.5 text-[11px] font-semibold rounded-full border transition-colors ${i === 1 ? 'bg-white border-chirp-stone-200 text-chirp-stone-900 shadow-sm' : 'border-transparent text-chirp-stone-500 hover:text-chirp-stone-900 hover:bg-chirp-stone-100'}`}>
-               {tone}
-             </button>
-           ))}
-        </div>
-
-        <div className="relative flex-1">
-          {/* Messy Text (Background) */}
-          <div className="absolute inset-0 p-8 text-[17px] leading-[1.8] text-chirp-stone-400 font-body">
-            So <span className="text-chirp-amber-400 line-through decoration-chirp-amber-400/50">um</span> I was thinking that <span className="text-chirp-amber-400 line-through decoration-chirp-amber-400/50">like</span> maybe we should <span className="text-chirp-amber-400 line-through decoration-chirp-amber-400/50">you know</span> move the standup to thursdays because <span className="text-chirp-amber-400 line-through decoration-chirp-amber-400/50">uh</span> most of the team is <span className="text-chirp-amber-400 line-through decoration-chirp-amber-400/50">like</span> busy on monday mornings and <span className="text-chirp-amber-400 line-through decoration-chirp-amber-400/50">I mean</span> it just makes more sense right
-          </div>
-
-          {/* Clean Text (Foreground, revealed by scroll) */}
-          <motion.div 
-            className="absolute inset-0 p-8 bg-white text-[17px] leading-[1.8] text-chirp-stone-900 font-body font-medium z-10"
-            style={{ clipPath }}
+        {/* Tab Bar */}
+        <div className="flex items-center gap-6 border-b border-black/[0.06] bg-chirp-stone-50/50 px-6 pt-4">
+          <button
+            onClick={() => setActiveTab("before")}
+            className={`pb-4 text-sm font-display font-bold transition-colors border-b-2 ${
+              activeTab === "before"
+                ? "text-chirp-stone-900 border-chirp-amber-500"
+                : "text-chirp-stone-400 border-transparent hover:text-chirp-stone-600"
+            }`}
           >
-            I was thinking we should move the standup to Thursdays. Most of the team is busy on Monday mornings, so it would make more sense.
-            
-            {/* Scanning Line */}
-            <div className="absolute top-0 bottom-0 right-0 w-[2px] bg-chirp-amber-500 shadow-[0_0_12px_rgba(245,158,11,0.8)]" />
-          </motion.div>
+            What you said
+          </button>
+          <button
+            onClick={() => setActiveTab("after")}
+            className={`pb-4 text-sm font-display font-bold transition-colors border-b-2 ${
+              activeTab === "after"
+                ? "text-chirp-stone-900 border-chirp-amber-500"
+                : "text-chirp-stone-400 border-transparent hover:text-chirp-stone-600"
+            }`}
+          >
+            What Chirp typed
+          </button>
         </div>
 
+        {/* Content Area */}
+        <div className="relative min-h-[220px]">
+          <AnimatePresence mode="wait">
+            {activeTab === "before" ? (
+              <motion.div
+                key="before"
+                initial={{ opacity: 0, y: 4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -4 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="absolute inset-0 flex flex-col justify-between p-8"
+              >
+                <div className="font-mono text-[15px] text-chirp-stone-700 leading-[1.8]">
+                  so <span className="bg-chirp-amber-100 text-chirp-amber-700 rounded px-1">um</span>{" "}
+                  <span className="bg-chirp-amber-100 text-chirp-amber-700 rounded px-1">basically</span>{" "}
+                  I was thinking that we should <span className="bg-chirp-amber-100 text-chirp-amber-700 rounded px-1">like</span>{" "}
+                  probably move the meeting to <span className="bg-chirp-amber-100 text-chirp-amber-700 rounded px-1">uh</span>{" "}
+                  Thursday if that works
+                </div>
+                <div className="mt-4 text-xs text-chirp-stone-400 font-mono self-end">
+                  Filler words highlighted
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="after"
+                initial={{ opacity: 0, y: 4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -4 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="absolute inset-0 flex flex-col justify-center p-8"
+              >
+                <div className="font-body text-[17px] text-chirp-stone-900 leading-[1.8]">
+                  I was thinking we should probably move the meeting to Thursday, if that works.
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
-    </motion.div>
+      
+      <div className="mt-6 font-mono text-xs text-chirp-stone-400 text-center tracking-wide">
+        Powered by Qwen 2.5 1.5B · runs locally · ~1 GB model
+      </div>
+    </div>
   );
 }

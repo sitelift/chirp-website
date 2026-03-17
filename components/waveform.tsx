@@ -14,8 +14,8 @@ export function Waveform() {
               key={`noisy-${i}`}
               className="w-[3px] origin-bottom rounded-full bg-chirp-stone-300"
               style={{
-                height: `${Math.random() * 28 + 6}px`,
-                animation: `waveform-bar ${800 + Math.random() * 600}ms ease-in-out ${i * 40}ms infinite`,
+                height: `${Math.abs(Math.sin(i * 1.3)) * 28 + 6}px`,
+                animation: `waveform-bar ${800 + Math.abs(Math.sin(i * 2.1)) * 600}ms ease-in-out ${i * 40}ms infinite`,
               }}
             />
           ))}

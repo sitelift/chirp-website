@@ -11,6 +11,7 @@ export default function DownloadPage() {
   const [isWindows, setIsWindows] = useState(true);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsWindows(/Windows/i.test(navigator.userAgent));
   }, []);
 

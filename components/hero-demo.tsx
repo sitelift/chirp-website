@@ -93,6 +93,7 @@ export function HeroDemo() {
 
   useEffect(() => {
     mountedRef.current = true;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     startCycle();
     return () => {
       mountedRef.current = false;

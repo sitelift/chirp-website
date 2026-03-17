@@ -13,7 +13,7 @@ export default function ChangelogPage() {
           Changelog
         </h1>
 
-        <p className="text-chirp-stone-500 mt-3">What's new in Chirp.</p>
+        <p className="text-chirp-stone-500 mt-3">What&apos;s new in Chirp.</p>
 
         <div className="mt-12">
           {CHANGELOG.map((release, index) => (
