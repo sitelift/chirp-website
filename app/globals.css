@@ -1,26 +1,153 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-background: #ffffff;
+  --color-foreground: #1C1917;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-display: var(--font-nunito);
+  --font-body: var(--font-inter);
+  --font-mono: var(--font-jetbrains);
+
+  /* Chirp Amber */
+  --color-chirp-amber-50: #FFFBEB;
+  --color-chirp-amber-100: #FEF3C7;
+  --color-chirp-amber-200: #FDE68A;
+  --color-chirp-amber-300: #FCD34D;
+  --color-chirp-amber-400: #FBBF24;
+  --color-chirp-amber-500: #F59E0B;
+  --color-chirp-amber-600: #D97706;
+  --color-chirp-amber-700: #B45309;
+  --color-chirp-amber-800: #92400E;
+
+  /* Chirp Stone */
+  --color-chirp-stone-50: #FAFAF9;
+  --color-chirp-stone-100: #F5F5F4;
+  --color-chirp-stone-200: #E7E5E4;
+  --color-chirp-stone-300: #D6D3D1;
+  --color-chirp-stone-400: #A8A29E;
+  --color-chirp-stone-500: #78716C;
+  --color-chirp-stone-600: #57534E;
+  --color-chirp-stone-700: #44403C;
+  --color-chirp-stone-800: #292524;
+  --color-chirp-stone-900: #1C1917;
+
+  /* Chirp Yellow */
+  --color-chirp-yellow: #F0B723;
+
+  /* Shadows */
+  --shadow-surface: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
+  --shadow-lifted: 0 4px 12px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+  --shadow-elevated: 0 8px 30px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+  --shadow-hero: 0 20px 60px rgba(0,0,0,0.10), 0 4px 16px rgba(0,0,0,0.06);
+  --shadow-amber: 0 4px 14px rgba(245,158,11,0.20), 0 1px 3px rgba(245,158,11,0.10);
+  --shadow-amber-hover: 0 6px 20px rgba(245,158,11,0.28), 0 2px 4px rgba(245,158,11,0.12);
+
+  /* Accordion animations */
+  --animate-accordion-down: accordion-down 200ms ease-out;
+  --animate-accordion-up: accordion-up 200ms ease-out forwards;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-body), sans-serif;
+}
+
+/* Amber warmth gradient */
+.amber-warmth {
+  position: absolute;
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(
+    circle,
+    rgba(251, 191, 36, 0.06) 0%,
+    rgba(251, 191, 36, 0.02) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+  filter: blur(60px);
+}
+
+.amber-warmth-tight {
+  background: radial-gradient(
+    circle,
+    rgba(251, 191, 36, 0.10) 0%,
+    transparent 60%
+  );
+  width: 200px;
+  height: 200px;
+}
+
+/* Dot grid background */
+.dot-grid {
+  background-image: radial-gradient(circle, rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Architecture diagram connector animation */
+@keyframes flow-down {
+  0% {
+    background-position: 0 -40px;
+  }
+  100% {
+    background-position: 0 40px;
+  }
+}
+
+.connector-flow {
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    var(--color-chirp-amber-400) 40%,
+    var(--color-chirp-amber-400) 60%,
+    transparent 100%
+  );
+  background-size: 2px 40px;
+  animation: flow-down 2s linear infinite;
+}
+
+/* Keyboard key press animation */
+@keyframes key-press {
+  0%, 85%, 100% {
+    transform: translateY(0);
+    box-shadow: 0 2px 0 0 rgba(0,0,0,0.06);
+  }
+  90% {
+    transform: translateY(2px);
+    box-shadow: none;
+  }
+}
+
+/* Waveform bar animation */
+@keyframes waveform-bar {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
+
+/* Accordion height animations */
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
