@@ -84,7 +84,7 @@ export function CleanupDemo() {
       </div>
       
       <div className="mt-6 font-mono text-xs text-chirp-stone-400 text-center tracking-wide">
-        Powered by Qwen 2.5 1.5B · runs locally · ~1 GB model
+        Runs entirely on your device · no internet needed
       </div>
     </div>
   );

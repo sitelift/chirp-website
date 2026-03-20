@@ -33,7 +33,7 @@ export function ArchitectureDemo() {
             />
           </div>
         </div>
-        <div className="relative z-10 bg-chirp-stone-50 px-3 py-1 font-mono text-[11px] font-semibold text-chirp-stone-400 uppercase tracking-widest rounded-full shadow-[0_0_0_4px_#FAFAF9]">
+        <div className="relative z-10 bg-white px-3 py-1 font-mono text-[11px] font-semibold text-chirp-stone-400 uppercase tracking-widest rounded-full shadow-[0_0_0_4px_white]">
           audio stream (never saved)
         </div>
       </div>
@@ -48,7 +48,7 @@ export function ArchitectureDemo() {
           Speech Model
         </div>
         <div className="font-mono text-sm text-chirp-stone-500 bg-chirp-stone-50 px-2.5 py-1 rounded inline-flex w-fit mb-2">
-          Parakeet TDT 0.6B
+          Speech Recognition
         </div>
         <div className="text-sm text-chirp-stone-600">
           runs on your CPU
@@ -66,7 +66,7 @@ export function ArchitectureDemo() {
             />
           </div>
         </div>
-        <div className="relative z-10 bg-chirp-stone-50 px-3 py-1 font-mono text-[11px] font-semibold text-chirp-stone-400 uppercase tracking-widest rounded-full shadow-[0_0_0_4px_#FAFAF9]">
+        <div className="relative z-10 bg-white px-3 py-1 font-mono text-[11px] font-semibold text-chirp-stone-400 uppercase tracking-widest rounded-full shadow-[0_0_0_4px_white]">
           raw transcript
         </div>
       </div>
@@ -81,7 +81,7 @@ export function ArchitectureDemo() {
           Cleanup Model
         </div>
         <div className="font-mono text-sm text-chirp-amber-800 bg-chirp-amber-100/50 px-2.5 py-1 rounded inline-flex w-fit mb-2 border border-chirp-amber-200/50">
-          Qwen 2.5 1.5B
+          Text Cleanup
         </div>
         <div className="text-sm text-chirp-amber-800">
           runs on your CPU
@@ -99,7 +99,7 @@ export function ArchitectureDemo() {
             />
           </div>
         </div>
-        <div className="relative z-10 bg-chirp-stone-50 px-3 py-1 font-mono text-[11px] font-semibold text-chirp-stone-400 uppercase tracking-widest rounded-full shadow-[0_0_0_4px_#FAFAF9]">
+        <div className="relative z-10 bg-white px-3 py-1 font-mono text-[11px] font-semibold text-chirp-stone-400 uppercase tracking-widest rounded-full shadow-[0_0_0_4px_white]">
           clean text
         </div>
       </div>

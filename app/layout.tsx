@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     template: "%s | Chirp",
   },
   description:
-    "Free, open-source voice-to-text that runs entirely on your PC or Mac. No cloud, no subscription, no compromise.",
+    "Free voice-to-text that runs entirely on your PC or Mac. No cloud, no subscription, no compromise.",
   keywords: [
     "voice to text",
     "speech to text",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     "local",
     "privacy",
     "free",
-    "open source",
+    "no subscription",
     "offline",
   ],
   openGraph: {
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     url: "https://trychirp.app",
     title: "Chirp — Local Voice-to-Text for Mac & Windows",
     description:
-      "Free, open-source voice-to-text that runs entirely on your computer.",
+      "Free voice-to-text that runs entirely on your computer. No cloud, no subscription.",
     siteName: "Chirp",
     images: [{ url: "/og.png", width: 1200, height: 630 }],
   },
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Chirp — Local Voice-to-Text for Mac & Windows",
     description:
-      "Free, open-source voice-to-text that runs entirely on your computer.",
+      "Free voice-to-text that runs entirely on your computer. No cloud, no subscription.",
     images: ["/og.png"],
   },
 };

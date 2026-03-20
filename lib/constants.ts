@@ -7,7 +7,7 @@ export const PRODUCT = {
   diskSpace: "~1.5 GB",
   ram: "4 GB RAM (8 GB recommended)",
   architecture: "x64",
-  license: "MIT",
+  license: "Proprietary",
   github: "https://github.com/trychirp/chirp",
   website: "https://trychirp.app",
   downloadUrl: "https://github.com/trychirp/chirp/releases/latest",
@@ -20,7 +20,7 @@ export const FAQ_SECTIONS = [
       {
         question: "What is Chirp?",
         answer:
-          "Chirp is a free, open-source voice-to-text app for Windows and macOS. Press a hotkey, speak, and your words appear as text wherever your cursor is. Everything runs locally on your computer — no cloud, no account, no subscription.",
+          "Chirp is a free voice-to-text app for Windows and macOS. Press a hotkey, speak, and your words appear as text wherever your cursor is. Everything runs locally on your computer — no cloud, no account, no subscription.",
       },
       {
         question: "How do I install it?",
@@ -60,7 +60,7 @@ export const FAQ_SECTIONS = [
       {
         question: "Is it really free? What's the catch?",
         answer:
-          "No catch. MIT-licensed open source. No freemium tiers, no pro plan, no subscriptions. It's a community project.",
+          "No catch. No freemium tiers, no pro plan, no subscriptions. Chirp is free — no strings attached.",
       },
     ],
   },
@@ -118,7 +118,7 @@ export const FAQ_SECTIONS = [
       {
         question: "SmartScreen is blocking the installer.",
         answer:
-          'That\'s normal for new unsigned software. Chirp is open source — every line of code is on GitHub. Click "More info" then "Run anyway."',
+          'That\'s normal for new unsigned software. Click "More info" then "Run anyway." Chirp is safe — it runs fully offline after setup.',
       },
       {
         question: "Chirp can't hear my microphone.",

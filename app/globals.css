@@ -45,6 +45,9 @@
   /* Accordion animations */
   --animate-accordion-down: accordion-down 200ms ease-out;
   --animate-accordion-up: accordion-up 200ms ease-out forwards;
+
+  /* Testimonial scroll */
+  --animate-testimonial-scroll: testimonial-scroll 30s linear infinite;
 }
 
 body {
@@ -112,6 +115,46 @@ body {
   to {
     height: 0;
   }
+}
+
+/* Dotted background pattern */
+.bg-dotted {
+  background-image: radial-gradient(circle, rgba(0,0,0,0.06) 1px, transparent 0);
+  background-size: 20px 20px;
+}
+
+/* Warm amber gradient background */
+.bg-amber-warm {
+  background: linear-gradient(165deg, #FEF3C7 0%, #FDE68A 40%, #FCD34D 100%);
+}
+
+/* Pill section label */
+.pill-label {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 14px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+}
+
+.pill-label-light {
+  background: rgba(245,158,11,0.1);
+  color: #D97706;
+}
+
+.pill-label-dark {
+  background: rgba(251,191,36,0.15);
+  color: #FBBF24;
+}
+
+/* Testimonial auto-scroll */
+@keyframes testimonial-scroll {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
 }
 
 /* Reduced motion */

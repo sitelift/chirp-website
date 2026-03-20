@@ -69,11 +69,11 @@ export default function PrivacyPolicy() {
         </p>
 
         <h2 className="text-chirp-stone-900 font-display text-xl font-bold mt-12 mb-4">
-          Open source
+          Transparency
         </h2>
         <p>
-          Chirp is MIT-licensed. You can read every line of code on GitHub. If
-          you find a privacy concern, please open an issue.
+          If you have a privacy concern, please reach out to us. We take
+          privacy seriously — it&apos;s the reason Chirp exists.
         </p>
       </div>
     </main>

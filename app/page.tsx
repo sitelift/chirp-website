@@ -10,52 +10,76 @@ import { HomeSections } from "@/components/home-sections";
 export default function Home() {
   return (
     <>
-      <section className="relative flex min-h-[80vh] items-center overflow-hidden bg-chirp-stone-900 px-6 py-32 lg:py-48">
-        <div className="mx-auto flex w-full max-w-[1280px] flex-col items-center justify-between gap-12 lg:flex-row lg:items-center">
-          
-          <motion.div
-            {...staggerContainer}
-            className="relative flex max-w-[620px] flex-col pt-24 text-left lg:pt-0"
+      <section
+        className="relative flex min-h-screen flex-col items-center overflow-hidden px-6 pb-12 pt-32 lg:pt-44"
+      >
+        {/* Hero background image */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('/hero-bg.jpeg')" }}
+        />
+        {/* Darken overlay for text legibility */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-black/20"
+        />
+
+        {/* Centered content */}
+        <motion.div
+          {...staggerContainer}
+          className="relative z-10 flex max-w-3xl flex-col items-center text-center"
+        >
+          <motion.h1
+            {...staggerChild}
+            className="font-display text-5xl font-extrabold leading-[1.05] tracking-tight text-white md:text-7xl lg:text-8xl"
           >
-            <motion.h1
-              {...staggerChild}
-              className="font-display text-5xl font-extrabold leading-[1.05] tracking-tight text-white md:text-7xl"
-            >
-              Speak Freely
-            </motion.h1>
+            Speak Freely
+          </motion.h1>
 
-            <motion.p
-              {...staggerChild}
-              className="mt-6 text-xl leading-relaxed text-chirp-stone-400"
-            >
-              Works instantly in the background. Cleans up filler words and fixes punctuation instantly. 100% private. No internet required.
-            </motion.p>
+          <motion.p
+            {...staggerChild}
+            className="mt-6 max-w-xl text-lg leading-relaxed text-white/70 md:text-xl"
+          >
+            Press a hotkey, speak, text appears at your cursor. No internet, no cloud, no accounts.
+          </motion.p>
 
-            <motion.div {...staggerChild} className="mt-10 flex items-center gap-6">
-              <Link
-                href="/download"
-                className="inline-flex h-14 items-center rounded-lg bg-chirp-amber-400 px-8 font-display text-lg font-bold text-chirp-stone-900 transition-all hover:bg-chirp-amber-300"
-              >
-                Download for Mac & Windows
-              </Link>
-            </motion.div>
-
-            <motion.p
-              {...staggerChild}
-              className="mt-4 font-mono text-xs text-chirp-stone-500"
+          <motion.div {...staggerChild} className="mt-10 flex flex-wrap items-center justify-center gap-4">
+            <Link
+              href="/download"
+              className="inline-flex h-14 items-center rounded-lg bg-chirp-amber-400 px-8 font-display text-lg font-bold text-chirp-stone-900 transition-all hover:bg-chirp-amber-300"
             >
-              {PRODUCT.version} · {PRODUCT.os}
-            </motion.p>
+              Download for Mac & Windows
+            </Link>
+            <Link
+              href="/faq"
+              className="inline-flex h-14 items-center rounded-lg border border-white/20 px-8 font-display text-lg font-bold text-white transition-all hover:bg-white/10"
+            >
+              Learn More
+            </Link>
           </motion.div>
 
-          <motion.div
-            {...reveal}
-            className="w-full lg:w-1/2 lg:flex lg:justify-end"
+          <motion.p
+            {...staggerChild}
+            className="mt-4 font-mono text-xs text-white/40"
           >
-            <WaveformOverlayDemo />
-          </motion.div>
-        
-        </div>
+            {PRODUCT.version} · {PRODUCT.os}
+          </motion.p>
+        </motion.div>
+
+        {/* Demo below CTAs */}
+        <motion.div
+          {...reveal}
+          className="relative z-10 mt-20 w-full max-w-2xl"
+        >
+          <WaveformOverlayDemo />
+        </motion.div>
+
+        {/* Bottom fade to match next light section */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-b from-transparent to-[#1C1917]"
+        />
       </section>
 
       <HomeSections />

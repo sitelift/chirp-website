@@ -38,29 +38,13 @@ export function WaveformOverlayDemo() {
   const isActive = phase !== "idle";
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-      className="relative w-full max-w-[480px] h-[320px] rounded-xl border border-chirp-stone-700 bg-chirp-stone-800 shadow-hero flex items-center justify-center overflow-hidden"
+      className="flex w-full justify-center"
     >
-      {/* Decorative background glow for the dark container */}
-      <div 
-        className="absolute inset-0 opacity-20 mix-blend-screen"
-        style={{
-          backgroundImage: "radial-gradient(circle at 50% 50%, #F59E0B 0%, transparent 60%)"
-        }}
-      />
-      
-      {/* Abstract screen content lines to show it's "typing" in the background */}
-      <div className="absolute top-8 left-8 right-8 flex flex-col gap-4 opacity-10">
-        <div className="h-4 w-3/4 rounded bg-white" />
-        <div className="h-4 w-full rounded bg-white" />
-        <div className="h-4 w-5/6 rounded bg-white" />
-        <div className="h-4 w-1/2 rounded bg-white" />
-      </div>
-
-      <div className="relative z-20 flex justify-center w-full">
+      <div className="flex justify-center">
         {/* The Premium Morphing Pill */}
         <motion.div
           animate={{
@@ -108,7 +92,7 @@ export function WaveformOverlayDemo() {
                 )}
                 {phase === "done" && (
                   <span className="font-mono text-xs font-semibold tracking-wide text-chirp-success flex items-center gap-2">
-                    ✓ Copied to clipboard
+                    ✓ Inserted 14 words
                   </span>
                 )}
               </motion.div>
