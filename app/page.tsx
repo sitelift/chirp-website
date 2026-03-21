@@ -41,7 +41,7 @@ export default function Home() {
             {...staggerChild}
             className="mt-5 max-w-xl text-lg leading-relaxed text-white/70 md:text-xl"
           >
-            Every voice-to-text tool sends your audio to someone else&apos;s server, charges you monthly, or both. Chirp runs on your machine. No cloud. No account. No subscription.
+            Voice-to-text that runs on your machine. No cloud, no account, no subscription.
           </motion.p>
 
           <motion.div {...staggerChild} className="mt-8 flex flex-wrap items-center justify-center gap-4">

@@ -11,7 +11,7 @@ const flowVariants = {
 export function ArchitectureDemo() {
   return (
     <div className="w-full max-w-[800px] flex flex-col items-center mx-auto">
-      <div className="grid grid-cols-1 md:grid-cols-7 w-full items-center gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-7 w-full items-center gap-0">
         
         {/* Node 1: Microphone */}
         <motion.div 
@@ -62,7 +62,7 @@ export function ArchitectureDemo() {
                 <div className="h-2 w-2 rounded-full bg-chirp-amber-500" />
                 <span className="font-mono text-[10px] font-bold text-chirp-amber-800 uppercase tracking-wider">Speech Logic</span>
               </div>
-              <p className="text-xs text-chirp-stone-600 leading-relaxed font-medium">Whisper-based processing directly on your CPU.</p>
+              <p className="text-xs text-chirp-stone-600 leading-relaxed font-medium">Parakeet-based processing directly on your CPU.</p>
             </div>
             <div className="p-4 rounded-2xl bg-white/80 border border-chirp-amber-200/20 shadow-subtle">
               <div className="flex items-center gap-2 mb-2">
@@ -78,14 +78,14 @@ export function ArchitectureDemo() {
               <div className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
               <span className="text-[10px] font-mono text-chirp-stone-500 font-bold uppercase tracking-widest">Active Processing</span>
             </div>
-            <span className="text-[10px] font-mono text-chirp-amber-700 bg-chirp-amber-100 px-2 py-0.5 rounded-full border border-chirp-amber-200/40 font-bold">Encrypted Memory</span>
+            <span className="text-[10px] font-mono text-chirp-amber-700 bg-chirp-amber-100 px-2 py-0.5 rounded-full border border-chirp-amber-200/40 font-bold">Local Only</span>
           </div>
         </motion.div>
 
       </div>
 
       {/* Output Connection */}
-      <div className="my-4 h-16 w-[2px] bg-chirp-stone-200 relative overflow-hidden">
+      <div className="h-16 w-[2px] bg-chirp-stone-200 relative overflow-hidden">
         <motion.div 
           className="absolute inset-0 bg-gradient-to-b from-transparent via-chirp-amber-400 to-transparent opacity-70"
           animate={{ y: ["-100%", "200%"] }}
