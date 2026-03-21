@@ -41,19 +41,19 @@ export default function Home() {
             {...staggerChild}
             className="mt-6 max-w-xl text-lg leading-relaxed text-white/70 md:text-xl"
           >
-            Press a hotkey, speak, text appears at your cursor. No internet, no cloud, no accounts.
+            Press a hotkey, speak, and text appears at your cursor. Runs locally on your machine.
           </motion.p>
 
           <motion.div {...staggerChild} className="mt-10 flex flex-wrap items-center justify-center gap-4">
             <Link
               href="/download"
-              className="inline-flex h-14 items-center rounded-lg bg-chirp-amber-400 px-8 font-display text-lg font-bold text-chirp-stone-900 transition-all hover:bg-chirp-amber-300"
+              className="inline-flex h-14 items-center rounded-full bg-chirp-amber-400 px-8 font-display text-lg font-bold text-chirp-stone-900 transition-all hover:bg-chirp-amber-300"
             >
               Download for Mac & Windows
             </Link>
             <Link
               href="/faq"
-              className="inline-flex h-14 items-center rounded-lg border border-white/20 px-8 font-display text-lg font-bold text-white transition-all hover:bg-white/10"
+              className="inline-flex h-14 items-center rounded-full border border-white/20 px-8 font-display text-lg font-bold text-white transition-all hover:bg-white/10"
             >
               Learn More
             </Link>
@@ -78,7 +78,7 @@ export default function Home() {
         {/* Bottom fade to match next light section */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-b from-transparent to-[#1C1917]"
+          className="pointer-events-none absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-b from-transparent to-white"
         />
       </section>
 

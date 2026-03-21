@@ -20,7 +20,7 @@ export const FAQ_SECTIONS = [
       {
         question: "What is Chirp?",
         answer:
-          "Chirp is a free voice-to-text app for Windows and macOS. Press a hotkey, speak, and your words appear as text wherever your cursor is. Everything runs locally on your computer — no cloud, no account, no subscription.",
+          "Chirp is a free voice-to-text app for Windows and macOS. Press a hotkey, speak, and your words appear as text wherever your cursor is. Everything runs locally on your computer.",
       },
       {
         question: "How do I install it?",
@@ -35,7 +35,7 @@ export const FAQ_SECTIONS = [
       {
         question: "Does it work in every app?",
         answer:
-          "Yes. Chirp pastes text wherever your cursor is focused — browsers, editors, messaging apps, documents.",
+          "Yes. Chirp pastes text wherever your cursor is focused: browsers, editors, messaging apps, documents.",
       },
     ],
   },
@@ -60,7 +60,7 @@ export const FAQ_SECTIONS = [
       {
         question: "Is it really free? What's the catch?",
         answer:
-          "No catch. No freemium tiers, no pro plan, no subscriptions. Chirp is free — no strings attached.",
+          "No catch. Chirp is free. No freemium tiers, no pro plan, no subscriptions.",
       },
     ],
   },
@@ -70,7 +70,7 @@ export const FAQ_SECTIONS = [
       {
         question: "What is Smart Cleanup?",
         answer:
-          "A local AI model (Qwen 2.5 1.5B, ~1 GB) that removes filler words, fixes grammar, and adds punctuation. It runs entirely on your CPU — nothing is sent anywhere.",
+          "A local AI model (Qwen 2.5 1.5B, ~1 GB) that removes filler words, fixes grammar, and adds punctuation. It runs on your CPU. Chirp sends nothing over the network.",
       },
       {
         question: "Can I add custom words?",
@@ -84,7 +84,7 @@ export const FAQ_SECTIONS = [
       },
       {
         question: "Does it support other languages?",
-        answer: "Currently English only. Other languages are planned.",
+        answer: "Yes. The speech model supports 25 languages, including Spanish, French, German, Japanese, and Chinese. Chirp detects the language automatically from your speech.",
       },
     ],
   },

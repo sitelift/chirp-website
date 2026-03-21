@@ -11,20 +11,13 @@ import { ArchitectureDemo } from "./architecture-demo";
 import { IntegrationGrid } from "./integration-grid";
 import { FeatureCard } from "./feature-card";
 import { FeatureRow } from "./feature-row";
-import { 
-  Check, 
-  Minus, 
-  Plus, 
-  ShieldCheck, 
-  Zap, 
-  Globe, 
-  Keyboard, 
-  BookOpen, 
-  Heart, 
-  CreditCard, 
-  Users, 
-  ExternalLink,
-  ChevronDown,
+import {
+  ShieldCheck,
+  Globe,
+  Keyboard,
+  BookOpen,
+  Heart,
+  CreditCard,
   HelpCircle,
   Sparkles,
   Eraser,
@@ -47,7 +40,7 @@ function SmartCleanupSection() {
             From rambling to ready.
           </h2>
           <p className="mt-6 text-lg leading-[1.75] text-chirp-stone-500 max-w-[520px] mx-auto">
-            Chirp cleans up your speech as you talk. Filler words, grammar, punctuation—all corrected on the fly. Select a tone mode and get refined text.
+            Chirp cleans up your speech as you talk. Filler words, grammar, and punctuation get corrected on the fly. Pick a tone mode and get polished text.
           </p>
         </motion.div>
 
@@ -97,7 +90,7 @@ function FreeForeverSection() {
             Free. No asterisk.
           </h2>
           <p className="mt-6 text-lg leading-[1.75] text-chirp-stone-500 max-w-[520px] mx-auto">
-            No subscriptions. No &quot;pro&quot; tier. No usage limits. Chirp is free today, free tomorrow, free forever. No credit card, no trial period, no strings attached.
+            Chirp costs nothing. No subscription, no usage cap, no credit card. Use it as much as you want, for as long as you want.
           </p>
         </motion.div>
 
@@ -164,7 +157,7 @@ function WorksEverywhereSection() {
             One hotkey. Every app.
           </h2>
           <p className="mt-6 text-lg leading-[1.75] text-chirp-stone-500 max-w-[520px] mx-auto">
-            Press a hotkey. Your browser, editor, or email client—Chirp transcribes and pastes at your cursor.
+            Chirp transcribes your voice and pastes text at your cursor. Browser, editor, email client, terminal. One hotkey works in all of them.
           </p>
         </motion.div>
 
@@ -215,8 +208,7 @@ function PrivacySection() {
             Your voice never leaves<br className="hidden md:block" /> this machine.
           </h2>
           <p className="mt-8 text-xl leading-[1.6] text-chirp-stone-500 max-w-[640px] mx-auto">
-            Most voice-to-text tools send your audio to a remote server. We don&apos;t. 
-            Everything happens on your CPU. No cloud, no telemetry, no tracking.
+            Most voice-to-text tools route your audio through a remote server. Chirp processes everything on your CPU. Your voice stays on your machine.
           </p>
         </motion.div>
 
@@ -254,7 +246,7 @@ function SetupSection() {
             Download.<br />Install. Done.
           </h2>
           <p className="mt-6 text-lg leading-[1.75] text-chirp-stone-500 max-w-[400px]">
-            No API keys. No account creation. No config files. Install Chirp, press the hotkey, start talking. You&apos;ll be up and running in under a minute.
+            Install Chirp, press the hotkey, start talking. You&apos;ll be transcribing in under a minute.
           </p>
         </motion.div>
 
@@ -298,15 +290,14 @@ function IntegrationSection() {
             Works with your stack.
           </h2>
           <p className="mt-6 text-lg leading-[1.75] text-chirp-stone-500 max-w-[540px] mx-auto">
-            Chirp pastes text directly at your cursor, which means it works in literally every application that accepts keyboard input.
+            Chirp pastes text at your cursor. Any application that accepts keyboard input works with Chirp.
           </p>
         </motion.div>
         
         <IntegrationGrid />
 
-        <motion.div {...reveal} className="mt-16 flex items-center gap-2 px-4 py-2 rounded-full bg-chirp-stone-50 border border-chirp-stone-100 shadow-subtle group hover:bg-white transition-all">
-          <span className="text-xs font-bold text-chirp-stone-600">See all 100+ supported apps</span>
-          <ExternalLink className="w-3 h-3 text-chirp-stone-400 group-hover:text-chirp-amber-600 transition-colors" />
+        <motion.div {...reveal} className="mt-16 flex items-center gap-2 px-4 py-2 rounded-full bg-chirp-stone-50 border border-chirp-stone-100">
+          <span className="text-xs font-bold text-chirp-stone-600">Works anywhere your cursor is</span>
         </motion.div>
       </div>
     </section>
@@ -323,7 +314,7 @@ function FreeManifestoSection() {
             A tool, not a tax.
           </h2>
           <p className="mt-12 text-2xl leading-[1.6] text-chirp-stone-500 font-medium italic">
-            &quot;Our goal is to build a better professional toolset—free, on-device, and high-performance. Software should aid your thinking, not clutter your mind with subscriptions.&quot;
+            &quot;We build professional tools that run on your machine, cost nothing, and stay fast. Software should help you think, not charge you for the privilege.&quot;
           </p>
           <div className="mt-12 flex items-center justify-center gap-4">
              <div className="h-[1px] w-12 bg-chirp-stone-200" />
@@ -339,7 +330,7 @@ function FreeManifestoSection() {
 const faqs = [
   {
     q: "Is it really 100% private?",
-    a: "Yes. Chirp uses local AI models (based on OpenAI's Whisper) that run on your computer's CPU. No audio data ever leaves your machine—we don't even have a server to send it to."
+    a: "Yes. Chirp uses local AI models that run on your computer's CPU. No audio data leaves your machine. We don't even have a server to send it to."
   },
   {
     q: "How is it free forever?",
@@ -347,7 +338,7 @@ const faqs = [
   },
   {
     q: "Does it work in languages other than English?",
-    a: "Absolutely. Chirp supports over 25 languages out of the box, including Spanish, French, German, Japanese, and Chinese."
+    a: "Yes. Chirp supports 25 languages out of the box, including Spanish, French, German, Japanese, and Chinese."
   },
   {
     q: "Can I use it with specialized jargon?",
@@ -413,7 +404,7 @@ function FounderNoteSection() {
             </div>
 
             <blockquote className="font-body text-[17px] font-medium leading-[1.8] text-chirp-stone-700">
-              &quot;I building Chirp because I wanted a tool that just works. Press a key, talk, done. No accounts, no cloud, no billing. If you want a private way to type with your voice, this is for you.&quot;
+              &quot;I built Chirp because I wanted a tool that just works. Press a key, talk, done. No accounts, no cloud, no billing. If you want a private way to type with your voice, this is for you.&quot;
             </blockquote>
           </div>
         </motion.div>

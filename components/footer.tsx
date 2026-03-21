@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BirdMark } from "./bird-mark";
+import { PRODUCT } from "@/lib/constants";
 
 
 export function Footer() {
@@ -63,6 +64,14 @@ export function Footer() {
                 >
                   Privacy
                 </Link>
+                <a
+                  href={PRODUCT.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-chirp-stone-400 transition-colors duration-200 hover:text-chirp-amber-400"
+                >
+                  GitHub
+                </a>
               </nav>
             </div>
           </div>

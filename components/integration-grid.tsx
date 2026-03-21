@@ -1,17 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { 
-  Slack, 
-  Mail, 
-  MessageSquare, 
-  Github, 
-  Variable, 
-  FileText, 
+import {
+  Slack,
+  Mail,
+  MessageSquare,
+  Variable,
+  FileText,
   Briefcase,
-  Search,
-  CheckCircle2,
-  Globe
+  Globe,
+  Terminal
 } from "lucide-react";
 
 const integrations = [
@@ -19,7 +17,7 @@ const integrations = [
   { name: "Gmail", icon: Mail, color: "text-[#EA4335]" },
   { name: "VS Code", icon: Variable, color: "text-[#007ACC]" },
   { name: "Notion", icon: FileText, color: "text-[#000000]" },
-  { name: "Markdown", icon: Github, color: "text-[#181717]" },
+  { name: "Terminal", icon: Terminal, color: "text-[#181717]" },
   { name: "Discord", icon: MessageSquare, color: "text-[#5865F2]" },
   { name: "LinkedIn", icon: Briefcase, color: "text-[#0A66C2]" },
   { name: "Chrome", icon: Globe, color: "text-[#4285F4]" },
@@ -37,7 +35,7 @@ export function IntegrationGrid() {
   return (
     <div className="relative w-full py-12">
       <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-4 md:gap-6">
-        {integrations.concat(integrations.slice(0, 1)).map((app, i) => (
+        {integrations.map((app, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, scale: 0.9 }}

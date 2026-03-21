@@ -8,19 +8,22 @@ import { BirdMark } from "@/components/bird-mark";
 import { AmberWarmth } from "@/components/amber-warmth";
 
 export default function DownloadPage() {
-  const [isWindows, setIsWindows] = useState(true);
+  const [platform, setPlatform] = useState<"windows" | "mac">("windows");
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setIsWindows(/Windows/i.test(navigator.userAgent));
+    setPlatform(/Mac|iPhone|iPad/i.test(navigator.userAgent) ? "mac" : "windows");
   }, []);
+
+  const isMac = platform === "mac";
 
   const steps = [
     {
       number: "1",
       title: "Run the installer",
-      description:
-        'Windows may show SmartScreen. Click "More info" then "Run anyway."',
+      description: isMac
+        ? "Open the .dmg and drag Chirp to Applications."
+        : 'Windows may show SmartScreen. Click "More info" then "Run anyway."',
     },
     {
       number: "2",
@@ -32,7 +35,7 @@ export default function DownloadPage() {
       number: "3",
       title: (
         <>
-          Press <span className="font-mono">Ctrl+Shift+Space</span>
+          Press <span className="font-mono">{isMac ? "Cmd+Shift+Space" : "Ctrl+Shift+Space"}</span>
         </>
       ),
       description: "From any app. Start talking. That's it.",
@@ -64,32 +67,15 @@ export default function DownloadPage() {
             </span>
           </div>
 
-          {isWindows ? (
-            <>
-              <a
-                href={PRODUCT.downloadUrl}
-                className="mt-6 flex items-center justify-center w-full h-12 bg-chirp-amber-500 text-white font-display font-bold rounded-full shadow-amber hover:bg-chirp-amber-600 hover:shadow-amber-hover transition-all"
-              >
-                Download for Windows
-              </a>
-              <p className="font-mono text-xs text-chirp-stone-400 mt-3 text-center">
-                {PRODUCT.downloadSize} · {PRODUCT.os} ({PRODUCT.architecture})
-              </p>
-            </>
-          ) : (
-            <p className="mt-6 text-sm text-chirp-stone-600 leading-relaxed">
-              Chirp is currently Windows-only. Star us on{" "}
-              <a
-                href={PRODUCT.github}
-                className="text-chirp-amber-600 hover:text-chirp-amber-700 underline underline-offset-2"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                GitHub
-              </a>{" "}
-              to follow progress on macOS and Linux support.
-            </p>
-          )}
+          <a
+            href={PRODUCT.downloadUrl}
+            className="mt-6 flex items-center justify-center w-full h-12 bg-chirp-amber-500 text-white font-display font-bold rounded-full shadow-amber hover:bg-chirp-amber-600 hover:shadow-amber-hover transition-all"
+          >
+            Download for {isMac ? "Mac" : "Windows"}
+          </a>
+          <p className="font-mono text-xs text-chirp-stone-400 mt-3 text-center">
+            {PRODUCT.downloadSize} · {PRODUCT.os} ({PRODUCT.architecture})
+          </p>
         </div>
 
         {/* Installation steps */}
