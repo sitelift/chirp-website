@@ -36,7 +36,7 @@ const reveal = {
 export function IntegrationGrid() {
   return (
     <div className="relative w-full py-12">
-      <div className="grid grid-cols-3 md:grid-cols-5 gap-4 md:gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-4 md:gap-6">
         {integrations.concat(integrations.slice(0, 1)).map((app, i) => (
           <motion.div
             key={i}

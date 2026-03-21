@@ -18,9 +18,9 @@ export function Nav() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 h-14 transition-all duration-200 ${
-          scrolled
-            ? "bg-chirp-stone-900/90 backdrop-blur-xl border-b border-white/[0.06]"
+        className={`fixed top-0 left-0 right-0 z-50 h-14 transition-all duration-300 ${
+          scrolled || mobileOpen
+            ? "bg-chirp-stone-900/95 backdrop-blur-md border-b border-white/[0.06]"
             : "bg-transparent"
         }`}
       >

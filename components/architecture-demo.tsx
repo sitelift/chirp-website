@@ -30,7 +30,7 @@ export function ArchitectureDemo() {
         {/* Connection 1 */}
         <div className="md:col-span-1 h-12 md:h-px w-px md:w-full flex items-center justify-center relative">
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="h-full md:h-px w-px md:w-full bg-chirp-stone-200 relative overflow-hidden">
+            <div className="h-full md:h-[2px] w-[2px] md:w-full bg-chirp-stone-200 relative overflow-hidden">
               <motion.div 
                 className="absolute inset-0 bg-gradient-to-r from-transparent via-chirp-amber-400 to-transparent opacity-70"
                 animate={{ x: ["-100%", "200%"] }}
@@ -85,7 +85,7 @@ export function ArchitectureDemo() {
       </div>
 
       {/* Output Connection */}
-      <div className="h-16 w-px bg-chirp-stone-200 relative overflow-hidden">
+      <div className="h-16 w-[2px] bg-chirp-stone-200 relative overflow-hidden">
         <motion.div 
           className="absolute inset-0 bg-gradient-to-b from-transparent via-chirp-amber-400 to-transparent opacity-70"
           animate={{ y: ["-100%", "200%"] }}

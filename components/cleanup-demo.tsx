@@ -64,9 +64,7 @@ export function CleanupDemo() {
                 className="absolute inset-0 flex flex-col justify-between p-8"
               >
                 <div className="font-mono text-[16px] text-chirp-stone-700 leading-[1.8]">
-                  so <span className="inline-block bg-chirp-amber-100/60 text-chirp-amber-700 rounded-md px-1.5 py-0.5 border border-chirp-amber-200/50">um</span>{" "}
-                  <span className="inline-block bg-chirp-amber-100/60 text-chirp-amber-700 rounded-md px-1.5 py-0.5 border border-chirp-amber-200/50">basically</span>{" "}
-                  I was thinking that we should <span className="inline-block bg-chirp-amber-100/60 text-chirp-amber-700 rounded-md px-1.5 py-0.5 border border-chirp-amber-200/50">like</span>{" "}
+                  So I was thinking that we should 
                   probably move the meeting to <span className="inline-block bg-chirp-amber-100/60 text-chirp-amber-700 rounded-md px-1.5 py-0.5 border border-chirp-amber-200/50">uh</span>{" "}
                   Thursday if that works
                 </div>

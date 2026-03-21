@@ -47,7 +47,7 @@ function SmartCleanupSection() {
             From rambling to ready.
           </h2>
           <p className="mt-6 text-lg leading-[1.75] text-chirp-stone-500 max-w-[520px] mx-auto">
-            Chirp&apos;s local AI cleans up your speech in real time. Filler words, grammar, punctuation. Choose a tone mode and get polished text instantly.
+            Chirp cleans up your speech as you talk. Filler words, grammar, punctuation—all corrected on the fly. Select a tone mode and get refined text.
           </p>
         </motion.div>
 
@@ -164,7 +164,7 @@ function WorksEverywhereSection() {
             One hotkey. Every app.
           </h2>
           <p className="mt-6 text-lg leading-[1.75] text-chirp-stone-500 max-w-[520px] mx-auto">
-            Press a hotkey from anywhere. Your browser, editor, or email client. Chirp transcribes and pastes right at your cursor.
+            Press a hotkey. Your browser, editor, or email client—Chirp transcribes and pastes at your cursor.
           </p>
         </motion.div>
 
@@ -172,7 +172,7 @@ function WorksEverywhereSection() {
           <KeyboardDemo />
         </motion.div>
 
-        <motion.div {...reveal} className="mt-16 grid w-full grid-cols-1 gap-4 sm:grid-cols-3">
+        <motion.div {...reveal} className="mt-16 grid w-full grid-cols-1 gap-4 lg:grid-cols-3">
           <FeatureCard
             icon={BookOpen}
             title="Custom dictionary"
@@ -323,7 +323,7 @@ function FreeManifestoSection() {
             A tool, not a tax.
           </h2>
           <p className="mt-12 text-2xl leading-[1.6] text-chirp-stone-500 font-medium italic">
-            &quot;Software should help you think, not make you worry about subscriptions or privacy tiers. Chirp is our commitment to a better professional toolset—free forever, on-device, and built for performance.&quot;
+            &quot;Our goal is to build a better professional toolset—free, on-device, and high-performance. Software should aid your thinking, not clutter your mind with subscriptions.&quot;
           </p>
           <div className="mt-12 flex items-center justify-center gap-4">
              <div className="h-[1px] w-12 bg-chirp-stone-200" />
@@ -413,7 +413,7 @@ function FounderNoteSection() {
             </div>
 
             <blockquote className="font-body text-[17px] font-medium leading-[1.8] text-chirp-stone-700">
-              &quot;I built Chirp because I got tired of paying for tools that send my voice to someone else&apos;s server. I wanted something that just works&nbsp;&mdash; press a key, talk, done. No accounts, no cloud, no monthly bill. If that&apos;s what you&apos;re looking for, I think you&apos;ll like it.&quot;
+              &quot;I building Chirp because I wanted a tool that just works. Press a key, talk, done. No accounts, no cloud, no billing. If you want a private way to type with your voice, this is for you.&quot;
             </blockquote>
           </div>
         </motion.div>
