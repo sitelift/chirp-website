@@ -187,6 +187,8 @@ export function WorkflowDemo({
   const [demoPhase, setDemoPhase] = useState<DemoPhase>("idle");
   const [typedChars, setTypedChars] = useState(0);
   const [heroPlaybackReady, setHeroPlaybackReady] = useState(false);
+  /** Bumps when the phase sequence wraps idle→…→pause→idle so AnimatePresence keys stay unique and each loop replays. */
+  const [loopEpoch, setLoopEpoch] = useState(0);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.2 });
@@ -267,6 +269,7 @@ export function WorkflowDemo({
         stepIndex++;
         if (stepIndex >= sequence.length) {
           stepIndex = 0;
+          setLoopEpoch((e) => e + 1);
         }
         runStep();
       }, step.duration);
@@ -424,7 +427,7 @@ export function WorkflowDemo({
                 <AnimatePresence>
                   {showBodyPlaceholder && (
                     <motion.div
-                      key="bodyPlaceholder"
+                      key={`bodyPlaceholder-${loopEpoch}`}
                       className="col-start-1 row-start-1"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
@@ -439,7 +442,7 @@ export function WorkflowDemo({
                   )}
                   {showRawText && (
                     <motion.div
-                      key="rawText"
+                      key={`rawText-${loopEpoch}`}
                       className="col-start-1 row-start-1"
                       initial={{ opacity: 0, y: 4 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -462,7 +465,7 @@ export function WorkflowDemo({
 
                   {showCleanText && (
                     <motion.div
-                      key="cleanText"
+                      key={`cleanText-${loopEpoch}`}
                       className="col-start-1 row-start-1"
                       initial={{ opacity: 0, y: 4 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -490,7 +493,7 @@ export function WorkflowDemo({
               <AnimatePresence mode="wait">
                 {demoPhase === "hotkey" && (
                   <motion.div
-                    key="keycaps"
+                    key={`keycaps-${loopEpoch}`}
                     initial={{ opacity: 0, scale: 0.94, y: 8 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.94, y: -8 }}
@@ -512,7 +515,7 @@ export function WorkflowDemo({
 
                 {showOverlay && (
                   <motion.div
-                    key="overlayPill"
+                    key={`overlayPill-${loopEpoch}`}
                     initial={{ opacity: 0, y: 8, scale: 0.96 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -8, scale: 0.96 }}
