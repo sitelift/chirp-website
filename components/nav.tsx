@@ -27,8 +27,8 @@ export function Nav() {
         <div className="mx-auto flex h-full max-w-[1120px] items-center justify-between px-6">
           <Link href="/" className="flex items-center gap-2">
             <BirdMark size={24} />
-            <span className="font-display text-[15px] font-semibold text-white">
-              Chirp
+            <span className="font-display text-[18px] font-extrabold tracking-tight text-white">
+              chirp
             </span>
           </Link>
 
@@ -86,10 +86,13 @@ export function Nav() {
         <div className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 bg-chirp-stone-900 md:hidden">
           <Link
             href="/"
-            className="font-display text-2xl font-semibold text-white"
+            className="flex items-center gap-2.5"
             onClick={() => setMobileOpen(false)}
           >
-            Home
+            <BirdMark size={28} />
+            <span className="font-display text-2xl font-extrabold tracking-tight text-white">
+              chirp
+            </span>
           </Link>
           <Link
             href="/changelog"
@@ -107,7 +110,7 @@ export function Nav() {
           </Link>
           <Link
             href="/download"
-            className="inline-flex h-12 items-center rounded-full bg-chirp-amber-500 px-8 font-display text-lg font-bold text-white"
+            className="inline-flex h-12 min-h-11 items-center rounded-full bg-chirp-amber-400 px-8 font-display text-lg font-bold text-chirp-stone-900 transition-colors hover:bg-chirp-amber-300"
             onClick={() => setMobileOpen(false)}
           >
             Download

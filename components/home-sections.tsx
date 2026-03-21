@@ -20,7 +20,7 @@ import {
 
 function IntegrationsSection() {
   return (
-    <section className="relative overflow-hidden border-t border-chirp-stone-100 bg-chirp-amber-50 px-6 py-28 md:py-36 lg:py-44">
+    <section className="relative overflow-hidden border-t border-chirp-stone-100 bg-white px-6 py-24 md:py-32 lg:py-36">
       <div className="relative z-10 mx-auto grid w-full max-w-5xl grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-20">
         <motion.div {...reveal} className="text-center lg:text-left">
           <span className="pill-label pill-label-light">Seamless Integration</span>
@@ -48,9 +48,7 @@ function IntegrationsSection() {
 
 function PowerToolsSection() {
   return (
-    <section className="relative overflow-hidden border-t border-chirp-stone-100 bg-chirp-stone-50 bg-dotted px-6 py-28 md:py-36 lg:py-44">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none h-[600px] w-[600px] rounded-full bg-chirp-stone-50/50 blur-[80px]" />
-
+    <section className="relative overflow-hidden border-t border-chirp-stone-100 bg-chirp-stone-50 bg-dotted px-6 py-24 md:py-32 lg:py-36">
       <div className="relative z-10 mx-auto flex w-full max-w-[1060px] flex-col items-center">
         <motion.div {...reveal} className="mb-12 w-full text-center lg:mb-14 lg:text-left">
           <span className="pill-label pill-label-light">Complete Control</span>
@@ -72,7 +70,7 @@ function PowerToolsSection() {
 
 function PrivacySection() {
   return (
-    <section className="relative overflow-hidden border-t border-chirp-stone-100 bg-white px-6 py-28 md:py-36 lg:py-40">
+    <section className="relative overflow-hidden border-t border-chirp-stone-100 bg-white px-6 py-24 md:py-32 lg:py-36">
       <div className="relative z-10 mx-auto flex w-full max-w-[1060px] flex-col items-center">
         <motion.div {...reveal} className="w-full text-center">
           <span className="pill-label pill-label-light">Absolute Privacy</span>
@@ -148,16 +146,14 @@ function PrivacySection() {
 
 function FreeForeverSection() {
   return (
-    <section className="overflow-hidden border-t border-chirp-stone-200 bg-chirp-stone-50 px-6 py-28 md:py-36 lg:py-44">
+    <section className="overflow-hidden border-t border-chirp-stone-200 bg-chirp-stone-50 px-6 py-24 md:py-32 lg:py-36">
       <div className="relative z-10 mx-auto flex w-full max-w-[1000px] flex-col items-center">
         <motion.div
           {...reveal}
-          className="relative flex w-full flex-col gap-10 overflow-hidden rounded-[32px] border border-chirp-stone-200 bg-white p-10 shadow-elevated md:flex-row md:items-center md:justify-between md:gap-12 md:p-14"
+          className="relative flex w-full flex-col gap-10 overflow-hidden rounded-[32px] border border-chirp-stone-200 bg-white p-10 md:flex-row md:items-center md:justify-between md:gap-12 md:p-14"
         >
-          <div className="pointer-events-none absolute top-1/2 left-0 h-[400px] w-[400px] -translate-y-1/2 rounded-full bg-chirp-amber-400/5 blur-[60px]" />
-
           <div className="relative z-10">
-            <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl border border-chirp-amber-100 bg-chirp-amber-50 shadow-inner">
+            <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl border border-chirp-amber-200 bg-chirp-amber-50">
               <Heart
                 className="h-7 w-7 text-chirp-amber-500"
                 strokeWidth={1.5}
@@ -195,7 +191,7 @@ function FreeForeverSection() {
 
 function FounderNoteSection() {
   return (
-    <section className="overflow-hidden border-y border-chirp-stone-100 bg-white px-6 py-28 md:py-36 lg:py-40">
+    <section className="overflow-hidden border-y border-chirp-stone-100 bg-white px-6 py-24 md:py-32 lg:py-36">
       <div className="mx-auto max-w-[1000px]">
         <motion.div
           {...reveal}
@@ -205,15 +201,15 @@ function FounderNoteSection() {
             <img
               src="/pieter.jpg"
               alt="Pieter de Bruijn"
-              className="h-24 w-24 rounded-full border-4 border-white object-cover shadow-elevated md:h-32 md:w-32"
+              className="h-24 w-24 rounded-full border-4 border-chirp-stone-200 object-cover md:h-32 md:w-32"
             />
             <div className="text-center lg:text-left">
               <span className="font-display text-xl font-bold tracking-widest text-chirp-stone-900 uppercase">
                 Pieter de Bruijn
               </span>
               <p className="mt-2">
-                <span className="inline-block rounded-full border border-chirp-amber-200/50 bg-chirp-amber-50 px-4 py-1.5 font-mono text-[11px] font-bold tracking-widest text-chirp-amber-700 uppercase shadow-subtle">
-                  Creator of Chirp
+                <span className="inline-block rounded-full border border-chirp-amber-200/50 bg-chirp-amber-50 px-4 py-1.5 font-mono text-[11px] font-bold tracking-widest text-chirp-amber-700 uppercase">
+                  Creator of chirp
                 </span>
               </p>
             </div>
@@ -234,7 +230,7 @@ function FounderNoteSection() {
 
 function FAQSection() {
   return (
-    <section className="overflow-hidden border-t border-chirp-stone-100 bg-chirp-amber-50 px-6 py-28 md:py-36 lg:py-40">
+    <section className="overflow-hidden border-t border-chirp-stone-100 bg-chirp-stone-50 px-6 py-24 md:py-32 lg:py-36">
       <div className="mx-auto flex w-full max-w-5xl flex-col items-center">
         <motion.div {...reveal} className="mb-14 w-full text-center md:mb-16">
           <h2 className="font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-chirp-stone-900">
@@ -248,7 +244,7 @@ function FAQSection() {
               key={faq.question}
               {...reveal}
               transition={{ delay: i * 0.06 }}
-              className="group cursor-default rounded-2xl border border-chirp-stone-100 bg-white p-7 transition-all hover:border-chirp-amber-200 hover:shadow-subtle md:p-8"
+              className="group cursor-default rounded-2xl border border-chirp-stone-200 bg-white p-7 transition-colors hover:border-chirp-amber-200 md:p-8"
             >
               <h3 className="flex items-start gap-3 font-display text-lg font-bold text-chirp-stone-900">
                 <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-chirp-stone-50 transition-colors group-hover:bg-chirp-amber-50">
@@ -273,7 +269,7 @@ function FAQSection() {
 
 function CloseSection() {
   return (
-    <section className="relative overflow-hidden px-6 py-28 md:py-36 lg:py-44">
+    <section className="relative overflow-hidden px-6 pb-24 pt-24 md:pb-32 md:pt-32 lg:pb-36 lg:pt-36">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -281,7 +277,7 @@ function CloseSection() {
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-black/40"
+        className="pointer-events-none absolute inset-0 bg-black/45"
       />
 
       <motion.div
@@ -294,9 +290,9 @@ function CloseSection() {
 
         <motion.h2
           {...staggerChild}
-          className="mb-2 font-display text-7xl font-extrabold tracking-tighter text-white md:text-8xl lg:text-[10rem] leading-none"
+          className="mb-2 font-display text-7xl font-extrabold leading-none tracking-tighter text-white drop-shadow-[0_2px_28px_rgba(0,0,0,0.4)] md:text-8xl lg:text-9xl"
         >
-          Try Chirp.
+          Try chirp.
         </motion.h2>
 
         <motion.p

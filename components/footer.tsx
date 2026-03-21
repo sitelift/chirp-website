@@ -14,8 +14,8 @@ export function Footer() {
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-2.5">
               <BirdMark size={22} />
-              <span className="font-display text-[16px] font-semibold text-chirp-stone-100">
-                Chirp
+              <span className="font-display text-[16px] font-extrabold tracking-tight text-chirp-stone-100">
+                chirp
               </span>
             </div>
             <p className="text-sm leading-relaxed text-chirp-stone-400">

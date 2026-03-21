@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Nunito, Inter, JetBrains_Mono } from "next/font/google";
 import { Nav } from "@/components/nav";
-import { Footer } from "@/components/footer";
+import { ConditionalFooter } from "@/components/conditional-footer";
 import "./globals.css";
 
 const nunito = Nunito({
@@ -74,7 +74,7 @@ export default function RootLayout({
       >
         <Nav />
         <main>{children}</main>
-        <Footer />
+        <ConditionalFooter />
       </body>
     </html>
   );

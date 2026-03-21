@@ -53,6 +53,8 @@ export type WorkflowDemoProps = {
   className?: string;
 };
 
+const easeOutSoft = [0.25, 1, 0.5, 1] as const;
+
 function OverlayPill({ phase }: { phase: PillPhase }) {
   const isActive =
     phase === "listening" || phase === "processing" || phase === "done";
@@ -65,23 +67,16 @@ function OverlayPill({ phase }: { phase: PillPhase }) {
       transition={{ duration: 0.2, ease: "easeOut" }}
       className="flex items-center justify-center pointer-events-none drop-shadow-2xl"
     >
-      <motion.div
-        animate={{
-          height: isActive ? 48 : 40,
-          paddingLeft: isActive ? 18 : 12,
-          paddingRight: isActive ? 18 : 12,
-          gap: isActive ? 14 : 10,
-          boxShadow: isActive
-            ? "0 4px 24px rgba(245,158,11,0.12), 0 0 0 1px rgba(245,158,11,0.1) inset, 0 8px 32px rgba(0,0,0,0.06)"
-            : "0 4px 12px rgba(0,0,0,0.04), 0 0 0 1px rgba(0,0,0,0.03) inset",
-        }}
-        transition={{ duration: 0.25, ease: springEasing }}
-        className="flex items-center rounded-full border border-chirp-amber-200/50 bg-white/95 backdrop-blur-xl"
+      <div
+        className={cn(
+          "flex items-center gap-3 rounded-full border border-chirp-amber-200/50 bg-white/95 backdrop-blur-xl transition-[min-height,padding] duration-200 ease-out",
+          isActive ? "min-h-12 py-2.5 pl-[14px] pr-[18px]" : "min-h-10 py-2 pl-3 pr-3"
+        )}
       >
         <BirdMark
           size={isActive ? 22 : 18}
           className={cn(
-            "mr-2 transition-colors duration-200",
+            "shrink-0 transition-colors duration-200",
             isActive ? "text-chirp-amber-400" : "text-chirp-stone-400"
           )}
         />
@@ -104,7 +99,7 @@ function OverlayPill({ phase }: { phase: PillPhase }) {
                   transition={{
                     repeat: Infinity,
                     duration: 1.2,
-                    ease: "easeInOut",
+                    ease: easeOutSoft,
                     delay: i * 0.04,
                   }}
                 />
@@ -139,15 +134,15 @@ function OverlayPill({ phase }: { phase: PillPhase }) {
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.div>
+      </div>
     </motion.div>
   );
 }
 
 function StaticDemoWindow() {
   return (
-    <div className="relative max-w-full min-w-0 w-full overflow-hidden rounded-2xl border border-chirp-stone-200/80 bg-white shadow-lifted">
-      <div className="relative flex items-center justify-center border-b border-chirp-stone-100 bg-chirp-stone-100 px-4 py-3 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+    <div className="relative max-w-full min-w-0 w-full overflow-hidden rounded-2xl border border-chirp-stone-200 bg-white">
+      <div className="relative flex items-center justify-center border-b border-chirp-stone-200 bg-chirp-stone-100 px-4 py-3">
         <div className="absolute left-4 flex gap-1.5">
           <div className="h-3 w-3 rounded-full bg-chirp-stone-300 shadow-inner" />
           <div className="h-3 w-3 rounded-full bg-chirp-stone-300 shadow-inner" />
@@ -305,6 +300,8 @@ export function WorkflowDemo({
     demoPhase === "process_clean" ||
     demoPhase === "done" ||
     demoPhase === "pause";
+  const showBodyPlaceholder =
+    demoPhase === "idle" || demoPhase === "hotkey";
 
   const renderRawText = () => {
     const textToShow = RAW_TEXT.slice(0, typedChars);
@@ -389,9 +386,9 @@ export function WorkflowDemo({
       <div className="relative min-w-0">
         <div
           ref={containerRef}
-          className="relative max-w-full min-w-0 overflow-hidden rounded-2xl border border-chirp-stone-200/80 bg-white shadow-lifted"
+          className="relative max-w-full min-w-0 overflow-hidden rounded-2xl border border-chirp-stone-200 bg-white"
         >
-          <div className="relative flex items-center justify-center border-b border-chirp-stone-100 bg-chirp-stone-100 px-4 py-3 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+          <div className="relative flex items-center justify-center border-b border-chirp-stone-200 bg-chirp-stone-100 px-4 py-3">
             <div className="absolute left-4 flex gap-1.5">
               <div className="h-3 w-3 rounded-full bg-chirp-stone-300 shadow-inner" />
               <div className="h-3 w-3 rounded-full bg-chirp-stone-300 shadow-inner" />
@@ -425,6 +422,21 @@ export function WorkflowDemo({
             <div className="relative z-10 font-body text-base leading-[1.75] text-chirp-stone-800 sm:text-lg md:text-xl md:leading-[1.8]">
               <div className="grid grid-cols-1 grid-rows-1">
                 <AnimatePresence>
+                  {showBodyPlaceholder && (
+                    <motion.div
+                      key="bodyPlaceholder"
+                      className="col-start-1 row-start-1"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.25, ease: "easeOut" }}
+                    >
+                      <p className="max-w-[42ch] text-chirp-stone-400 sm:text-lg md:text-xl md:leading-relaxed">
+                        Place the cursor where you want text, press the hotkey,
+                        and start speaking—transcription appears here.
+                      </p>
+                    </motion.div>
+                  )}
                   {showRawText && (
                     <motion.div
                       key="rawText"
@@ -489,7 +501,7 @@ export function WorkflowDemo({
                       {["Ctrl", "Shift", "Space"].map((key) => (
                         <span
                           key={key}
-                          className="rounded-lg border border-chirp-stone-200/80 bg-white px-2.5 py-1.5 font-mono text-[10px] font-bold text-chirp-stone-700 shadow-[0_2px_0_rgba(0,0,0,0.05),0_8px_16px_rgba(0,0,0,0.06)] ring-1 ring-black/5 sm:px-3 sm:text-[11px]"
+                          className="rounded-lg border border-chirp-stone-200 bg-white px-2.5 py-1.5 font-mono text-[10px] font-bold text-chirp-stone-700 sm:px-3 sm:text-[11px]"
                         >
                           {key}
                         </span>

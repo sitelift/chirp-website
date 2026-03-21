@@ -18,7 +18,7 @@ export default function Home() {
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-black/20"
+          className="pointer-events-none absolute inset-0 bg-black/30"
         />
 
         <motion.div
@@ -27,14 +27,14 @@ export default function Home() {
         >
           <motion.h1
             {...staggerChild}
-            className="max-w-3xl text-center font-display text-5xl font-extrabold leading-[1.0] tracking-tighter text-white sm:text-6xl md:text-8xl lg:text-[8rem]"
+            className="max-w-3xl text-center font-display text-5xl font-extrabold leading-[1.02] tracking-tighter text-white drop-shadow-[0_2px_24px_rgba(0,0,0,0.35)] sm:text-6xl md:text-7xl lg:text-8xl"
           >
             Speak Freely.
           </motion.h1>
 
           <motion.p
             {...staggerChild}
-            className="mt-6 max-w-xl text-center text-base leading-relaxed text-white/70 sm:mt-8 sm:text-lg md:text-xl"
+            className="mt-6 max-w-xl text-center text-base leading-relaxed text-white/85 sm:mt-8 sm:text-lg md:text-xl"
           >
             Voice-to-text that runs on your machine. No cloud, no account, no
             subscription.

@@ -153,6 +153,8 @@ module.exports = {
 | Small print | Inter | 400 | 13px | 1.5 | stone-500 |
 | Code / URL | JetBrains Mono | 400 | 15px | 1.5 | amber-500 |
 
+**Photo hero / photo close CTA (homepage):** When the hero or closing band uses a **full-bleed JPEG** with a darkening overlay, the **headline and subhead may use white / white at reduced opacity** instead of stone-900 / stone-700 so text stays legible. Prefer **Nunito 800** for the hero headline; sizes may exceed the default 60px desktop row when the layout is intentionally poster-like. This exception applies **only** to those two bands, not to body sections on white.
+
 ---
 
 ## 4. Spacing System
@@ -646,6 +648,7 @@ The only dark surface is the landing page footer (stone-900 background), which u
 - Do not add dark mode
 - Do not add custom fonts beyond Nunito, Inter, JetBrains Mono
 - Do not use icon libraries other than Lucide
+- **Exception (marketing only):** Third-party **brand logos** on the public website may use **self-hosted SVG files** (e.g. under `/public/integrations/`), typically sourced from the Simple Icons project or equivalent official monochrome marks. Do not hotlink CDNs for these assets; do not use this exception inside the desktop app UI.
 - Do not use opacity for disabled states on text (use stone-400 color instead)
 - Do not animate anything longer than 300ms
 - Do not use `ease-in` for UI transitions

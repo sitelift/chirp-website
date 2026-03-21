@@ -4,14 +4,14 @@ import { motion } from "framer-motion";
 export function IntegrationGrid() {
   // Using exact, canonical SimpleIcons slugs that are guaranteed to exist on the main CDN.
   const apps = [
-    { name: "Slack", iconUrl: "https://cdn.simpleicons.org/slack", bg: "bg-white" },
-    { name: "Discord", iconUrl: "https://cdn.simpleicons.org/discord", bg: "bg-white" },
-    { name: "Notion", iconUrl: "https://cdn.simpleicons.org/notion", bg: "bg-white" },
-    { name: "WhatsApp", iconUrl: "https://cdn.simpleicons.org/whatsapp", bg: "bg-white" },
-    { name: "Linear", iconUrl: "https://cdn.simpleicons.org/linear", bg: "bg-white" },
-    { name: "Figma", iconUrl: "https://cdn.simpleicons.org/figma", bg: "bg-white" },
-    { name: "GitHub", iconUrl: "https://cdn.simpleicons.org/github", bg: "bg-white" },
-    { name: "X", iconUrl: "https://cdn.simpleicons.org/x", bg: "bg-white" },
+    { name: "Slack", iconSrc: "/integrations/slack.svg", bg: "bg-white" },
+    { name: "Discord", iconSrc: "/integrations/discord.svg", bg: "bg-white" },
+    { name: "Notion", iconSrc: "/integrations/notion.svg", bg: "bg-white" },
+    { name: "WhatsApp", iconSrc: "/integrations/whatsapp.svg", bg: "bg-white" },
+    { name: "Linear", iconSrc: "/integrations/linear.svg", bg: "bg-white" },
+    { name: "Figma", iconSrc: "/integrations/figma.svg", bg: "bg-white" },
+    { name: "GitHub", iconSrc: "/integrations/github.svg", bg: "bg-white" },
+    { name: "X", iconSrc: "/integrations/x.svg", bg: "bg-white" },
   ];
 
   return (
@@ -24,10 +24,17 @@ export function IntegrationGrid() {
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ delay: i * 0.05, duration: 0.4, ease: "easeOut" }}
-            className="flex items-center gap-3 px-5 py-3 rounded-2xl bg-white border border-chirp-stone-200 shadow-lifted hover:shadow-elevated transition-shadow cursor-default"
+            className="flex cursor-default items-center gap-3 rounded-2xl border border-chirp-stone-200 bg-white px-5 py-3 transition-colors hover:border-chirp-amber-200"
           >
-            <div className={`flex items-center justify-center p-1.5 rounded-xl ${app.bg} w-9 h-9 shadow-subtle border border-chirp-stone-100`}>
-              <img src={app.iconUrl} alt={app.name} className="w-5 h-5 object-contain" />
+            <div
+              className={`flex h-9 w-9 items-center justify-center rounded-xl border border-chirp-stone-100 p-1.5 ${app.bg}`}
+            >
+              <img
+                src={app.iconSrc}
+                alt=""
+                role="presentation"
+                className="h-5 w-5 object-contain"
+              />
             </div>
             <span className="font-display font-bold text-[16px] text-chirp-stone-800 tracking-tight">{app.name}</span>
           </motion.div>
