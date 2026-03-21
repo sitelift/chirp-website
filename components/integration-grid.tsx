@@ -4,19 +4,19 @@ import { motion } from "framer-motion";
 export function IntegrationGrid() {
   // Using exact, canonical SimpleIcons slugs that are guaranteed to exist on the main CDN.
   const apps = [
-    { name: "Slack", iconUrl: "https://cdn.simpleicons.org/slack/E01E5A", bg: "bg-white" },
-    { name: "Discord", iconUrl: "https://cdn.simpleicons.org/discord/5865F2", bg: "bg-white" },
-    { name: "Notion", iconUrl: "https://cdn.simpleicons.org/notion/000000", bg: "bg-white" },
-    { name: "WhatsApp", iconUrl: "https://cdn.simpleicons.org/whatsapp/25D366", bg: "bg-white" },
-    { name: "Linear", iconUrl: "https://cdn.simpleicons.org/linear/5E6AD2", bg: "bg-white" },
-    { name: "Figma", iconUrl: "https://cdn.simpleicons.org/figma/F24E1E", bg: "bg-white" },
-    { name: "GitHub", iconUrl: "https://cdn.simpleicons.org/github/181717", bg: "bg-white" },
-    { name: "X", iconUrl: "https://cdn.simpleicons.org/x/000000", bg: "bg-white" },
+    { name: "Slack", iconUrl: "https://cdn.simpleicons.org/slack", bg: "bg-white" },
+    { name: "Discord", iconUrl: "https://cdn.simpleicons.org/discord", bg: "bg-white" },
+    { name: "Notion", iconUrl: "https://cdn.simpleicons.org/notion", bg: "bg-white" },
+    { name: "WhatsApp", iconUrl: "https://cdn.simpleicons.org/whatsapp", bg: "bg-white" },
+    { name: "Linear", iconUrl: "https://cdn.simpleicons.org/linear", bg: "bg-white" },
+    { name: "Figma", iconUrl: "https://cdn.simpleicons.org/figma", bg: "bg-white" },
+    { name: "GitHub", iconUrl: "https://cdn.simpleicons.org/github", bg: "bg-white" },
+    { name: "X", iconUrl: "https://cdn.simpleicons.org/x", bg: "bg-white" },
   ];
 
   return (
-    <div className="relative w-full max-w-[800px] mx-auto py-10 mt-8">
-      <div className="flex flex-wrap justify-center gap-4">
+    <div className="relative mx-auto mt-6 w-full max-w-full py-6 lg:mt-0 lg:py-4">
+      <div className="flex flex-wrap justify-center gap-3 sm:gap-4 lg:justify-end">
         {apps.map((app, i) => (
           <motion.div
             key={app.name}

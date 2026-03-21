@@ -33,13 +33,13 @@ export function PowerTools() {
       {/* Custom Dict Card */}
       <motion.div 
         initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ delay: 0.1 }}
-        className="col-span-1 border-chirp-stone-100 border rounded-3xl p-8 md:p-10 shadow-elevated bg-gradient-to-b from-white to-chirp-stone-50/50 flex flex-col"
+        className="col-span-1 flex flex-col rounded-3xl border border-chirp-stone-100 bg-chirp-stone-50 p-8 shadow-elevated md:p-10"
       >
         <div className="h-12 w-12 rounded-2xl bg-white shadow-sm border border-chirp-stone-100 flex items-center justify-center mb-6">
           <BookA className="w-6 h-6 text-chirp-amber-500" strokeWidth={2} />
         </div>
         <h3 className="font-display text-3xl font-extrabold tracking-tight text-chirp-stone-900">Custom Dict</h3>
-        <p className="text-chirp-stone-500 mt-4 text-lg leading-relaxed">Add your team's specific jargon, acronyms, and names. Chirp spells them flawlessly every time.</p>
+        <p className="text-chirp-stone-500 mt-4 text-lg leading-relaxed">Add your team&apos;s specific jargon, acronyms, and names. Chirp spells them flawlessly every time.</p>
         
         <div className="mt-auto pt-10">
           <div className="px-4 py-3 rounded-xl bg-white border border-chirp-stone-200 shadow-sm font-mono text-sm font-medium text-chirp-stone-600 flex justify-between items-center">

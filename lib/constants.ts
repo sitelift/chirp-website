@@ -134,6 +134,30 @@ export const FAQ_SECTIONS = [
   },
 ];
 
+/** Curated FAQs shown on the homepage preview (full FAQ page uses FAQ_SECTIONS). */
+export const HOME_PREVIEW_FAQS: { question: string; answer: string }[] = [
+  {
+    question: "Is it really 100% private?",
+    answer:
+      "Yes. Chirp uses local AI models that run on your computer's CPU. No audio data leaves your machine. We don't even have a server to send it to.",
+  },
+  {
+    question: "How is it free forever?",
+    answer:
+      "Chirp is a side project. Since it runs entirely on your hardware, there are no server costs to pass on to you.",
+  },
+  {
+    question: "Does it work in languages other than English?",
+    answer:
+      "Yes. Chirp supports 25 languages out of the box, including Spanish, French, German, Japanese, and Chinese.",
+  },
+  {
+    question: "Can I use it with specialized jargon?",
+    answer:
+      "Yes. You can add technical terms, names, and industry-specific jargon to your custom dictionary in the settings to ensure perfect transcription.",
+  },
+];
+
 export const CHANGELOG = [
   {
     version: "v0.4.0",
