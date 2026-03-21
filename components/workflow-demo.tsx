@@ -5,7 +5,6 @@ import {
   motion,
   AnimatePresence,
   useInView,
-  useReducedMotion,
 } from "framer-motion";
 import { BirdMark } from "./bird-mark";
 import { cn } from "@/lib/utils";
@@ -139,51 +138,10 @@ function OverlayPill({ phase }: { phase: PillPhase }) {
   );
 }
 
-function StaticDemoWindow() {
-  return (
-    <div className="relative max-w-full min-w-0 w-full overflow-hidden rounded-2xl border border-chirp-stone-200 bg-white">
-      <div className="relative flex items-center justify-center border-b border-chirp-stone-200 bg-chirp-stone-100 px-4 py-3">
-        <div className="absolute left-4 flex gap-1.5">
-          <div className="h-3 w-3 rounded-full bg-chirp-stone-300 shadow-inner" />
-          <div className="h-3 w-3 rounded-full bg-chirp-stone-300 shadow-inner" />
-          <div className="h-3 w-3 rounded-full bg-chirp-stone-300 shadow-inner" />
-        </div>
-        <span className="text-xs font-medium tracking-wide text-chirp-stone-500">
-          New Message
-        </span>
-      </div>
-      <div className="flex flex-col gap-3 border-b border-chirp-stone-100 bg-white/50 px-4 py-3 sm:px-6 md:px-10">
-        <div className="flex items-center text-[12px] sm:text-[13px] md:text-sm">
-          <span className="w-14 shrink-0 font-medium text-chirp-stone-400">
-            To:
-          </span>
-          <span className="rounded px-2 py-0.5 font-medium text-chirp-stone-800 bg-chirp-stone-100">
-            Team
-          </span>
-        </div>
-        <div className="flex items-start text-[12px] sm:text-[13px] md:text-sm">
-          <span className="w-14 shrink-0 font-medium text-chirp-stone-400">
-            Subject:
-          </span>
-          <span className="min-w-0 font-bold text-chirp-stone-800 break-words">
-            Moving Thursday&apos;s standup
-          </span>
-        </div>
-      </div>
-      <div className="min-h-[200px] bg-white p-4 sm:p-6 md:min-h-[280px] md:p-10">
-        <p className="text-base leading-relaxed text-chirp-stone-800 md:text-xl md:leading-[1.75]">
-          {CLEAN_TEXT}
-        </p>
-      </div>
-    </div>
-  );
-}
-
 export function WorkflowDemo({
   placement = "hero",
   className,
 }: WorkflowDemoProps) {
-  const reduceMotion = useReducedMotion();
   const [demoPhase, setDemoPhase] = useState<DemoPhase>("idle");
   const [typedChars, setTypedChars] = useState(0);
   /** Bumps when the phase sequence wraps idle→…→pause→idle so AnimatePresence keys stay unique and each loop replays. */
@@ -192,10 +150,7 @@ export function WorkflowDemo({
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.2 });
 
-  // Hero: avoid rAF gating — rAF is throttled in background tabs and can block playback on some hosts.
-  const playbackEnabled =
-    !reduceMotion &&
-    (placement === "hero" ? true : isInView);
+  const playbackEnabled = placement === "hero" ? true : isInView;
 
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const charIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -267,14 +222,6 @@ export function WorkflowDemo({
       clearTimers();
     };
   }, [playbackEnabled]);
-
-  if (reduceMotion) {
-    return (
-      <div className={cn("mx-auto w-full min-w-0 max-w-6xl", className)}>
-        <StaticDemoWindow />
-      </div>
-    );
-  }
 
   let pillPhase: PillPhase = "idle";
   if (demoPhase === "listen_type") pillPhase = "listening";
