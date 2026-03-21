@@ -15,23 +15,23 @@ export function WaveformOverlayDemo() {
       // 1. Idle (Passive)
       setPhase("idle");
       await new Promise((r) => setTimeout(r, 2000));
-      
+
       // 2. Listening
       setPhase("listening");
       await new Promise((r) => setTimeout(r, 2500));
-      
+
       // 3. Processing
       setPhase("processing");
       await new Promise((r) => setTimeout(r, 1500));
-      
+
       // 4. Done
       setPhase("done");
       await new Promise((r) => setTimeout(r, 2000));
-      
+
       // Loop
       cycle();
     };
-    
+
     cycle();
   }, []);
 
@@ -56,11 +56,11 @@ export function WaveformOverlayDemo() {
           transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
           className="flex items-center rounded-full border border-chirp-stone-200 bg-white shadow-overlay"
         >
-          <BirdMark 
-            size={isActive ? 20 : 16} 
-            className={`transition-colors duration-300 ${isActive ? "text-chirp-amber-400" : "text-chirp-stone-400"}`} 
+          <BirdMark
+            size={isActive ? 20 : 16}
+            className={`transition-colors duration-300 ${isActive ? "text-chirp-amber-400" : "text-chirp-stone-400"}`}
           />
-          
+
           <AnimatePresence mode="wait">
             {isActive && (
               <motion.div

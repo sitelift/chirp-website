@@ -32,9 +32,9 @@ export default function Home() {
         >
           <motion.h1
             {...staggerChild}
-            className="font-display text-5xl font-extrabold leading-[1.05] tracking-tight text-white md:text-7xl lg:text-8xl"
+            className="font-display text-6xl font-extrabold leading-[1.0] tracking-tighter text-white md:text-8xl lg:text-[8rem]"
           >
-            Speak Freely
+            Speak Freely.
           </motion.h1>
 
           <motion.p
@@ -67,13 +67,7 @@ export default function Home() {
           </motion.p>
         </motion.div>
 
-        {/* Demo below CTAs */}
-        <motion.div
-          {...reveal}
-          className="relative z-10 mt-16 w-full max-w-2xl"
-        >
-          <WaveformOverlayDemo />
-        </motion.div>
+
 
       </section>
 

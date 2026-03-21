@@ -5,19 +5,16 @@ import { motion } from "framer-motion";
 import { reveal, staggerContainer, staggerChild } from "@/lib/motion";
 import { PRODUCT } from "@/lib/constants";
 import { BirdMark } from "@/components/bird-mark";
-import { CleanupDemo } from "@/components/cleanup-demo";
 import { WorkflowDemo } from "./workflow-demo";
+import { IntegrationGrid } from "./integration-grid";
+import { PowerTools } from "./power-tools";
 import { LogoStrip } from "./logo-strip";
-import { ArchitectureDemo } from "./architecture-demo";
 import { FeatureCard } from "./feature-card";
 import {
   ShieldCheck,
   Heart,
   CreditCard,
   HelpCircle,
-  Sparkles,
-  Eraser,
-  Type,
 } from "lucide-react";
 
 /* ------------------------------------------------------------------ */
@@ -26,73 +23,70 @@ import {
 
 function WorkflowDemoSection() {
   return (
-    <section className="bg-white px-6 py-12 md:py-16 overflow-hidden">
-      <motion.div {...reveal} className="mx-auto max-w-[860px]">
-        <WorkflowDemo />
-      </motion.div>
-    </section>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/*  Scrolling App Logos — trust signal                                  */
-/* ------------------------------------------------------------------ */
-
-function LogoStripSection() {
-  return (
-    <section className="bg-white py-8 md:py-12 overflow-hidden border-t border-chirp-stone-100">
-      <LogoStrip />
-    </section>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/*  Smart Cleanup — flagship feature                                   */
-/* ------------------------------------------------------------------ */
-
-function SmartCleanupSection() {
-  return (
-    <section className="bg-white bg-dotted px-6 py-20 md:py-28 lg:py-36 overflow-hidden relative">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-chirp-amber-400/5 blur-[80px] pointer-events-none" />
-
+    <section className="bg-white px-6 py-28 md:py-40 lg:py-48 overflow-hidden relative">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-chirp-stone-50/50 blur-[80px] pointer-events-none" />
+      
       <div className="mx-auto flex w-full max-w-[860px] flex-col items-center relative z-10">
-        <motion.div {...reveal} className="text-center w-full">
-          <span className="pill-label pill-label-light">Cleanup</span>
+        <motion.div {...reveal} className="text-center w-full mb-12">
+          <span className="pill-label pill-label-light">The Workflow</span>
           <h2 className="mt-4 font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-chirp-stone-900 md:text-5xl">
-            From rambling to ready.
+            Press. Speak. Done.
           </h2>
           <p className="mt-5 text-lg leading-[1.75] text-chirp-stone-500 max-w-[520px] mx-auto">
-            Chirp cleans up your speech as you talk. Filler words, grammar, and punctuation get corrected on the fly.
+            Chirp is always ready. Press the hotkey, speak your mind, and watch the AI extract your thoughts perfectly into any text field.
           </p>
         </motion.div>
 
-        <motion.div {...reveal} className="w-full mt-10">
-          <CleanupDemo />
+        <motion.div {...reveal} className="w-full relative">
+          <WorkflowDemo />
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Integrations — Works Where You Do                                  */
+/* ------------------------------------------------------------------ */
+
+function IntegrationsSection() {
+  return (
+    <section className="bg-white px-6 py-28 md:py-40 lg:py-48 overflow-hidden relative">
+      <div className="mx-auto flex w-full max-w-[860px] flex-col items-center relative z-10">
+        <motion.div {...reveal} className="text-center w-full">
+          <span className="pill-label pill-label-light">Seamless Integration</span>
+          <h2 className="mt-4 font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-chirp-stone-900 md:text-5xl">
+            Works where you do.
+          </h2>
+          <p className="mt-5 text-lg leading-[1.75] text-chirp-stone-500 max-w-[520px] mx-auto">
+            Chirp isn't a walled garden. There's no app to switch to. You just press the hotkey, speak, and the clean text drops perfectly into wherever your cursor is.
+          </p>
+        </motion.div>
+        
+        <IntegrationGrid />
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Power Tools — Bento Grid                                           */
+/* ------------------------------------------------------------------ */
+
+function PowerToolsSection() {
+  return (
+    <section className="bg-white px-6 py-28 md:py-40 lg:py-48 overflow-hidden border-t border-chirp-stone-100 bg-dotted relative">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-chirp-stone-50/50 blur-[80px] pointer-events-none" />
+      
+      <div className="mx-auto flex w-full max-w-[1060px] flex-col items-center relative z-10">
+        <motion.div {...reveal} className="text-center w-full mb-8">
+          <span className="pill-label pill-label-light">Complete Control</span>
+          <h2 className="mt-4 font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-chirp-stone-900 md:text-5xl">
+            Heavyweight power. <br className="hidden md:block" /> Lightweight footprint.
+          </h2>
         </motion.div>
 
-        <motion.div {...reveal} className="mt-10 grid w-full grid-cols-1 gap-4 sm:grid-cols-3">
-          <div className="flex items-start gap-3 rounded-xl bg-chirp-stone-50 p-4">
-            <Sparkles className="mt-0.5 h-5 w-5 flex-shrink-0 text-chirp-amber-500" strokeWidth={1.5} />
-            <div>
-              <p className="text-sm font-bold text-chirp-stone-900">Tone modes</p>
-              <p className="text-xs text-chirp-stone-500">Casual, email, or formal</p>
-            </div>
-          </div>
-          <div className="flex items-start gap-3 rounded-xl bg-chirp-stone-50 p-4">
-            <Eraser className="mt-0.5 h-5 w-5 flex-shrink-0 text-chirp-amber-500" strokeWidth={1.5} />
-            <div>
-              <p className="text-sm font-bold text-chirp-stone-900">Filler removal</p>
-              <p className="text-xs text-chirp-stone-500">Um, uh, like, you know</p>
-            </div>
-          </div>
-          <div className="flex items-start gap-3 rounded-xl bg-chirp-stone-50 p-4">
-            <Type className="mt-0.5 h-5 w-5 flex-shrink-0 text-chirp-amber-500" strokeWidth={1.5} />
-            <div>
-              <p className="text-sm font-bold text-chirp-stone-900">Grammar fix</p>
-              <p className="text-xs text-chirp-stone-500">Punctuation and structure</p>
-            </div>
-          </div>
-        </motion.div>
+        <PowerTools />
       </div>
     </section>
   );
@@ -104,32 +98,31 @@ function SmartCleanupSection() {
 
 function PrivacySection() {
   return (
-    <section className="bg-white px-6 py-20 md:py-28 lg:py-36 overflow-hidden relative border-t border-chirp-stone-100">
-      <div className="absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full bg-chirp-amber-400/5 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] rounded-full bg-chirp-amber-400/3 blur-[100px] pointer-events-none" />
-
-      <div className="mx-auto flex w-full max-w-[1120px] flex-col items-center relative z-10">
-        <motion.div {...reveal} className="text-center w-full mb-12">
-          <h2 className="font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-chirp-stone-900 md:text-5xl lg:text-6xl">
-            Speak freely — your voice<br className="hidden md:block" /> never leaves your machine.
+    <section className="bg-white px-6 py-28 md:py-40 overflow-hidden relative border-t border-chirp-stone-100">
+      <div className="mx-auto flex w-full max-w-[1060px] flex-col items-center relative z-10">
+        <motion.div {...reveal} className="text-center w-full">
+          <span className="pill-label pill-label-light">Absolute Privacy</span>
+          <h2 className="mt-4 font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-chirp-stone-900 md:text-5xl lg:text-6xl">
+            Your voice never leaves<br className="hidden md:block" /> your laptop.
           </h2>
-          <p className="mt-5 text-xl leading-[1.6] text-chirp-stone-500 max-w-[640px] mx-auto">
-            Most voice-to-text tools route your audio through a remote server. Chirp processes everything on your CPU. Your voice stays on your machine.
+          <p className="mt-6 text-xl leading-[1.6] text-chirp-stone-500 max-w-[640px] mx-auto">
+            Everything runs locally on your own CPU. No telemetry, no API calls, no servers. Built from the ground up for strict confidentiality.
           </p>
         </motion.div>
 
-        <div className="w-full flex justify-center">
-          <motion.div {...reveal}>
-            <ArchitectureDemo />
+        <motion.div {...staggerContainer} className="mt-16 grid grid-cols-3 gap-8 md:gap-16 w-full max-w-[700px] text-center">
+          <motion.div {...staggerChild} className="flex flex-col items-center">
+            <span className="font-display text-6xl md:text-7xl font-extrabold text-chirp-stone-900 leading-none">0</span>
+            <span className="mt-3 font-mono text-[10px] md:text-xs font-bold tracking-[0.2em] text-chirp-stone-400 uppercase">servers</span>
           </motion.div>
-        </div>
-
-        <motion.div {...reveal} className="mt-12 flex flex-wrap justify-center gap-x-12 gap-y-4 font-mono text-xs text-chirp-stone-400 tracking-[0.2em] uppercase text-center">
-          <span>Zero servers</span>
-          <span className="text-chirp-stone-200">/</span>
-          <span>Zero telemetry</span>
-          <span className="text-chirp-stone-200">/</span>
-          <span>Zero network calls</span>
+          <motion.div {...staggerChild} className="flex flex-col items-center">
+            <span className="font-display text-6xl md:text-7xl font-extrabold text-chirp-stone-900 leading-none">0</span>
+            <span className="mt-3 font-mono text-[10px] md:text-xs font-bold tracking-[0.2em] text-chirp-stone-400 uppercase">network calls</span>
+          </motion.div>
+          <motion.div {...staggerChild} className="flex flex-col items-center">
+            <span className="font-display text-6xl md:text-7xl font-extrabold text-chirp-stone-900 leading-none">0</span>
+            <span className="mt-3 font-mono text-[10px] md:text-xs font-bold tracking-[0.2em] text-chirp-stone-400 uppercase">bytes transmitted</span>
+          </motion.div>
         </motion.div>
       </div>
     </section>
@@ -142,38 +135,32 @@ function PrivacySection() {
 
 function FreeForeverSection() {
   return (
-    <section className="px-6 py-20 md:py-28 lg:py-36 overflow-hidden border-t border-chirp-stone-100">
-      <div className="mx-auto flex w-full max-w-[900px] flex-col items-center">
-        <motion.div {...reveal} className="text-center w-full">
-          <span className="pill-label pill-label-light">Free Forever</span>
-          <h2 className="mt-4 font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-chirp-stone-900 md:text-5xl">
-            Free. No asterisk.
-          </h2>
-          <p className="mt-5 text-lg leading-[1.75] text-chirp-stone-500 max-w-[520px] mx-auto">
-            Chirp costs nothing. No subscription, no usage cap, no credit card. Use it as much as you want, for as long as you want.
-          </p>
+    <section className="bg-chirp-stone-50 px-6 py-28 md:py-40 lg:py-48 overflow-hidden border-t border-chirp-stone-200">
+      <div className="mx-auto flex w-full max-w-[1000px] flex-col items-center relative z-10">
+        
+        <motion.div {...reveal} className="w-full rounded-[32px] bg-white border border-chirp-stone-200 shadow-elevated p-8 md:p-12 flex items-center justify-between text-left relative overflow-hidden flex-col md:flex-row gap-8">
+          <div className="absolute top-1/2 left-0 w-[400px] h-[400px] bg-chirp-amber-400/5 rounded-full blur-[60px] pointer-events-none -translate-y-1/2" />
+          
+          <div className="relative z-10">
+            <div className="h-14 w-14 mb-6 rounded-2xl bg-chirp-amber-50 border border-chirp-amber-100 flex items-center justify-center shadow-inner">
+               <Heart className="w-7 h-7 text-chirp-amber-500" strokeWidth={1.5} />
+            </div>
+
+            <h2 className="font-display text-4xl md:text-5xl font-extrabold tracking-tighter text-chirp-stone-900 leading-[1.0]">
+              Free. No asterisk.
+            </h2>
+            
+            <p className="mt-4 text-lg leading-[1.6] text-chirp-stone-500 max-w-[480px] font-medium">
+              No subscriptions. No credit cards. No artificial limits. Built for the community, forever.
+            </p>
+          </div>
+
+          <div className="relative z-10 flex flex-col gap-4 font-mono text-[13px] uppercase tracking-widest text-chirp-stone-500 font-bold bg-chirp-stone-50 p-6 rounded-2xl border border-chirp-stone-100 w-full md:w-auto">
+            <span className="flex items-center gap-3"><ShieldCheck className="w-5 h-5 text-chirp-success"/> 100% Secure</span>
+            <span className="flex items-center gap-3"><CreditCard className="w-5 h-5 text-chirp-amber-500"/> Zero Cost</span>
+          </div>
         </motion.div>
 
-        <motion.div {...reveal} className="mt-10 grid w-full grid-cols-1 gap-6 sm:grid-cols-3">
-          <FeatureCard
-            icon={Heart}
-            title="No account needed"
-            description="Download and go. Nothing to sign up for. No email, no password."
-            variant="light"
-          />
-          <FeatureCard
-            icon={CreditCard}
-            title="No subscription"
-            description="Not now, not ever. No payment info, no 'upgrade' prompts."
-            variant="light"
-          />
-          <FeatureCard
-            icon={ShieldCheck}
-            title="No catch"
-            description="We don't sell your data. We don't show ads. It's just free."
-            variant="light"
-          />
-        </motion.div>
       </div>
     </section>
   );
@@ -185,22 +172,23 @@ function FreeForeverSection() {
 
 function FounderNoteSection() {
   return (
-    <section className="bg-white px-6 py-16 md:py-24 overflow-hidden border-t border-chirp-stone-100">
-      <div className="mx-auto max-w-[720px]">
-        <motion.div {...reveal} className="flex flex-col md:flex-row items-start gap-6 md:gap-8">
+    <section className="bg-white px-6 py-28 md:py-40 overflow-hidden relative border-t border-chirp-stone-100">
+      <div className="mx-auto max-w-[900px] flex flex-col items-center text-center">
+        <motion.div {...reveal} className="flex flex-col items-center gap-12">
           <img
             src="/pieter.jpg"
             alt="Pieter de Bruijn"
-            className="w-16 h-16 rounded-2xl object-cover border border-chirp-stone-200 shadow-subtle bg-chirp-stone-100 flex-shrink-0"
+            className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover shadow-elevated border-4 border-white"
           />
           <div>
-            <blockquote className="font-body text-xl md:text-2xl font-medium leading-[1.7] text-chirp-stone-700">
-              &quot;I built Chirp because every voice-to-text tool I tried was either cloud-only, subscription-gated, or both. Your voice shouldn&apos;t require a monthly fee.&quot;
+            <blockquote className="font-display text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.1] tracking-tighter text-chirp-stone-900 mb-10">
+              "Your voice shouldn't require a monthly fee. I built Chirp to run entirely on your own hardware."
             </blockquote>
-            <div className="mt-5 flex items-center gap-3">
-              <span className="font-display font-bold text-chirp-stone-900">Pieter de Bruijn</span>
-              <span className="text-chirp-stone-300">/</span>
-              <span className="text-chirp-stone-500 text-sm font-medium">Creator of Chirp</span>
+            <div className="flex flex-col items-center justify-center gap-3">
+              <span className="font-display text-xl font-bold text-chirp-stone-900 uppercase tracking-widest">Pieter de Bruijn</span>
+              <span className="font-mono text-[11px] font-bold text-chirp-amber-700 uppercase tracking-widest bg-chirp-amber-50 border border-chirp-amber-200/50 px-4 py-1.5 rounded-full shadow-subtle">
+                Creator of Chirp
+              </span>
             </div>
           </div>
         </motion.div>
@@ -294,14 +282,14 @@ function CloseSection() {
 
         <motion.h2
           {...staggerChild}
-          className="font-display text-5xl font-extrabold tracking-tight text-white md:text-6xl"
+          className="font-display text-7xl font-extrabold tracking-tighter text-white md:text-8xl lg:text-[10rem] leading-none mb-2"
         >
           Try Chirp.
         </motion.h2>
 
         <motion.p
           {...staggerChild}
-          className="mt-5 text-[20px] font-medium text-chirp-stone-400"
+          className="mt-6 text-[22px] font-medium text-chirp-stone-400"
         >
           Free. Private. Yours.
         </motion.p>
@@ -355,8 +343,8 @@ export function HomeSections() {
   return (
     <main className="relative z-10 bg-white">
       <WorkflowDemoSection />
-      <LogoStripSection />
-      <SmartCleanupSection />
+      <IntegrationsSection />
+      <PowerToolsSection />
       <PrivacySection />
       <FreeForeverSection />
       <FounderNoteSection />

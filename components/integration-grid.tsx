@@ -1,64 +1,52 @@
 "use client";
-
-import { type ComponentType } from "react";
 import { motion } from "framer-motion";
-import { Terminal } from "lucide-react";
-import {
-  SlackLogo,
-  GmailLogo,
-  VSCodeLogo,
-  NotionLogo,
-  DiscordLogo,
-  LinkedInLogo,
-  ChromeLogo,
-  GoogleDocsLogo,
-} from "./brand-logos";
-
-interface Integration {
-  name: string;
-  icon: ComponentType<{ className?: string; size?: number }>;
-  usesOwnColor: boolean;
-  fallbackColor?: string;
-}
-
-const integrations: Integration[] = [
-  { name: "Slack", icon: SlackLogo, usesOwnColor: true },
-  { name: "Gmail", icon: GmailLogo, usesOwnColor: true },
-  { name: "VS Code", icon: VSCodeLogo, usesOwnColor: true },
-  { name: "Notion", icon: NotionLogo, usesOwnColor: true },
-  { name: "Terminal", icon: Terminal as ComponentType<{ className?: string; size?: number }>, usesOwnColor: false, fallbackColor: "text-[#181717]" },
-  { name: "Discord", icon: DiscordLogo, usesOwnColor: true },
-  { name: "LinkedIn", icon: LinkedInLogo, usesOwnColor: true },
-  { name: "Chrome", icon: ChromeLogo, usesOwnColor: true },
-  { name: "Docs", icon: GoogleDocsLogo, usesOwnColor: true },
-];
 
 export function IntegrationGrid() {
-  return (
-    <div className="relative w-full py-6 md:py-8">
-      <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-4 md:gap-6">
-        {integrations.map((app, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.05, duration: 0.3 }}
-            className="group relative flex flex-col items-center justify-center rounded-2xl bg-white border border-chirp-stone-100 p-6 shadow-subtle hover:shadow-lifted hover:-translate-y-1 transition-all duration-300"
-          >
-            <div className="p-3 rounded-xl bg-chirp-stone-50 group-hover:bg-white transition-colors">
-              <app.icon
-                className={`h-8 w-8 ${app.fallbackColor ?? ""} opacity-80 group-hover:opacity-100 transition-opacity`}
-                size={32}
-              />
-            </div>
-            <span className="mt-3 text-[10px] font-mono font-bold text-chirp-stone-400 uppercase tracking-widest">{app.name}</span>
+  // Using exact, canonical SimpleIcons slugs that are guaranteed to exist on the main CDN.
+  const apps = [
+    { name: "Slack", iconUrl: "https://cdn.simpleicons.org/slack/E01E5A", bg: "bg-white" },
+    { name: "Discord", iconUrl: "https://cdn.simpleicons.org/discord/5865F2", bg: "bg-white" },
+    { name: "Notion", iconUrl: "https://cdn.simpleicons.org/notion/000000", bg: "bg-white" },
+    { name: "WhatsApp", iconUrl: "https://cdn.simpleicons.org/whatsapp/25D366", bg: "bg-white" },
+    { name: "Linear", iconUrl: "https://cdn.simpleicons.org/linear/5E6AD2", bg: "bg-white" },
+    { name: "Figma", iconUrl: "https://cdn.simpleicons.org/figma/F24E1E", bg: "bg-white" },
+    { name: "GitHub", iconUrl: "https://cdn.simpleicons.org/github/181717", bg: "bg-white" },
+    { name: "X", iconUrl: "https://cdn.simpleicons.org/x/000000", bg: "bg-white" },
+  ];
 
-            {/* Minimal pulse dot for "active" feel */}
-            <div className="absolute top-3 right-3 h-1.5 w-1.5 rounded-full bg-success opacity-0 group-hover:opacity-100 transition-opacity" />
+  return (
+    <div className="relative w-full max-w-[800px] mx-auto py-10 mt-8">
+      <div className="flex flex-wrap justify-center gap-4">
+        {apps.map((app, i) => (
+          <motion.div
+            key={app.name}
+            initial={{ opacity: 0, scale: 0.9, y: 10 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ delay: i * 0.05, duration: 0.4, ease: "easeOut" }}
+            className="flex items-center gap-3 px-5 py-3 rounded-2xl bg-white border border-chirp-stone-200 shadow-lifted hover:shadow-elevated transition-shadow cursor-default"
+          >
+            <div className={`flex items-center justify-center p-1.5 rounded-xl ${app.bg} w-9 h-9 shadow-subtle border border-chirp-stone-100`}>
+              <img src={app.iconUrl} alt={app.name} className="w-5 h-5 object-contain" />
+            </div>
+            <span className="font-display font-bold text-[16px] text-chirp-stone-800 tracking-tight">{app.name}</span>
           </motion.div>
         ))}
       </div>
+      
+      <motion.div 
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.6 }}
+        className="flex items-center justify-center mt-12 gap-5"
+      >
+        <span className="h-px bg-chirp-stone-200 flex-1 hidden sm:block" />
+        <p className="text-center font-mono text-[11px] uppercase tracking-widest text-chirp-stone-400 font-bold whitespace-nowrap">
+          And literally any other text field
+        </p>
+        <span className="h-px bg-chirp-stone-200 flex-1 hidden sm:block" />
+      </motion.div>
     </div>
   );
 }

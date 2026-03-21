@@ -33,16 +33,16 @@ export function Nav() {
           </Link>
 
           {/* Desktop links */}
-          <div className="hidden items-center gap-6 md:flex">
+          <div className="hidden items-center gap-8 md:flex">
             <Link
               href="/changelog"
-              className="text-sm text-chirp-stone-400 transition-colors duration-200 hover:text-white"
+              className="text-[13px] font-mono font-bold tracking-widest text-chirp-stone-400 transition-colors duration-200 hover:text-white uppercase"
             >
               Changelog
             </Link>
             <Link
               href="/faq"
-              className="text-sm text-chirp-stone-400 transition-colors duration-200 hover:text-white"
+              className="text-[13px] font-mono font-bold tracking-widest text-chirp-stone-400 transition-colors duration-200 hover:text-white uppercase"
             >
               FAQ
             </Link>
