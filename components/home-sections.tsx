@@ -7,12 +7,7 @@ import { PRODUCT, HOME_PREVIEW_FAQS } from "@/lib/constants";
 import { BirdMark } from "@/components/bird-mark";
 import { IntegrationGrid } from "./integration-grid";
 import { PowerTools } from "./power-tools";
-import {
-  ShieldCheck,
-  Heart,
-  CreditCard,
-  HelpCircle,
-} from "lucide-react";
+import { HelpCircle } from "lucide-react";
 
 /* ------------------------------------------------------------------ */
 /*  Integrations — Works Where You Do                                  */
@@ -20,7 +15,7 @@ import {
 
 function IntegrationsSection() {
   return (
-    <section className="relative overflow-hidden border-t border-chirp-stone-100 bg-white px-6 py-24 md:py-32 lg:py-36">
+    <section className="relative overflow-hidden border-t border-chirp-stone-100 bg-white px-6 py-16 md:py-24 lg:py-28">
       <div className="relative z-10 mx-auto grid w-full max-w-5xl grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-20">
         <motion.div {...reveal} className="text-center lg:text-left">
           <span className="pill-label pill-label-light">Seamless Integration</span>
@@ -48,7 +43,7 @@ function IntegrationsSection() {
 
 function PowerToolsSection() {
   return (
-    <section className="relative overflow-hidden border-t border-chirp-stone-100 bg-chirp-stone-50 bg-dotted px-6 py-24 md:py-32 lg:py-36">
+    <section className="relative overflow-hidden border-t border-chirp-stone-100 bg-chirp-stone-50 bg-dotted px-6 py-16 md:py-24 lg:py-28">
       <div className="relative z-10 mx-auto flex w-full max-w-[1060px] flex-col items-center">
         <motion.div {...reveal} className="mb-12 w-full text-center lg:mb-14 lg:text-left">
           <span className="pill-label pill-label-light">Complete Control</span>
@@ -70,7 +65,7 @@ function PowerToolsSection() {
 
 function PrivacySection() {
   return (
-    <section className="relative overflow-hidden border-t border-chirp-stone-100 bg-white px-6 py-24 md:py-32 lg:py-36">
+    <section className="relative overflow-hidden border-t border-chirp-stone-100 bg-white px-6 py-16 md:py-24 lg:py-28">
       <div className="relative z-10 mx-auto flex w-full max-w-[1060px] flex-col items-center">
         <motion.div {...reveal} className="w-full text-center">
           <span className="pill-label pill-label-light">Absolute Privacy</span>
@@ -146,39 +141,63 @@ function PrivacySection() {
 
 function FreeForeverSection() {
   return (
-    <section className="overflow-hidden border-t border-chirp-stone-200 bg-chirp-stone-50 px-6 py-24 md:py-32 lg:py-36">
-      <div className="relative z-10 mx-auto flex w-full max-w-[1000px] flex-col items-center">
+    <section className="overflow-hidden border-t border-chirp-amber-100 bg-chirp-amber-50/50 px-6 py-16 md:py-24 lg:py-28">
+      <div className="relative z-10 mx-auto flex w-full max-w-[1000px] flex-col items-center text-center">
+        <motion.div {...reveal}>
+          <span className="pill-label pill-label-light">Forever Free</span>
+          <h2 className="mt-4 font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-chirp-stone-900 md:text-5xl">
+            Other apps charge. We don&apos;t.
+          </h2>
+        </motion.div>
+
         <motion.div
-          {...reveal}
-          className="relative flex w-full flex-col gap-10 overflow-hidden rounded-[32px] border border-chirp-stone-200 bg-white p-10 md:flex-row md:items-center md:justify-between md:gap-12 md:p-14"
+          {...staggerContainer}
+          className="mt-12 grid w-full max-w-[720px] grid-cols-1 gap-4 sm:grid-cols-3 md:mt-14"
         >
-          <div className="relative z-10">
-            <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl border border-chirp-amber-200 bg-chirp-amber-50">
-              <Heart
-                className="h-7 w-7 text-chirp-amber-500"
-                strokeWidth={1.5}
-              />
-            </div>
-
-            <h2 className="font-display text-4xl font-extrabold leading-[1.0] tracking-tighter text-chirp-stone-900 md:text-5xl">
-              Free. No asterisk.
-            </h2>
-
-            <p className="mt-4 max-w-[480px] text-lg font-medium leading-[1.6] text-chirp-stone-500">
-              No subscriptions. No credit cards. No artificial limits. Built for
-              the community, forever.
-            </p>
-          </div>
-
-          <div className="relative z-10 flex w-full flex-col gap-4 rounded-2xl border border-chirp-stone-100 bg-chirp-stone-50 p-6 font-mono text-[13px] font-bold tracking-widest text-chirp-stone-500 uppercase md:w-auto">
-            <span className="flex items-center gap-3">
-              <ShieldCheck className="h-5 w-5 text-chirp-success" /> 100%
-              Secure
+          <motion.div
+            {...staggerChild}
+            className="flex flex-col items-center rounded-2xl border border-chirp-amber-200 bg-white p-6 md:p-8"
+          >
+            <span className="font-mono text-sm text-chirp-stone-400 line-through">
+              $10/mo
             </span>
-            <span className="flex items-center gap-3">
-              <CreditCard className="h-5 w-5 text-chirp-amber-500" /> Zero Cost
+            <span className="mt-1 font-display text-5xl font-extrabold leading-none text-chirp-stone-900 md:text-6xl">
+              $0
             </span>
-          </div>
+            <span className="mt-2 font-mono text-[11px] font-bold tracking-[0.2em] text-chirp-stone-400 uppercase">
+              forever
+            </span>
+          </motion.div>
+
+          <motion.div
+            {...staggerChild}
+            className="flex flex-col items-center rounded-2xl border border-chirp-amber-200 bg-white p-6 md:p-8"
+          >
+            <span className="font-mono text-sm text-chirp-stone-400 line-through">
+              Limited
+            </span>
+            <span className="mt-1 font-display text-5xl font-extrabold leading-none text-chirp-stone-900 md:text-6xl">
+              &infin;
+            </span>
+            <span className="mt-2 font-mono text-[11px] font-bold tracking-[0.2em] text-chirp-stone-400 uppercase">
+              usage
+            </span>
+          </motion.div>
+
+          <motion.div
+            {...staggerChild}
+            className="flex flex-col items-center rounded-2xl border border-chirp-amber-200 bg-white p-6 md:p-8"
+          >
+            <span className="font-mono text-sm text-chirp-stone-400 line-through">
+              Cloud lock-in
+            </span>
+            <span className="mt-1 font-display text-5xl font-extrabold leading-none text-chirp-stone-900 md:text-6xl">
+              Yours
+            </span>
+            <span className="mt-2 font-mono text-[11px] font-bold tracking-[0.2em] text-chirp-stone-400 uppercase">
+              forever
+            </span>
+          </motion.div>
         </motion.div>
       </div>
     </section>
@@ -191,23 +210,23 @@ function FreeForeverSection() {
 
 function FounderNoteSection() {
   return (
-    <section className="overflow-hidden border-y border-chirp-stone-100 bg-white px-6 py-24 md:py-32 lg:py-36">
+    <section className="overflow-hidden bg-white px-6 py-24 md:py-32 lg:py-36">
       <div className="mx-auto max-w-[1000px]">
         <motion.div
           {...reveal}
           className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[auto_1fr] lg:gap-14"
         >
-          <div className="flex flex-col items-center gap-4 lg:items-start">
+          <div className="flex flex-col items-center gap-2 lg:items-start">
             <img
               src="/pieter.jpg"
               alt="Pieter de Bruijn"
-              className="h-24 w-24 rounded-full border-4 border-chirp-stone-200 object-cover md:h-32 md:w-32"
+              className="h-24 w-24 rounded-full object-cover shadow-md md:h-32 md:w-32"
             />
-            <div className="text-center lg:text-left">
-              <span className="font-display text-xl font-bold tracking-widest text-chirp-stone-900 uppercase">
+            <div className="mt-1 text-center lg:text-left">
+              <span className="text-lg font-semibold text-chirp-stone-900">
                 Pieter de Bruijn
               </span>
-              <p className="mt-2">
+              <p className="mt-1">
                 <span className="inline-block rounded-full border border-chirp-amber-200/50 bg-chirp-amber-50 px-4 py-1.5 font-mono text-[11px] font-bold tracking-widest text-chirp-amber-700 uppercase">
                   Creator of chirp
                 </span>
@@ -230,7 +249,7 @@ function FounderNoteSection() {
 
 function FAQSection() {
   return (
-    <section className="overflow-hidden border-t border-chirp-stone-100 bg-chirp-stone-50 px-6 py-24 md:py-32 lg:py-36">
+    <section className="overflow-hidden bg-chirp-stone-50/60 px-6 py-16 md:py-24 lg:py-28">
       <div className="mx-auto flex w-full max-w-5xl flex-col items-center">
         <motion.div {...reveal} className="mb-14 w-full text-center md:mb-16">
           <h2 className="font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-chirp-stone-900">

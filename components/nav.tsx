@@ -2,12 +2,16 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { BirdMark } from "./bird-mark";
 
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+  const showDark = scrolled || mobileOpen || !isHome;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 100);
@@ -19,7 +23,7 @@ export function Nav() {
     <>
       <nav
         className={`fixed top-0 left-0 right-0 z-50 h-14 transition-all duration-300 ${
-          scrolled || mobileOpen
+          showDark
             ? "bg-chirp-stone-900/95 backdrop-blur-md border-b border-white/[0.06]"
             : "bg-transparent"
         }`}
