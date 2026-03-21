@@ -20,14 +20,14 @@ import {
 
 function IntegrationsSection() {
   return (
-    <section className="relative overflow-hidden border-t border-chirp-stone-100 bg-chirp-amber-50 px-6 py-20 md:py-24 lg:py-28">
-      <div className="relative z-10 mx-auto grid w-full max-w-5xl grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-14">
+    <section className="relative overflow-hidden border-t border-chirp-stone-100 bg-chirp-amber-50 px-6 py-28 md:py-36 lg:py-44">
+      <div className="relative z-10 mx-auto grid w-full max-w-5xl grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-20">
         <motion.div {...reveal} className="text-center lg:text-left">
           <span className="pill-label pill-label-light">Seamless Integration</span>
           <h2 className="mt-4 font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-chirp-stone-900 md:text-5xl">
             Works where you do.
           </h2>
-          <p className="mt-5 text-lg leading-[1.75] text-chirp-stone-500 lg:max-w-[480px]">
+          <p className="mt-6 text-lg leading-[1.85] text-chirp-stone-500 lg:max-w-[480px]">
             Chirp isn&apos;t a walled garden. There&apos;s no app to switch to.
             You just press the hotkey, speak, and the clean text drops perfectly
             into wherever your cursor is.
@@ -48,11 +48,11 @@ function IntegrationsSection() {
 
 function PowerToolsSection() {
   return (
-    <section className="relative overflow-hidden border-t border-chirp-stone-100 bg-chirp-stone-50 bg-dotted px-6 py-20 md:py-24 lg:py-28">
+    <section className="relative overflow-hidden border-t border-chirp-stone-100 bg-chirp-stone-50 bg-dotted px-6 py-28 md:py-36 lg:py-44">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none h-[600px] w-[600px] rounded-full bg-chirp-stone-50/50 blur-[80px]" />
 
       <div className="relative z-10 mx-auto flex w-full max-w-[1060px] flex-col items-center">
-        <motion.div {...reveal} className="mb-8 w-full text-center lg:mb-10 lg:text-left">
+        <motion.div {...reveal} className="mb-12 w-full text-center lg:mb-14 lg:text-left">
           <span className="pill-label pill-label-light">Complete Control</span>
           <h2 className="mt-4 font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-chirp-stone-900 md:text-5xl">
             Heavyweight power. <br className="hidden md:block" /> Lightweight
@@ -72,7 +72,7 @@ function PowerToolsSection() {
 
 function PrivacySection() {
   return (
-    <section className="relative overflow-hidden border-t border-chirp-stone-100 bg-white px-6 py-20 md:py-24">
+    <section className="relative overflow-hidden border-t border-chirp-stone-100 bg-white px-6 py-28 md:py-36 lg:py-40">
       <div className="relative z-10 mx-auto flex w-full max-w-[1060px] flex-col items-center">
         <motion.div {...reveal} className="w-full text-center">
           <span className="pill-label pill-label-light">Absolute Privacy</span>
@@ -80,7 +80,7 @@ function PrivacySection() {
             Your voice never leaves
             <br className="hidden md:block" /> your laptop.
           </h2>
-          <p className="mx-auto mt-6 max-w-[640px] text-xl leading-[1.6] text-chirp-stone-500">
+          <p className="mx-auto mt-8 max-w-[640px] text-xl leading-[1.7] text-chirp-stone-500">
             Everything runs locally on your own CPU. No telemetry, no API
             calls, no servers. Built from the ground up for strict
             confidentiality.
@@ -89,7 +89,7 @@ function PrivacySection() {
 
         <motion.div
           {...staggerContainer}
-          className="mt-12 flex w-full max-w-[720px] flex-col gap-8 sm:mt-16 sm:flex-row sm:items-stretch sm:justify-center sm:gap-0"
+          className="mt-16 flex w-full max-w-[720px] flex-col gap-10 sm:mt-20 sm:flex-row sm:items-stretch sm:justify-center sm:gap-0"
         >
           <motion.div
             {...staggerChild}
@@ -134,7 +134,7 @@ function PrivacySection() {
           </motion.div>
         </motion.div>
 
-        <p className="mt-8 text-center font-mono text-sm text-chirp-stone-500">
+        <p className="mt-12 text-center font-mono text-sm text-chirp-stone-500">
           Offline-first · No analytics · No cloud pipeline
         </p>
       </div>
@@ -148,11 +148,11 @@ function PrivacySection() {
 
 function FreeForeverSection() {
   return (
-    <section className="overflow-hidden border-t border-chirp-stone-200 bg-chirp-stone-50 px-6 py-20 md:py-24 lg:py-28">
+    <section className="overflow-hidden border-t border-chirp-stone-200 bg-chirp-stone-50 px-6 py-28 md:py-36 lg:py-44">
       <div className="relative z-10 mx-auto flex w-full max-w-[1000px] flex-col items-center">
         <motion.div
           {...reveal}
-          className="relative flex w-full flex-col gap-8 overflow-hidden rounded-[32px] border border-chirp-stone-200 bg-white p-8 shadow-elevated md:flex-row md:items-center md:justify-between md:p-12"
+          className="relative flex w-full flex-col gap-10 overflow-hidden rounded-[32px] border border-chirp-stone-200 bg-white p-10 shadow-elevated md:flex-row md:items-center md:justify-between md:gap-12 md:p-14"
         >
           <div className="pointer-events-none absolute top-1/2 left-0 h-[400px] w-[400px] -translate-y-1/2 rounded-full bg-chirp-amber-400/5 blur-[60px]" />
 
@@ -195,7 +195,7 @@ function FreeForeverSection() {
 
 function FounderNoteSection() {
   return (
-    <section className="overflow-hidden border-y border-chirp-stone-100 bg-white px-6 py-20 md:py-24">
+    <section className="overflow-hidden border-y border-chirp-stone-100 bg-white px-6 py-28 md:py-36 lg:py-40">
       <div className="mx-auto max-w-[1000px]">
         <motion.div
           {...reveal}
@@ -234,9 +234,9 @@ function FounderNoteSection() {
 
 function FAQSection() {
   return (
-    <section className="overflow-hidden border-t border-chirp-stone-100 bg-chirp-amber-50 px-6 py-20 md:py-24">
+    <section className="overflow-hidden border-t border-chirp-stone-100 bg-chirp-amber-50 px-6 py-28 md:py-36 lg:py-40">
       <div className="mx-auto flex w-full max-w-5xl flex-col items-center">
-        <motion.div {...reveal} className="mb-10 w-full text-center">
+        <motion.div {...reveal} className="mb-14 w-full text-center md:mb-16">
           <h2 className="font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-chirp-stone-900">
             Frequently Asked Questions
           </h2>
@@ -248,7 +248,7 @@ function FAQSection() {
               key={faq.question}
               {...reveal}
               transition={{ delay: i * 0.06 }}
-              className="group cursor-default rounded-2xl border border-chirp-stone-100 bg-white p-6 transition-all hover:border-chirp-amber-200 hover:shadow-subtle"
+              className="group cursor-default rounded-2xl border border-chirp-stone-100 bg-white p-7 transition-all hover:border-chirp-amber-200 hover:shadow-subtle md:p-8"
             >
               <h3 className="flex items-start gap-3 font-display text-lg font-bold text-chirp-stone-900">
                 <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-chirp-stone-50 transition-colors group-hover:bg-chirp-amber-50">
@@ -273,7 +273,7 @@ function FAQSection() {
 
 function CloseSection() {
   return (
-    <section className="relative overflow-hidden px-6 py-20 md:py-24 lg:py-28">
+    <section className="relative overflow-hidden px-6 py-28 md:py-36 lg:py-44">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -289,7 +289,7 @@ function CloseSection() {
         className="relative z-10 mx-auto flex max-w-[800px] flex-col items-center text-center"
       >
         <motion.div {...staggerChild}>
-          <BirdMark size={80} color="rgba(245,158,11,0.15)" className="mb-8" />
+          <BirdMark size={72} color="rgba(245,158,11,0.15)" className="mb-10" />
         </motion.div>
 
         <motion.h2
@@ -301,12 +301,12 @@ function CloseSection() {
 
         <motion.p
           {...staggerChild}
-          className="mt-6 text-[22px] font-medium text-chirp-stone-300"
+          className="mt-8 text-[22px] font-medium text-chirp-stone-300"
         >
           Free. Private. Yours.
         </motion.p>
 
-        <motion.div {...staggerChild} className="relative mt-8">
+        <motion.div {...staggerChild} className="relative mt-10">
           <Link
             href="/download"
             className="inline-flex h-14 min-h-11 items-center justify-center rounded-full bg-chirp-amber-400 px-10 font-display text-lg font-bold text-chirp-stone-900 transition-colors hover:bg-chirp-amber-300"
@@ -317,30 +317,10 @@ function CloseSection() {
 
         <motion.p
           {...staggerChild}
-          className="mt-3 font-mono text-xs text-chirp-stone-400"
+          className="mt-4 font-mono text-xs text-chirp-stone-400"
         >
           {PRODUCT.version} · Free forever
         </motion.p>
-
-        <div className="mx-auto mt-12 w-[120px] border-t border-white/[0.06]" />
-
-        <motion.div
-          {...staggerChild}
-          className="mt-8 flex items-center justify-center gap-8"
-        >
-          <Link
-            href="/faq"
-            className="text-sm font-medium text-chirp-stone-300 transition-colors hover:text-white"
-          >
-            FAQ
-          </Link>
-          <Link
-            href="/privacy"
-            className="text-sm font-medium text-chirp-stone-300 transition-colors hover:text-white"
-          >
-            Privacy
-          </Link>
-        </motion.div>
       </motion.div>
     </section>
   );

@@ -10,7 +10,7 @@ import { WorkflowDemo } from "@/components/workflow-demo";
 export default function Home() {
   return (
     <>
-      <section className="relative flex flex-col items-center overflow-x-hidden px-6 pb-12 pt-28 md:pb-16 md:pt-36 lg:pt-44">
+      <section className="relative flex flex-col items-center overflow-x-hidden px-6 pb-20 pt-32 md:pb-28 md:pt-40 lg:pb-32 lg:pt-48">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -34,7 +34,7 @@ export default function Home() {
 
           <motion.p
             {...staggerChild}
-            className="mt-5 max-w-xl text-center text-base leading-relaxed text-white/70 sm:text-lg md:text-xl"
+            className="mt-6 max-w-xl text-center text-base leading-relaxed text-white/70 sm:mt-8 sm:text-lg md:text-xl"
           >
             Voice-to-text that runs on your machine. No cloud, no account, no
             subscription.
@@ -42,7 +42,7 @@ export default function Home() {
 
           <motion.div
             {...staggerChild}
-            className="mt-8 flex w-full max-w-md flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-4"
+            className="mt-10 flex w-full max-w-md flex-col items-stretch gap-4 sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-5"
           >
             <Link
               href="/download"
@@ -67,15 +67,8 @@ export default function Home() {
 
           <motion.div
             {...staggerChild}
-            className="mt-10 w-full min-w-0 md:mt-14"
+            className="mt-14 w-full min-w-0 md:mt-20 lg:mt-24"
           >
-            <p className="mb-2 text-center font-display text-2xl font-extrabold tracking-tight text-white md:text-3xl">
-              Press. Speak. Done.
-            </p>
-            <p className="mx-auto mb-6 max-w-lg text-center text-sm leading-relaxed text-white/65 md:text-base">
-              Press the hotkey, speak your mind, and watch the AI drop clean
-              text into any field.
-            </p>
             <WorkflowDemo placement="hero" />
           </motion.div>
         </motion.div>

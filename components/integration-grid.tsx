@@ -15,8 +15,8 @@ export function IntegrationGrid() {
   ];
 
   return (
-    <div className="relative mx-auto mt-6 w-full max-w-full py-6 lg:mt-0 lg:py-4">
-      <div className="flex flex-wrap justify-center gap-3 sm:gap-4 lg:justify-end">
+    <div className="relative mx-auto mt-8 w-full max-w-full py-4 lg:mt-0 lg:py-6">
+      <div className="flex flex-wrap justify-center gap-3 sm:gap-5 lg:justify-end">
         {apps.map((app, i) => (
           <motion.div
             key={app.name}

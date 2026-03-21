@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useLayoutEffect, useState, useRef } from "react";
 import {
   motion,
   AnimatePresence,
@@ -196,10 +196,18 @@ export function WorkflowDemo({
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.2 });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (placement !== "hero" || reduceMotion) return;
-    const tid = window.setTimeout(() => setHeroPlaybackReady(true), 200);
-    return () => clearTimeout(tid);
+    let cancelled = false;
+    const id = requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (!cancelled) setHeroPlaybackReady(true);
+      });
+    });
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(id);
+    };
   }, [placement, reduceMotion]);
 
   const playbackEnabled =
@@ -213,8 +221,8 @@ export function WorkflowDemo({
     if (!playbackEnabled) return;
 
     const sequence = [
-      { phase: "idle" as DemoPhase, duration: 3400 },
-      { phase: "hotkey" as DemoPhase, duration: 2125 },
+      { phase: "idle" as DemoPhase, duration: 1200 },
+      { phase: "hotkey" as DemoPhase, duration: 2000 },
       { phase: "listen_type" as DemoPhase, duration: 9350 },
       { phase: "process_highlight" as DemoPhase, duration: 4250 },
       { phase: "process_clean" as DemoPhase, duration: 2125 },

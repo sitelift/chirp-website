@@ -8,7 +8,7 @@ export function Footer() {
     <footer className="relative bg-chirp-stone-900">
 
       {/* Main footer content */}
-      <div className="relative z-10 mx-auto max-w-[1120px] px-6 pb-12 pt-16">
+      <div className="relative z-10 mx-auto max-w-[1120px] px-6 pt-20 pb-14 md:pt-24">
         <div className="flex flex-col gap-10 sm:flex-row sm:items-start sm:justify-between">
           {/* Logo + tagline */}
           <div className="flex flex-col gap-3">

@@ -4,7 +4,7 @@ import { SlidersHorizontal, BookA, Zap } from "lucide-react";
 
 export function PowerTools() {
   return (
-    <div className="w-full max-w-[1060px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
+    <div className="mx-auto mt-20 grid w-full max-w-[1060px] grid-cols-1 gap-8 md:grid-cols-3 md:mt-24 md:gap-8">
       
       {/* Tone Modes Card */}
       <motion.div 
