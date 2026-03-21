@@ -46,6 +46,10 @@ Three fonts loaded via `next/font/google` in `app/layout.tsx`, exposed as CSS va
 - Cards use border OR shadow, never both
 - Animations ≤ 300ms, always `ease-out` (never `ease-in` for UI)
 
+## Deployment
+
+This site is deployed on **Vercel** via the `master` branch on GitHub. After making changes, always commit and `git push` to `origin/master` so the user can see the result on Vercel. Do not leave changes uncommitted unless the user asks you to.
+
 ## Content
 
 **SPEC.md** contains the full product specification. Refer to it for feature descriptions, technical details, and product positioning. All user-facing copy in `lib/constants.ts` should align with SPEC.md.
