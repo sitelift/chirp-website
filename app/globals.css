@@ -48,6 +48,9 @@
 
   /* Testimonial scroll */
   --animate-testimonial-scroll: testimonial-scroll 30s linear infinite;
+
+  /* Marquee logo strip */
+  --animate-marquee: marquee 30s linear infinite;
 }
 
 body {
@@ -155,6 +158,21 @@ body {
 @keyframes testimonial-scroll {
   0% { transform: translateY(0); }
   100% { transform: translateY(-50%); }
+}
+
+/* Marquee scroll for logo strip */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Hide scrollbar */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
 
 /* Reduced motion */

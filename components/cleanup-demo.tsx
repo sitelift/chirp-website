@@ -73,7 +73,7 @@ export function CleanupDemo() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -4 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
-                className="absolute inset-0 flex flex-col justify-center p-8 md:p-10"
+                className="absolute inset-0 flex flex-col justify-start p-8 md:p-10"
               >
                 <div className="font-body text-[18px] md:text-[20px] text-chirp-stone-900 leading-[1.9]">
                   I was thinking we should move the meeting to Thursday, if that works for everyone. I can send out the updated invite.
