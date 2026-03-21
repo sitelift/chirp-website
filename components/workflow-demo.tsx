@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   motion,
   AnimatePresence,
@@ -186,30 +186,16 @@ export function WorkflowDemo({
   const reduceMotion = useReducedMotion();
   const [demoPhase, setDemoPhase] = useState<DemoPhase>("idle");
   const [typedChars, setTypedChars] = useState(0);
-  const [heroPlaybackReady, setHeroPlaybackReady] = useState(false);
   /** Bumps when the phase sequence wraps idle→…→pause→idle so AnimatePresence keys stay unique and each loop replays. */
   const [loopEpoch, setLoopEpoch] = useState(0);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.2 });
 
-  useLayoutEffect(() => {
-    if (placement !== "hero" || reduceMotion) return;
-    let cancelled = false;
-    const id = requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        if (!cancelled) setHeroPlaybackReady(true);
-      });
-    });
-    return () => {
-      cancelled = true;
-      cancelAnimationFrame(id);
-    };
-  }, [placement, reduceMotion]);
-
+  // Hero: avoid rAF gating — rAF is throttled in background tabs and can block playback on some hosts.
   const playbackEnabled =
     !reduceMotion &&
-    (placement === "hero" ? heroPlaybackReady : isInView);
+    (placement === "hero" ? true : isInView);
 
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const charIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
