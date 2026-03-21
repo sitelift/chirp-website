@@ -10,7 +10,7 @@ const flowVariants = {
 
 export function ArchitectureDemo() {
   return (
-    <div className="w-full max-w-[800px] flex flex-col items-center mx-auto my-8">
+    <div className="w-full max-w-[800px] flex flex-col items-center mx-auto">
       <div className="grid grid-cols-1 md:grid-cols-7 w-full items-center gap-4">
         
         {/* Node 1: Microphone */}
@@ -43,13 +43,13 @@ export function ArchitectureDemo() {
         {/* Node 2: Local AI Engine */}
         <motion.div 
           variants={flowVariants}
-          className="md:col-span-4 rounded-3xl p-8 bg-chirp-amber-50/50 shadow-elevated border border-chirp-amber-200/30 flex flex-col relative overflow-hidden"
+          className="md:col-span-4 rounded-3xl p-5 md:p-8 bg-chirp-amber-50/50 shadow-elevated border border-chirp-amber-200/30 flex flex-col relative overflow-hidden"
         >
           <div className="absolute top-0 right-0 p-4 opacity-5">
             <Zap className="w-24 h-24 text-chirp-amber-500" />
           </div>
 
-          <div className="flex items-center gap-3 font-display font-bold text-xl text-chirp-stone-900 mb-6">
+          <div className="flex items-center gap-3 font-display font-bold text-xl text-chirp-stone-900 mb-4 md:mb-6">
             <div className="h-8 w-8 rounded-lg bg-chirp-amber-500 flex items-center justify-center">
               <Zap className="w-5 h-5 text-white" />
             </div>

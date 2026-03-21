@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <>
       <section
-        className="relative flex min-h-screen flex-col items-center overflow-hidden px-6 pb-12 pt-32 lg:pt-44"
+        className="relative flex min-h-screen flex-col items-center overflow-hidden px-6 pb-16 pt-28 md:pb-20 md:pt-36 lg:pt-44"
       >
         {/* Hero background image */}
         <div
@@ -39,12 +39,12 @@ export default function Home() {
 
           <motion.p
             {...staggerChild}
-            className="mt-6 max-w-xl text-lg leading-relaxed text-white/70 md:text-xl"
+            className="mt-5 max-w-xl text-lg leading-relaxed text-white/70 md:text-xl"
           >
             Press a hotkey, speak, and text appears at your cursor. Runs locally on your machine.
           </motion.p>
 
-          <motion.div {...staggerChild} className="mt-10 flex flex-wrap items-center justify-center gap-4">
+          <motion.div {...staggerChild} className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <Link
               href="/download"
               className="inline-flex h-14 items-center rounded-full bg-chirp-amber-400 px-8 font-display text-lg font-bold text-chirp-stone-900 transition-all hover:bg-chirp-amber-300"
@@ -61,7 +61,7 @@ export default function Home() {
 
           <motion.p
             {...staggerChild}
-            className="mt-4 font-mono text-xs text-white/40"
+            className="mt-3 font-mono text-xs text-white/40"
           >
             {PRODUCT.version} · {PRODUCT.os}
           </motion.p>
@@ -70,16 +70,11 @@ export default function Home() {
         {/* Demo below CTAs */}
         <motion.div
           {...reveal}
-          className="relative z-10 mt-20 w-full max-w-2xl"
+          className="relative z-10 mt-16 w-full max-w-2xl"
         >
           <WaveformOverlayDemo />
         </motion.div>
 
-        {/* Bottom fade to match next light section */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-b from-transparent to-white"
-        />
       </section>
 
       <HomeSections />

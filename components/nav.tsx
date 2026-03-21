@@ -48,7 +48,7 @@ export function Nav() {
             </Link>
             <Link
               href="/download"
-              className="inline-flex h-8 items-center rounded-lg bg-chirp-amber-400 px-4 font-display text-sm font-bold text-chirp-stone-900 transition-colors duration-200 hover:bg-chirp-amber-300"
+              className="inline-flex h-8 items-center rounded-full bg-chirp-amber-400 px-4 font-display text-sm font-bold text-chirp-stone-900 transition-colors duration-200 hover:bg-chirp-amber-300"
             >
               Download
             </Link>

@@ -18,7 +18,7 @@ const Key = ({ label, isWide = false, pressed }: { label: string, isWide?: boole
     className={`
       flex items-center justify-center border-2 
       rounded-xl font-display text-sm font-bold text-chirp-stone-700
-      ${isWide ? "w-36 px-4" : "w-16 px-2"} h-14 relative
+      ${isWide ? "w-28 md:w-36 px-4" : "w-14 md:w-16 px-2"} h-12 md:h-14 relative
       select-none
     `}
   >
@@ -41,7 +41,7 @@ export function KeyboardDemo() {
   }, []);
 
   return (
-    <div className="w-full max-w-[500px] mx-auto rounded-3xl bg-chirp-stone-50/50 border border-chirp-stone-100 p-12 flex flex-col items-center justify-center gap-8">
+    <div className="w-full max-w-[500px] mx-auto rounded-3xl bg-chirp-stone-50/50 border border-chirp-stone-100 p-6 md:p-12 flex flex-col items-center justify-center gap-5 md:gap-8">
       <div className="flex gap-4">
         <Key label="Ctrl" pressed={pressed} />
         <Key label="Shift" pressed={pressed} />

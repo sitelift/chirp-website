@@ -15,7 +15,7 @@ export function CleanupDemo() {
   }, []);
 
   return (
-    <div className="mx-auto w-full max-w-[640px] mt-12">
+    <div className="mx-auto w-full max-w-[640px]">
       <div className="relative overflow-hidden rounded-3xl bg-white shadow-elevated border border-chirp-stone-200">
         
         {/* Decorative elements */}
@@ -52,7 +52,7 @@ export function CleanupDemo() {
         </div>
 
         {/* Content Area */}
-        <div className="relative min-h-[220px]">
+        <div className="relative min-h-[180px] md:min-h-[220px]">
           <AnimatePresence mode="wait">
             {activeTab === "before" ? (
               <motion.div
@@ -61,7 +61,7 @@ export function CleanupDemo() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -4 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
-                className="absolute inset-0 flex flex-col justify-between p-8"
+                className="absolute inset-0 flex flex-col justify-between p-5 md:p-8"
               >
                 <div className="font-mono text-[16px] text-chirp-stone-700 leading-[1.8]">
                   So I was thinking that we should 
@@ -80,7 +80,7 @@ export function CleanupDemo() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -4 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
-                className="absolute inset-0 flex flex-col justify-center p-8"
+                className="absolute inset-0 flex flex-col justify-center p-5 md:p-8"
               >
                 <div className="font-body text-[17px] text-chirp-stone-900 leading-[1.8]">
                   I was thinking we should probably move the meeting to Thursday, if that works.
