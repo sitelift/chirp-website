@@ -1,22 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function CleanupDemo() {
   const [activeTab, setActiveTab] = useState<"before" | "after">("before");
 
-  // Auto-switch tabs every 4 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveTab((current) => (current === "before" ? "after" : "before"));
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <div className="mx-auto w-full max-w-[640px]">
-      <div className="relative overflow-hidden rounded-3xl bg-white shadow-elevated border border-chirp-stone-200">
+      <div className="relative overflow-hidden rounded-3xl bg-white shadow-elevated">
         
         {/* Decorative elements */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-chirp-amber-400/5 blur-3xl pointer-events-none" />

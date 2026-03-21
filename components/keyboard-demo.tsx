@@ -11,7 +11,7 @@ const Key = ({ label, isWide = false, pressed }: { label: string, isWide?: boole
       backgroundColor: pressed ? "#FFF8E1" : "#FFFFFF",
       borderColor: pressed ? "#FFB300" : "#E7E5E4",
       boxShadow: pressed 
-        ? "0 0 10px 0 rgba(255,179,0,0.2)" 
+        ? "0 0 16px 2px rgba(255,179,0,0.3)"
         : "0 4px 0 0 #D6D3D1, 0 1px 2px 0 rgba(0,0,0,0.05)"
     }}
     transition={{ duration: 0.1, ease: "easeOut" }}
@@ -35,8 +35,8 @@ export function KeyboardDemo() {
   useEffect(() => {
     const interval = setInterval(() => {
       setPressed(true);
-      setTimeout(() => setPressed(false), 300);
-    }, 4000);
+      setTimeout(() => setPressed(false), 800);
+    }, 2500);
     return () => clearInterval(interval);
   }, []);
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mic, Zap, Sparkles, Clipboard } from "lucide-react";
+import { Mic, Zap, Clipboard } from "lucide-react";
 
 const flowVariants = {
   hidden: { opacity: 0, y: 10 },
@@ -85,7 +85,7 @@ export function ArchitectureDemo() {
       </div>
 
       {/* Output Connection */}
-      <div className="h-16 w-[2px] bg-chirp-stone-200 relative overflow-hidden">
+      <div className="my-4 h-16 w-[2px] bg-chirp-stone-200 relative overflow-hidden">
         <motion.div 
           className="absolute inset-0 bg-gradient-to-b from-transparent via-chirp-amber-400 to-transparent opacity-70"
           animate={{ y: ["-100%", "200%"] }}
@@ -103,7 +103,7 @@ export function ArchitectureDemo() {
             <Clipboard className="w-5 h-5 text-chirp-stone-700" />
           </div>
           <div className="flex flex-col">
-            <div className="font-display font-bold text-base text-chirp-stone-900">Active Windows App</div>
+            <div className="font-display font-bold text-base text-chirp-stone-900">Your App</div>
             <div className="text-[11px] font-mono text-chirp-stone-400 uppercase tracking-tighter">Pasted at cursor</div>
           </div>
         </div>

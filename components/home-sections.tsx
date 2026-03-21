@@ -10,7 +10,6 @@ import { KeyboardDemo } from "@/components/keyboard-demo";
 import { ArchitectureDemo } from "./architecture-demo";
 import { IntegrationGrid } from "./integration-grid";
 import { FeatureCard } from "./feature-card";
-import { FeatureRow } from "./feature-row";
 import {
   ShieldCheck,
   Globe,
@@ -83,7 +82,7 @@ function SmartCleanupSection() {
 function FreeForeverSection() {
   return (
     <section className="px-6 py-16 md:py-24 lg:py-28 overflow-hidden border-t border-chirp-stone-100">
-      <div className="mx-auto flex w-full max-w-[720px] flex-col items-center">
+      <div className="mx-auto flex w-full max-w-[900px] flex-col items-center">
         <motion.div {...reveal} className="text-center w-full">
           <span className="pill-label pill-label-light">Free Forever</span>
           <h2 className="mt-4 font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-chirp-stone-900 md:text-5xl">
@@ -94,7 +93,7 @@ function FreeForeverSection() {
           </p>
         </motion.div>
 
-        <motion.div {...reveal} className="mt-10 grid w-full grid-cols-1 gap-4 sm:grid-cols-3">
+        <motion.div {...reveal} className="mt-10 grid w-full grid-cols-1 gap-6 sm:grid-cols-3">
           <FeatureCard
             icon={Heart}
             title="No account needed"
@@ -141,12 +140,34 @@ function WorksEverywhereSection() {
         <motion.div {...reveal} className="mt-10 w-full flex justify-center">
           <KeyboardDemo />
         </motion.div>
+      </div>
+    </section>
+  );
+}
 
-        <motion.div {...reveal} className="mt-10 grid w-full grid-cols-1 gap-4 lg:grid-cols-3">
+/* ------------------------------------------------------------------ */
+/*  Section — Features · Bento grid                                    */
+/* ------------------------------------------------------------------ */
+
+function FeaturesSection() {
+  return (
+    <section className="px-6 py-16 md:py-24 lg:py-28 overflow-hidden border-t border-chirp-stone-100">
+      <div className="mx-auto flex w-full max-w-[900px] flex-col items-center">
+        <motion.div {...reveal} className="text-center w-full">
+          <span className="pill-label pill-label-light">Features</span>
+          <h2 className="mt-4 font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-chirp-stone-900 md:text-5xl">
+            More under the hood.
+          </h2>
+          <p className="mt-5 text-lg leading-[1.75] text-chirp-stone-500 max-w-[520px] mx-auto">
+            Chirp does more than transcribe. Teach it your vocabulary, save reusable text blocks, and speak in 25 languages.
+          </p>
+        </motion.div>
+
+        <motion.div {...reveal} className="mt-10 grid w-full grid-cols-1 sm:grid-cols-2 gap-6">
           <FeatureCard
             icon={BookOpen}
             title="Custom dictionary"
-            description="Add names, jargon, and technical terms so Chirp gets them right."
+            description="Add names, jargon, and technical terms so Chirp gets them right every time."
             variant="light"
           />
           <FeatureCard
@@ -155,12 +176,14 @@ function WorksEverywhereSection() {
             description="Trigger phrases that expand to full text blocks on command."
             variant="light"
           />
-          <FeatureCard
-            icon={Globe}
-            title="25 languages"
-            description="Transcribe in 25 languages. Built-in support, no plugins or downloads."
-            variant="light"
-          />
+          <div className="sm:col-span-2">
+            <FeatureCard
+              icon={Globe}
+              title="25 languages"
+              description="Transcribe in 25 languages out of the box. Auto-detection, no plugins, no extra downloads."
+              variant="light"
+            />
+          </div>
         </motion.div>
       </div>
     </section>
@@ -214,7 +237,7 @@ function PrivacySection() {
 
 function SetupSection() {
   return (
-    <section className="px-6 py-16 md:py-24 lg:py-28 overflow-hidden border-t border-chirp-stone-100">
+    <section className="px-6 py-12 md:py-16 lg:py-20 overflow-hidden border-t border-chirp-stone-100">
       <div className="mx-auto flex w-full max-w-[900px] flex-col md:flex-row md:items-center md:gap-16">
         {/* Left — text */}
         <motion.div {...reveal} className="flex-1 mb-10 md:mb-0">
@@ -275,29 +298,6 @@ function IntegrationSection() {
 
         <motion.div {...reveal} className="mt-10 flex items-center gap-2 px-4 py-2 rounded-full bg-chirp-stone-50 border border-chirp-stone-100">
           <span className="text-xs font-bold text-chirp-stone-600">Works anywhere your cursor is</span>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-function FreeManifestoSection() {
-  return (
-    <section className="px-6 py-20 md:py-28 lg:py-36 overflow-hidden border-t border-chirp-stone-100 bg-stone-50/30">
-      <div className="mx-auto flex w-full max-w-[800px] flex-col items-center">
-        <motion.div {...reveal} className="text-center w-full">
-          <span className="pill-label pill-label-light">Our Mission</span>
-          <h2 className="mt-4 font-display text-5xl font-extrabold leading-[1.1] tracking-tight text-chirp-stone-900 md:text-7xl">
-            A tool, not a tax.
-          </h2>
-          <p className="mt-8 text-2xl leading-[1.6] text-chirp-stone-500 font-medium italic">
-            &quot;We build professional tools that run on your machine, cost nothing, and stay fast. Software should help you think, not charge you for the privilege.&quot;
-          </p>
-          <div className="mt-8 flex items-center justify-center gap-4">
-             <div className="h-[1px] w-12 bg-chirp-stone-200" />
-             <span className="font-display font-bold text-stone-900">The Chirp Team</span>
-             <div className="h-[1px] w-12 bg-chirp-stone-200" />
-          </div>
         </motion.div>
       </div>
     </section>
@@ -482,9 +482,9 @@ export function HomeSections() {
       <SmartCleanupSection />
       <PrivacySection />
       <WorksEverywhereSection />
+      <FeaturesSection />
       <IntegrationSection />
       <FreeForeverSection />
-      <FreeManifestoSection />
       <SetupSection />
       <FAQSection />
       <FounderNoteSection />
