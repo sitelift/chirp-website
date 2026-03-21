@@ -81,7 +81,7 @@ function OverlayPill({ phase }: { phase: PillPhase }) {
           )}
         />
 
-        <AnimatePresence mode="popLayout">
+        <AnimatePresence mode="wait">
           {phase === "listening" && (
             <motion.div
               key="waveform"
