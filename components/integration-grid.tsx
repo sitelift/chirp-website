@@ -14,16 +14,23 @@ import {
   GoogleDocsLogo,
 } from "./brand-logos";
 
-const integrations: { name: string; icon: ComponentType<{ className?: string; size?: number }>; color: string }[] = [
-  { name: "Slack", icon: SlackLogo, color: "text-[#4A154B]" },
-  { name: "Gmail", icon: GmailLogo, color: "text-[#EA4335]" },
-  { name: "VS Code", icon: VSCodeLogo, color: "text-[#007ACC]" },
-  { name: "Notion", icon: NotionLogo, color: "text-[#000000]" },
-  { name: "Terminal", icon: Terminal as ComponentType<{ className?: string; size?: number }>, color: "text-[#181717]" },
-  { name: "Discord", icon: DiscordLogo, color: "text-[#5865F2]" },
-  { name: "LinkedIn", icon: LinkedInLogo, color: "text-[#0A66C2]" },
-  { name: "Chrome", icon: ChromeLogo, color: "text-[#4285F4]" },
-  { name: "Docs", icon: GoogleDocsLogo, color: "text-[#4285F4]" },
+interface Integration {
+  name: string;
+  icon: ComponentType<{ className?: string; size?: number }>;
+  usesOwnColor: boolean;
+  fallbackColor?: string;
+}
+
+const integrations: Integration[] = [
+  { name: "Slack", icon: SlackLogo, usesOwnColor: true },
+  { name: "Gmail", icon: GmailLogo, usesOwnColor: true },
+  { name: "VS Code", icon: VSCodeLogo, usesOwnColor: true },
+  { name: "Notion", icon: NotionLogo, usesOwnColor: true },
+  { name: "Terminal", icon: Terminal as ComponentType<{ className?: string; size?: number }>, usesOwnColor: false, fallbackColor: "text-[#181717]" },
+  { name: "Discord", icon: DiscordLogo, usesOwnColor: true },
+  { name: "LinkedIn", icon: LinkedInLogo, usesOwnColor: true },
+  { name: "Chrome", icon: ChromeLogo, usesOwnColor: true },
+  { name: "Docs", icon: GoogleDocsLogo, usesOwnColor: true },
 ];
 
 export function IntegrationGrid() {
@@ -40,7 +47,10 @@ export function IntegrationGrid() {
             className="group relative flex flex-col items-center justify-center rounded-2xl bg-white border border-chirp-stone-100 p-6 shadow-subtle hover:shadow-lifted hover:-translate-y-1 transition-all duration-300"
           >
             <div className="p-3 rounded-xl bg-chirp-stone-50 group-hover:bg-white transition-colors">
-              <app.icon className={`h-8 w-8 ${app.color} opacity-80 group-hover:opacity-100 transition-opacity`} size={32} />
+              <app.icon
+                className={`h-8 w-8 ${app.fallbackColor ?? ""} opacity-80 group-hover:opacity-100 transition-opacity`}
+                size={32}
+              />
             </div>
             <span className="mt-3 text-[10px] font-mono font-bold text-chirp-stone-400 uppercase tracking-widest">{app.name}</span>
 

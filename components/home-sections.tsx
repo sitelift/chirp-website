@@ -203,7 +203,7 @@ function PrivacySection() {
 
       <div className="mx-auto flex w-full max-w-[1120px] flex-col items-center relative z-10">
         <motion.div {...reveal} className="text-center w-full mb-12">
-          <span className="pill-label pill-label-light">Privacy First</span>
+          <span className="pill-label pill-label-light">How It Works</span>
           <h2 className="mt-4 font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-chirp-stone-900 md:text-5xl lg:text-6xl">
             Your voice never leaves<br className="hidden md:block" /> this machine.
           </h2>
@@ -381,7 +381,7 @@ function FounderNoteSection() {
             </div>
 
             <blockquote className="font-body text-[17px] font-medium leading-[1.8] text-chirp-stone-700">
-              &quot;I built Chirp because I wanted a tool that just works. Press a key, talk, done. No accounts, no cloud, no billing. If you want a private way to type with your voice, this is for you.&quot;
+              &quot;I built Chirp over spring break because I was tired of every voice tool demanding my data, my email, or my credit card. Press a key, talk, done. Your voice shouldn&apos;t require a subscription.&quot;
             </blockquote>
           </div>
         </motion.div>
@@ -479,15 +479,15 @@ function CloseSection() {
 export function HomeSections() {
   return (
     <main className="relative z-10 bg-white">
-      <SmartCleanupSection />
+      <FounderNoteSection />
       <PrivacySection />
+      <FreeForeverSection />
+      <SmartCleanupSection />
       <WorksEverywhereSection />
       <FeaturesSection />
       <IntegrationSection />
-      <FreeForeverSection />
       <SetupSection />
       <FAQSection />
-      <FounderNoteSection />
       <CloseSection />
     </main>
   );
