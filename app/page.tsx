@@ -29,7 +29,7 @@ export default function Home() {
             {...staggerChild}
             className="max-w-3xl text-center font-display text-5xl font-extrabold leading-[1.02] tracking-tighter text-white drop-shadow-[0_2px_24px_rgba(0,0,0,0.35)] sm:text-6xl md:text-7xl lg:text-8xl"
           >
-            Speak Freely.
+            Speak freely.
           </motion.h1>
 
           <motion.p
