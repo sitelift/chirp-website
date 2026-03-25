@@ -23,7 +23,7 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://trychirp.app"),
+  metadataBase: new URL("https://chirptype.com"),
   title: {
     default: "Chirp — Local Voice-to-Text for Mac & Windows",
     template: "%s | Chirp",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://trychirp.app",
+    url: "https://chirptype.com",
     title: "Chirp — Local Voice-to-Text for Mac & Windows",
     description:
       "Free voice-to-text that runs entirely on your computer. No cloud, no subscription.",

@@ -1,16 +1,18 @@
 export const PRODUCT = {
   name: "Chirp",
   tagline: "Local voice-to-text for Windows & macOS",
-  version: "v0.4.0",
+  version: "v1.2.0",
   os: "Windows 10+ & macOS 13+",
   downloadSize: "~80 MB",
   diskSpace: "~1.5 GB",
   ram: "4 GB RAM (8 GB recommended)",
   architecture: "x64",
-  license: "Proprietary",
-  github: "https://github.com/trychirp/chirp",
-  website: "https://trychirp.app",
-  downloadUrl: "https://github.com/trychirp/chirp/releases/latest",
+  license: "MIT",
+  github: "https://github.com/sitelift/Chirp",
+  website: "https://chirptype.com",
+  downloadUrl: "https://github.com/sitelift/Chirp/releases/latest",
+  downloadUrlWindows: "https://github.com/sitelift/Chirp/releases/latest/download/Chirp-Setup.exe",
+  downloadUrlMac: "https://github.com/sitelift/Chirp/releases/latest/download/Chirp.dmg",
 };
 
 export const FAQ_SECTIONS = [
@@ -160,7 +162,7 @@ export const HOME_PREVIEW_FAQS: { question: string; answer: string }[] = [
 
 export const CHANGELOG = [
   {
-    version: "v0.4.0",
+    version: "v1.2.0",
     date: "March 17, 2026",
     latest: true,
     changes: [
