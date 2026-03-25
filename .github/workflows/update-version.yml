@@ -1,0 +1,29 @@
+name: Update Chirp Version
+
+on:
+  repository_dispatch:
+    types: [chirp-release]
+
+jobs:
+  update-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Update version in constants.ts
+        run: |
+          VERSION="${{ github.event.client_payload.version }}"
+          echo "Updating version to $VERSION"
+          sed -i "s/version: \"v[^\"]*\"/version: \"v${VERSION}\"/" lib/constants.ts
+          cat lib/constants.ts | head -5
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          VERSION="${{ github.event.client_payload.version }}"
+          git add lib/constants.ts
+          git diff --cached --quiet && echo "No changes" && exit 0
+          git commit -m "Update version to v${VERSION}"
+          git push
