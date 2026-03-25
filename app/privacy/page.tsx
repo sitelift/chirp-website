@@ -6,6 +6,7 @@ import {
   Wifi,
   HardDrive,
   Eye,
+  BarChart3,
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -49,8 +50,9 @@ export default function PrivacyPolicy() {
       <div className="mt-12 flex flex-col gap-5">
         <Section icon={ShieldCheck} title="The short version">
           <p>
-            Chirp doesn&apos;t collect, store, or transmit your data. There is no
-            server. There is nothing to worry about.
+            Chirp processes everything on your device. We offer optional,
+            anonymous analytics that you control. Your audio and text never
+            leave your computer.
           </p>
         </Section>
 
@@ -64,23 +66,33 @@ export default function PrivacyPolicy() {
           </p>
         </Section>
 
-        <Section icon={ShieldOff} title="What we don't do">
+        <Section icon={ShieldOff} title="What we don&apos;t do">
           <p>
             We don&apos;t send audio or text to any server. We don&apos;t store
-            your recordings. We don&apos;t collect telemetry, analytics, or usage
-            data. We don&apos;t make network requests during operation. We
-            don&apos;t require an account, email, or personal information. We
-            don&apos;t use cookies or tracking. We don&apos;t share data with
-            third parties — there is no data to share.
+            your recordings. We don&apos;t require an account, email, or
+            personal information. We don&apos;t use cookies or tracking. We
+            don&apos;t share data with third parties.
+          </p>
+        </Section>
+
+        <Section icon={BarChart3} title="Optional analytics">
+          <p>
+            Chirp includes optional analytics powered by Aptabase and crash
+            reporting via Sentry. Both are disabled by default. You choose
+            whether to enable them in Settings. When enabled, we collect app
+            launches, feature usage, and crash reports with stack traces. We
+            never collect audio recordings, transcription text, dictionary
+            entries, or personal information. You can disable analytics at any
+            time.
           </p>
         </Section>
 
         <Section icon={Wifi} title="Network activity">
           <p>
-            Chirp connects to the internet exactly once: to download the AI models
-            during first-time setup. After that, it works fully offline. You can
-            verify this by disconnecting from the internet — Chirp won&apos;t
-            notice.
+            Chirp connects to the internet to download AI models during setup,
+            check for updates, and fetch announcements. If you enable analytics,
+            anonymous usage data is sent periodically. Chirp works fully offline
+            after the initial model download.
           </p>
         </Section>
 
@@ -95,8 +107,9 @@ export default function PrivacyPolicy() {
 
         <Section icon={Eye} title="Transparency">
           <p>
-            If you have a privacy concern, please reach out to us. We take
-            privacy seriously — it&apos;s the reason Chirp exists.
+            If you have a privacy concern, reach out to us at
+            hello@chirptype.com. We take privacy seriously. It&apos;s the reason
+            Chirp exists.
           </p>
         </Section>
       </div>

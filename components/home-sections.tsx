@@ -10,7 +10,7 @@ import { PowerTools } from "./power-tools";
 import { HelpCircle } from "lucide-react";
 
 /* ------------------------------------------------------------------ */
-/*  Integrations — Works Where You Do                                  */
+/*  Integrations: Works Where You Do                                  */
 /* ------------------------------------------------------------------ */
 
 function IntegrationsSection() {
@@ -38,7 +38,7 @@ function IntegrationsSection() {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Power Tools — Bento Grid                                           */
+/*  Power Tools: Bento Grid                                           */
 /* ------------------------------------------------------------------ */
 
 function PowerToolsSection() {
@@ -226,16 +226,13 @@ function FounderNoteSection() {
               <span className="text-lg font-semibold text-chirp-stone-900">
                 Pieter de Bruijn
               </span>
-              <p className="mt-1">
-                <span className="inline-block rounded-full border border-chirp-amber-200/50 bg-chirp-amber-50 px-4 py-1.5 font-mono text-[11px] font-bold tracking-widest text-chirp-amber-700 uppercase">
-                  Creator of chirp
-                </span>
+              <p className="mt-0.5 text-sm text-chirp-stone-500">
+                Creator of Chirp
               </p>
             </div>
           </div>
           <blockquote className="text-center font-display text-3xl font-extrabold leading-[1.15] tracking-tighter text-chirp-stone-900 md:text-4xl lg:text-left lg:text-5xl">
-            &ldquo;Your voice shouldn&apos;t require a monthly fee. I built
-            Chirp to run entirely on your own hardware.&rdquo;
+            "I use voice-to-text every day. Every tool I tried was either expensive, slow, or sending my audio to the cloud. Chirp fixes all three."
           </blockquote>
         </motion.div>
       </div>

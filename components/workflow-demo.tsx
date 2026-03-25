@@ -369,7 +369,7 @@ export function WorkflowDemo({
                     >
                       <p className="max-w-[42ch] text-chirp-stone-400 sm:text-lg md:text-xl md:leading-relaxed">
                         Place the cursor where you want text, press the hotkey,
-                        and start speaking—transcription appears here.
+                        and start speaking. Transcription appears here.
                       </p>
                     </motion.div>
                   )}

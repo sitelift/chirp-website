@@ -112,7 +112,7 @@ export function HeroDemo() {
           <span className="h-3 w-3 rounded-full bg-chirp-stone-300" />
         </div>
         <span className="flex-1 text-center font-mono text-xs text-chirp-stone-400">
-          Untitled — Editor
+          Untitled - Editor
         </span>
         <div className="w-[52px]" />
       </div>

@@ -39,6 +39,16 @@ export const FAQ_SECTIONS = [
         answer:
           "Yes. Chirp pastes text wherever your cursor is focused: browsers, editors, messaging apps, documents.",
       },
+      {
+        question: "What are the system requirements?",
+        answer:
+          "Windows 10+ or macOS 13+, 4 GB RAM (8 GB recommended), and about 1.5 GB of disk space for the app and models. No GPU required.",
+      },
+      {
+        question: "Can I change the hotkey?",
+        answer:
+          "Yes. Open Settings, click the hotkey field, and press your preferred key combination.",
+      },
     ],
   },
   {
@@ -52,7 +62,7 @@ export const FAQ_SECTIONS = [
       {
         question: "Does Chirp collect telemetry or analytics?",
         answer:
-          "No. Zero telemetry. Chirp doesn't phone home, track usage, or make any network requests during operation.",
+          "Chirp offers optional, anonymous usage analytics powered by Aptabase. It's disabled by default and only activates if you enable 'Help improve Chirp' in Settings. We never collect audio, text, or personal information.",
       },
       {
         question: "Can I use it with sensitive or confidential content?",
@@ -62,7 +72,17 @@ export const FAQ_SECTIONS = [
       {
         question: "Is it really free? What's the catch?",
         answer:
-          "No catch. Chirp is free. No freemium tiers, no pro plan, no subscriptions.",
+          "Yes. All processing runs on your hardware, so there are no server costs. If you find Chirp valuable, you can support development through Buy Me a Coffee.",
+      },
+      {
+        question: "What data does the optional analytics collect?",
+        answer:
+          "When enabled: app launches, feature usage frequency, and crash reports. When disabled: nothing. We never collect audio recordings, transcription text, or personal information.",
+      },
+      {
+        question: "Is Chirp open source?",
+        answer:
+          "Yes. The source code is available on GitHub at github.com/sitelift/Chirp.",
       },
     ],
   },
@@ -72,7 +92,7 @@ export const FAQ_SECTIONS = [
       {
         question: "What is Smart Cleanup?",
         answer:
-          "A local AI model (Qwen 2.5 1.5B, ~1 GB) that removes filler words, fixes grammar, and adds punctuation. It runs on your CPU. Chirp sends nothing over the network.",
+          "A local AI model (Qwen 2.5 3B, about 2 GB) that removes filler words, fixes grammar, and adds punctuation. It runs on your CPU. Chirp sends nothing over the network.",
       },
       {
         question: "Can I add custom words?",
@@ -88,6 +108,16 @@ export const FAQ_SECTIONS = [
         question: "Does it support other languages?",
         answer: "Yes. The speech model supports 25 languages, including Spanish, French, German, Japanese, and Chinese. Chirp detects the language automatically from your speech.",
       },
+      {
+        question: "What is email mode?",
+        answer:
+          "When email mode is enabled, Chirp automatically detects greetings and sign-offs in your dictation and formats the output as a structured email with proper line breaks.",
+      },
+      {
+        question: "Can I use it for meetings?",
+        answer:
+          "Chirp is designed for single-speaker dictation, not meeting transcription. For best results, speak directly into your microphone.",
+      },
     ],
   },
   {
@@ -96,7 +126,7 @@ export const FAQ_SECTIONS = [
       {
         question: "What speech model does it use?",
         answer:
-          "NVIDIA Parakeet TDT 0.6B — excellent accuracy, runs efficiently on consumer hardware. About 465 MB.",
+          "NVIDIA Parakeet TDT 0.6B. Excellent accuracy, runs efficiently on consumer hardware. About 465 MB.",
       },
       {
         question: "Do I need a GPU?",
@@ -112,6 +142,16 @@ export const FAQ_SECTIONS = [
         question: "Does it work offline?",
         answer: "Completely, after the initial model download.",
       },
+      {
+        question: "What cleanup model does it use?",
+        answer:
+          "Qwen 2.5 3B by Alibaba, running locally through llama-server. It handles grammar correction, filler word removal, and sentence restructuring.",
+      },
+      {
+        question: "How accurate is the transcription?",
+        answer:
+          "Very. Parakeet TDT by NVIDIA is one of the most accurate speech recognition models available, supporting 25 languages with near-human accuracy in good audio conditions.",
+      },
     ],
   },
   {
@@ -120,7 +160,7 @@ export const FAQ_SECTIONS = [
       {
         question: "SmartScreen is blocking the installer.",
         answer:
-          'That\'s normal for new unsigned software. Click "More info" then "Run anyway." Chirp is safe — it runs fully offline after setup.',
+          'That\'s normal for new unsigned software. Click "More info" then "Run anyway." Chirp is safe and runs fully offline after setup.',
       },
       {
         question: "Chirp can't hear my microphone.",
@@ -131,6 +171,16 @@ export const FAQ_SECTIONS = [
         question: "The hotkey isn't working.",
         answer:
           "Check that no other app is using the same key combination. Try changing the hotkey in Settings, or restart Chirp.",
+      },
+      {
+        question: "My transcription is inaccurate.",
+        answer:
+          "Make sure your microphone is positioned correctly and background noise is minimal. You can also add frequently used terms to your custom dictionary in Settings.",
+      },
+      {
+        question: "Chirp is slow on my computer.",
+        answer:
+          "The speech model runs on CPU by default and should process a 10-second recording in under 2 seconds. If Smart Cleanup is enabled, it adds 1 to 3 seconds. Try disabling Smart Cleanup for faster results.",
       },
     ],
   },
@@ -146,7 +196,7 @@ export const HOME_PREVIEW_FAQS: { question: string; answer: string }[] = [
   {
     question: "How is it free forever?",
     answer:
-      "Chirp is a side project. Since it runs entirely on your hardware, there are no server costs to pass on to you.",
+      "Chirp runs entirely on your hardware. No servers, no cloud costs. Everyone deserves access to great voice-to-text tools.",
   },
   {
     question: "Does it work in languages other than English?",
@@ -163,47 +213,20 @@ export const HOME_PREVIEW_FAQS: { question: string; answer: string }[] = [
 export const CHANGELOG = [
   {
     version: "v1.2.0",
-    date: "March 17, 2026",
+    date: "March 25, 2026",
     latest: true,
     changes: [
-      "Added text snippets with triggers",
-      "Added completion sound effects",
-      "Added passive overlay mode",
-      "Added transcription history",
-      "Fixed microphone test volume display",
-    ],
-  },
-  {
-    version: "v0.3.0",
-    date: "February 20, 2026",
-    changes: [
-      "Added Smart Cleanup with Qwen 2.5 1.5B",
-      "Added custom dictionary for technical terms",
-      "Improved transcription accuracy",
-      "Added system tray minimize option",
-      "Fixed hotkey conflict detection",
-    ],
-  },
-  {
-    version: "v0.2.0",
-    date: "January 15, 2026",
-    changes: [
-      "Added noise suppression",
-      "Added configurable hotkeys",
-      "Improved overlay positioning",
-      "Added auto-paste at cursor",
-      "Fixed multi-monitor support",
-    ],
-  },
-  {
-    version: "v0.1.0",
-    date: "December 10, 2025",
-    changes: [
-      "Initial release",
-      "Voice-to-text with Parakeet TDT 0.6B",
-      "Global hotkey activation",
-      "Floating overlay UI",
-      "Windows 10+ support",
+      "Model attribution for Parakeet TDT (NVIDIA) and Qwen 2.5 (Alibaba)",
+      "Unified onboarding download with early exit option",
+      "Smart email formatting with greeting and sign-off detection",
+      "Support Chirp tip jar in sidebar",
+      "Optional anonymous analytics (Aptabase) and crash reporting (Sentry)",
+      "In-app announcements and feedback system",
+      "Single-instance lock prevents duplicate launches",
+      "Auto-launch minimizes to system tray",
+      "New app icon design",
+      "macOS permission handling during onboarding",
+      "Auto-updater for seamless updates",
     ],
   },
 ];

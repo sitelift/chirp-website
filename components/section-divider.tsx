@@ -62,7 +62,7 @@ export function SectionDivider({ variant, className }: SectionDividerProps) {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        {/* Background wave — deepest, most subtle */}
+        {/* Background wave  - deepest, most subtle */}
         <path
           d="M0,100 C180,70 360,120 540,85 C720,50 900,110 1080,75 C1200,55 1320,95 1440,70 L1440,180 L0,180 Z"
           fill={wave1}
@@ -85,7 +85,7 @@ export function SectionDivider({ variant, className }: SectionDividerProps) {
           fill="none"
         />
 
-        {/* Front wave — solid, final color */}
+        {/* Front wave  - solid, final color */}
         <path
           d="M0,130 C120,105 240,145 360,120 C480,95 600,140 720,115 C840,90 960,135 1080,110 C1200,85 1320,125 1440,100 L1440,180 L0,180 Z"
           fill={wave3}

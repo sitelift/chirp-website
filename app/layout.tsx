@@ -25,7 +25,7 @@ const jetbrains = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://chirptype.com"),
   title: {
-    default: "Chirp — Local Voice-to-Text for Mac & Windows",
+    default: "Chirp: Local Voice-to-Text for Mac & Windows",
     template: "%s | Chirp",
   },
   description:
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://chirptype.com",
-    title: "Chirp — Local Voice-to-Text for Mac & Windows",
+    title: "Chirp: Local Voice-to-Text for Mac & Windows",
     description:
       "Free voice-to-text that runs entirely on your computer. No cloud, no subscription.",
     siteName: "Chirp",
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Chirp — Local Voice-to-Text for Mac & Windows",
+    title: "Chirp: Local Voice-to-Text for Mac & Windows",
     description:
       "Free voice-to-text that runs entirely on your computer. No cloud, no subscription.",
     images: ["/og.png"],
