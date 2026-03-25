@@ -23,7 +23,7 @@ export function Footer() {
             </p>
           </div>
 
-          {/* Multi-column links */}
+          {/* Links */}
           <div className="flex gap-16">
             {/* Product column */}
             <div className="flex flex-col gap-3">
@@ -37,12 +37,6 @@ export function Footer() {
                 >
                   Download
                 </Link>
-                <Link
-                  href="/changelog"
-                  className="text-sm text-chirp-stone-400 transition-colors duration-200 hover:text-chirp-amber-400"
-                >
-                  Changelog
-                </Link>
               </nav>
             </div>
 
@@ -52,12 +46,6 @@ export function Footer() {
                 Resources
               </h3>
               <nav className="flex flex-col gap-2.5">
-                <Link
-                  href="/faq"
-                  className="text-sm text-chirp-stone-400 transition-colors duration-200 hover:text-chirp-amber-400"
-                >
-                  FAQ
-                </Link>
                 <Link
                   href="/privacy"
                   className="text-sm text-chirp-stone-400 transition-colors duration-200 hover:text-chirp-amber-400"

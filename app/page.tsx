@@ -50,12 +50,14 @@ export default function Home() {
             >
               Download for Mac & Windows
             </Link>
-            <Link
-              href="/faq"
+            <a
+              href="https://github.com/sitelift/Chirp"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex min-h-11 items-center justify-center rounded-full border border-white/20 px-8 py-3 font-display text-base font-bold text-white transition-colors hover:bg-white/10 md:h-14 md:text-lg"
             >
               Learn More
-            </Link>
+            </a>
           </motion.div>
 
           <motion.p

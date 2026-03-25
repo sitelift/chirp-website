@@ -39,18 +39,6 @@ export function Nav() {
           {/* Desktop links */}
           <div className="hidden items-center gap-8 md:flex">
             <Link
-              href="/changelog"
-              className="text-[13px] font-mono font-bold tracking-widest text-chirp-stone-400 transition-colors duration-200 hover:text-white uppercase"
-            >
-              Changelog
-            </Link>
-            <Link
-              href="/faq"
-              className="text-[13px] font-mono font-bold tracking-widest text-chirp-stone-400 transition-colors duration-200 hover:text-white uppercase"
-            >
-              FAQ
-            </Link>
-            <Link
               href="/download"
               className="inline-flex h-8 items-center rounded-full bg-chirp-amber-400 px-4 font-display text-sm font-bold text-chirp-stone-900 transition-colors duration-200 hover:bg-chirp-amber-300"
             >
@@ -97,20 +85,6 @@ export function Nav() {
             <span className="font-display text-2xl font-extrabold tracking-tight text-white">
               chirp
             </span>
-          </Link>
-          <Link
-            href="/changelog"
-            className="font-display text-2xl font-semibold text-chirp-stone-400"
-            onClick={() => setMobileOpen(false)}
-          >
-            Changelog
-          </Link>
-          <Link
-            href="/faq"
-            className="font-display text-2xl font-semibold text-chirp-stone-400"
-            onClick={() => setMobileOpen(false)}
-          >
-            FAQ
           </Link>
           <Link
             href="/download"

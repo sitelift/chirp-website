@@ -3,11 +3,11 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { reveal, staggerContainer, staggerChild } from "@/lib/motion";
+import * as Accordion from "@radix-ui/react-accordion";
 import { PRODUCT, HOME_PREVIEW_FAQS } from "@/lib/constants";
 import { BirdMark } from "@/components/bird-mark";
 import { IntegrationGrid } from "./integration-grid";
 import { PowerTools } from "./power-tools";
-import { HelpCircle } from "lucide-react";
 
 /* ------------------------------------------------------------------ */
 /*  Integrations: Works Where You Do                                  */
@@ -210,7 +210,7 @@ function FreeForeverSection() {
 
 function FounderNoteSection() {
   return (
-    <section className="overflow-hidden bg-white px-6 py-24 md:py-32 lg:py-36">
+    <section className="overflow-hidden bg-white px-6 py-32 md:py-40 lg:py-48">
       <div className="mx-auto max-w-[1000px]">
         <motion.div
           {...reveal}
@@ -247,33 +247,50 @@ function FounderNoteSection() {
 function FAQSection() {
   return (
     <section className="overflow-hidden bg-chirp-stone-50/60 px-6 py-16 md:py-24 lg:py-28">
-      <div className="mx-auto flex w-full max-w-5xl flex-col items-center">
-        <motion.div {...reveal} className="mb-14 w-full text-center md:mb-16">
+      <div className="mx-auto w-full max-w-[680px]">
+        <motion.div {...reveal} className="mb-12 text-center">
           <h2 className="font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-chirp-stone-900">
-            Frequently Asked Questions
+            Questions & Answers
           </h2>
         </motion.div>
 
-        <div className="grid w-full grid-cols-1 gap-4 lg:grid-cols-2">
-          {HOME_PREVIEW_FAQS.map((faq, i) => (
-            <motion.div
-              key={faq.question}
-              {...reveal}
-              transition={{ delay: i * 0.06 }}
-              className="group cursor-default rounded-2xl border border-chirp-stone-200 bg-white p-7 transition-colors hover:border-chirp-amber-200 md:p-8"
-            >
-              <h3 className="flex items-start gap-3 font-display text-lg font-bold text-chirp-stone-900">
-                <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-chirp-stone-50 transition-colors group-hover:bg-chirp-amber-50">
-                  <HelpCircle className="h-4 w-4 text-chirp-stone-400 transition-colors group-hover:text-chirp-amber-500" />
-                </div>
-                <span>{faq.question}</span>
-              </h3>
-              <p className="mt-4 leading-relaxed text-chirp-stone-500 pl-9">
-                {faq.answer}
-              </p>
-            </motion.div>
-          ))}
-        </div>
+        <motion.div {...reveal}>
+          <Accordion.Root type="multiple" className="w-full">
+            {HOME_PREVIEW_FAQS.map((faq) => (
+              <Accordion.Item
+                key={faq.question}
+                value={faq.question}
+                className="border-b border-black/[0.06]"
+              >
+                <Accordion.Header asChild>
+                  <Accordion.Trigger className="group flex w-full items-center justify-between py-5 text-left text-[17px] font-body font-medium text-chirp-stone-900 hover:text-chirp-stone-700">
+                    <span>{faq.question}</span>
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="shrink-0 ml-4 text-chirp-stone-400 transition-transform duration-200 group-data-[state=open]:rotate-180"
+                      aria-hidden="true"
+                    >
+                      <path d="M4 6l4 4 4-4" />
+                    </svg>
+                  </Accordion.Trigger>
+                </Accordion.Header>
+
+                <Accordion.Content className="overflow-hidden data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up">
+                  <p className="text-chirp-stone-600 text-base leading-relaxed pb-5">
+                    {faq.answer}
+                  </p>
+                </Accordion.Content>
+              </Accordion.Item>
+            ))}
+          </Accordion.Root>
+        </motion.div>
       </div>
     </section>
   );
