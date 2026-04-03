@@ -1,7 +1,7 @@
 export const PRODUCT = {
   name: "Chirp",
   tagline: "Local voice-to-text for Windows & macOS",
-  version: "v1.2.4",
+  version: "v1.2.5",
   os: "Windows 10+ & macOS 13+",
   downloadSize: "~80 MB",
   diskSpace: "~1.5 GB",
