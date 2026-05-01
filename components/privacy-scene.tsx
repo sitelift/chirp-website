@@ -1,136 +1,140 @@
-import { Laptop, LockKeyhole, ServerOff, WifiOff } from "lucide-react";
-import { BirdMark } from "./bird-mark";
+"use client";
 
-const privacyStats = [
-  {
-    value: "0",
-    label: "servers",
-    detail: "No account layer. No remote transcription queue.",
-    Icon: ServerOff,
-  },
-  {
-    value: "0",
-    label: "network calls",
-    detail: "After setup, dictation keeps working offline.",
-    Icon: WifiOff,
-  },
-  {
-    value: "0",
-    label: "bytes transmitted",
-    detail: "Audio and transcripts stay on your machine.",
-    Icon: LockKeyhole,
-  },
-];
+import { motion } from "framer-motion";
+import { reveal, staggerContainer, staggerChild } from "@/lib/motion";
+import { BrandPlaceholder } from "./brand-placeholder";
+
+// Privacy scene — Fey-style editorial. One headline alone on a sea
+// of dark canvas, an atmospheric centerpiece below it, and three
+// giant `0` stat blocks anchoring the bottom. No card chrome
+// wrapping the whole thing, no cute icons — the message lands
+// because it has room to breathe.
+//
+// Reference patterns from Fey home + pricing:
+//   - Single sentence headline period-terminated, alone on canvas
+//     ("Make better investments." / "What it costs.")
+//   - Massive vertical breathing room between sections
+//   - Atmospheric photograph or 3D rendered scene as the visual,
+//     never a boxy "demo container"
+//   - Stats and supporting copy sit small underneath the dominant
+//     visual, never compete with it.
+//
+// The atmospheric centerpiece uses <BrandPlaceholder> for now;
+// the slot is `privacy-vault` and gets a real bitmap in the
+// daytime image-gen pass (see BRAND_IMAGE_SLOTS.md).
 
 export function PrivacyScene() {
   return (
-    <section className="relative overflow-hidden px-6 py-28 md:py-36">
+    <section
+      id="privacy"
+      className="relative flex min-h-[100vh] flex-col items-center justify-center overflow-hidden px-6 py-32 md:py-44 lg:py-56"
+    >
+      {/* Single white halo bloom centered on the canvas — barely
+          there, just enough to lift the section off pitch black. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-1/2 h-[760px] w-[760px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-70"
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[820px] w-[820px] -translate-x-1/2 -translate-y-1/2 rounded-full"
         style={{
           background:
-            "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.055) 0%, rgba(255,255,255,0.018) 28%, transparent 68%)",
-        }}
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -left-36 top-20 h-[520px] w-[520px] rounded-full opacity-75 blur-3xl"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(240,183,35,0.12) 0%, transparent 62%)",
+            "radial-gradient(ellipse at center, rgba(255,255,255,0.04) 0%, transparent 60%)",
         }}
       />
 
-      <div className="relative mx-auto grid w-full max-w-[1180px] items-center gap-16 lg:grid-cols-[0.92fr_1.08fr] lg:gap-20">
-        <div className="max-w-[620px]">
-          <h2
-            className="halo-amber font-display font-semibold leading-[0.98] text-white"
-            style={{ fontSize: "clamp(44px, 7vw, 86px)" }}
-          >
-            Your voice never leaves your laptop.
-          </h2>
-          <p className="mt-7 max-w-[560px] font-body text-base leading-8 text-white/65 md:text-lg">
-            Chirp listens, transcribes, cleans up, and pastes text on-device.
-            There is no remote relay sitting between your words and the app
-            you are already using.
-          </p>
+      {/* Headline. Period-terminated, alone on a sea of canvas.
+          Halo bloom sits behind it. */}
+      <motion.h2
+        {...reveal}
+        className="halo-hero relative z-10 mx-auto max-w-[18ch] text-center font-display font-semibold leading-[0.96] tracking-tight text-white"
+        style={{
+          fontSize: "clamp(40px, 6.4vw, 84px)",
+          letterSpacing: "-0.025em",
+        }}
+      >
+        Your voice never leaves your laptop.
+      </motion.h2>
 
-          <div className="mt-12 grid border-y border-white/10 sm:grid-cols-3">
-            {privacyStats.map(({ value, label, detail, Icon }, index) => (
-              <div
-                key={label}
-                className={`group relative min-h-[190px] px-0 py-8 sm:px-7 ${
-                  index > 0 ? "border-t border-white/10 sm:border-l sm:border-t-0" : ""
-                }`}
-              >
-                <div className="mb-8 flex items-center gap-3 text-white/45 transition-colors duration-200 group-hover:text-white/70">
-                  <Icon size={18} strokeWidth={1.6} />
-                  <span className="font-mono text-[11px] uppercase">
-                    {label}
-                  </span>
-                </div>
-                <div className="font-display text-[88px] font-semibold leading-none text-white md:text-[104px]">
-                  {value}
-                </div>
-                <p className="mt-5 max-w-[13rem] text-sm leading-6 text-white/55">
-                  {detail}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
+      {/* Atmospheric centerpiece. Wide editorial frame. */}
+      <motion.div
+        {...reveal}
+        className="relative z-10 mt-20 w-full max-w-[760px] md:mt-28"
+      >
+        <BrandPlaceholder
+          name="privacy-vault"
+          aspectRatio="16 / 10"
+          caption="Padlock embossed with BirdMark · cinematic dark"
+        />
+      </motion.div>
 
-        <div className="relative mx-auto flex min-h-[520px] w-full max-w-[560px] items-center justify-center lg:mx-0">
-          <div
-            aria-hidden
-            className="absolute inset-4 rounded-full border border-white/[0.055]"
-          />
-          <div
-            aria-hidden
-            className="absolute inset-16 rounded-full border border-white/[0.075]"
-          />
-          <div
-            aria-hidden
-            className="absolute inset-28 rounded-full border border-dashed border-white/10"
-          />
-          <div
-            aria-hidden
-            className="absolute left-1/2 top-1/2 h-[360px] w-[360px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
-            style={{
-              background:
-                "radial-gradient(circle, rgba(240,183,35,0.16) 0%, rgba(240,183,35,0.04) 42%, transparent 70%)",
-            }}
-          />
+      {/* Stats row — three giant `0`s. Hairline-separated, no
+          card chrome, generous padding so each stat owns its
+          column. */}
+      <motion.div
+        {...staggerContainer}
+        className="relative z-10 mt-24 grid w-full max-w-[920px] grid-cols-1 gap-12 sm:grid-cols-3 sm:gap-0 md:mt-32"
+      >
+        <PrivacyStat
+          value="0"
+          label="servers"
+          detail="Audio is processed by an on-device speech model. There is no remote transcription queue."
+        />
+        <PrivacyStat
+          value="0"
+          label="network calls"
+          detail="After download, dictation works fully offline. No telemetry, no analytics."
+          divider
+        />
+        <PrivacyStat
+          value="0"
+          label="bytes transmitted"
+          detail="Your transcripts are written straight to your clipboard, then to the app you're already using."
+          divider
+        />
+      </motion.div>
 
-          <div className="relative flex h-[270px] w-[270px] items-center justify-center rounded-full border border-white/12 bg-white/[0.025] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-md md:h-[320px] md:w-[320px]">
-            <div
-              aria-hidden
-              className="absolute inset-8 rounded-full border border-white/10"
-            />
-            <div className="halo-mark flex h-28 w-28 items-center justify-center rounded-full border border-white/10 bg-black/80 md:h-32 md:w-32">
-              <BirdMark size={62} />
-            </div>
-            <div className="absolute -top-5 flex items-center gap-2 rounded-full border border-white/10 bg-black/70 px-4 py-2 text-white/70 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-md">
-              <Laptop size={15} strokeWidth={1.6} />
-              <span className="font-mono text-[11px] uppercase">local only</span>
-            </div>
-            <div className="absolute bottom-9 h-2 w-24 rounded-full bg-white/10">
-              <div className="h-full w-12 rounded-full bg-chirp-yellow shadow-[0_0_24px_rgba(240,183,35,0.35)]" />
-            </div>
-          </div>
-
-          <div className="absolute bottom-2 left-0 right-0 mx-auto grid max-w-[480px] grid-cols-3 gap-2 font-mono text-[10px] uppercase text-white/35">
-            <span className="border-t border-white/10 pt-3">microphone</span>
-            <span className="border-t border-white/10 pt-3 text-center">
-              model
-            </span>
-            <span className="border-t border-white/10 pt-3 text-right">
-              paste
-            </span>
-          </div>
-        </div>
-      </div>
+      {/* Quiet footnote line — mono caps, white/30. */}
+      <motion.p
+        {...reveal}
+        className="relative z-10 mt-20 text-center font-mono text-[11px] uppercase tracking-[0.22em] text-white/35"
+      >
+        Local-first · Offline · No account
+      </motion.p>
     </section>
+  );
+}
+
+interface PrivacyStatProps {
+  value: string;
+  label: string;
+  detail: string;
+  /** When true, render a vertical hairline on the left edge to
+   *  separate from the previous column on desktop. */
+  divider?: boolean;
+}
+
+function PrivacyStat({ value, label, detail, divider }: PrivacyStatProps) {
+  return (
+    <motion.div
+      {...staggerChild}
+      className={`relative flex flex-col items-center px-4 text-center sm:px-8 ${
+        divider ? "sm:border-l sm:border-white/10" : ""
+      }`}
+    >
+      <span
+        className="block font-display font-semibold leading-none text-white"
+        style={{
+          fontFeatureSettings: '"tnum"',
+          letterSpacing: "-0.04em",
+          fontSize: "clamp(96px, 12vw, 160px)",
+        }}
+      >
+        {value}
+      </span>
+      <span className="mt-6 font-mono text-[11px] uppercase tracking-[0.22em] text-white/45">
+        {label}
+      </span>
+      <p className="mt-5 max-w-[26ch] font-body text-[14px] leading-[1.65] text-white/55 md:text-[15px]">
+        {detail}
+      </p>
+    </motion.div>
   );
 }

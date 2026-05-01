@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import { staggerContainer, staggerChild } from "@/lib/motion";
 import { PRODUCT } from "@/lib/constants";
 import { HomeSections } from "@/components/home-sections";
-import { CursorSpotlight } from "@/components/cursor-spotlight";
 import { AnnouncementPill } from "@/components/announcement-pill";
 import { HeroAppPreview } from "@/components/hero-app-preview";
 
@@ -13,9 +12,6 @@ export default function Home() {
   return (
     <>
       <section className="relative flex min-h-[60vh] flex-col items-center justify-center overflow-hidden px-6 py-[8vh] md:py-[10vh]">
-        {/* Cursor-following amber spotlight, behind everything. */}
-        <CursorSpotlight />
-
         {/* Announcement pill above the hero, links to /changelog. */}
         <motion.div {...staggerChild} className="relative z-10 mb-6 md:mb-8">
           <AnnouncementPill

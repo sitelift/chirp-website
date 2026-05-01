@@ -48,17 +48,17 @@ is **human-gated** by Pieter; never merge to `master` autonomously.
 
 ## Next (priority order — do top to bottom)
 
-- [ ] Phase 4.2: **Privacy scene** for home page. Replace the legacy
-      light-mode `PrivacySection` (already removed). Rebuild from
-      first principles: large dark editorial scene, headline "Your
-      voice never leaves your laptop." or similar, atmospheric visual
-      (since Codex image gen is unavailable, use a CSS-driven
-      composition — e.g., a stylized padlock/vault SVG with the
-      BirdMark embossed; OR three big stat blocks "0 / 0 / 0" with
-      labels "servers · network calls · bytes transmitted" in giant
-      Geist Sans, hairline-separated, with an amber halo behind the
-      heading). Wire into `home-sections.tsx` after the WhatItDoes
-      scene.
+- [x] Phase 4.2: **Privacy scene** — rebuilt from scratch in
+      Fey editorial style (Codex's first scaffold was off-brand).
+      Single huge halo headline "Your voice never leaves your
+      laptop." period-terminated alone on canvas, atmospheric
+      `<BrandPlaceholder name="privacy-vault" />` centerpiece,
+      three giant `0` stat blocks (servers · network calls · bytes
+      transmitted) with hairline separators and per-column detail
+      copy, quiet mono footer "LOCAL-FIRST · OFFLINE · NO ACCOUNT".
+      Cursor-flashlight effect deleted from app/page.tsx (Fey
+      doesn't have one and user explicitly called it shit). Visual
+      verified at 1440x900 + 375x812.
 - [ ] Phase 4.3: **Power tools scene** for home page. Three feature
       cards: Vocabulary, Snippets, Smart Cleanup. Each card uses
       `.card-surface` with hover-lift, real app element previews

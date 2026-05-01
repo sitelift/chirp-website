@@ -34,7 +34,7 @@ Slot rows are added by the overnight loop as scenes are built.
 
 | Name | Aspect | Location | Composition brief | Status |
 |------|--------|----------|-------------------|--------|
-| _(none yet — loop will add as scenes ship)_ | | | | |
+| `privacy-vault` | 16 / 10 | `components/privacy-scene.tsx` · centerpiece below the headline | Cinematic dark vault / padlock close-up. The Chirp BirdMark is embossed into the metal of the lock face. Soft amber rim light from the upper-left. Pure black background, no horizon. Reference: Fey "Earnings in real time" tonal palette + product-monument feel. | placeholder |
 
 ---
 
