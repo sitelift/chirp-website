@@ -1,111 +1,118 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { BirdMark } from "@/components/bird-mark";
+import { useEffect, useRef, useState } from "react";
+import { TransientCanvas } from "./transient-canvas";
 
-type Phase = "idle" | "listening" | "processing" | "done";
+// The "what it does" scene's centerpiece. Wraps the ported
+// TransientCanvas with synthetic looping amplitudes + auto-cycling
+// state, so the visitor sees the listening waveform → polishing dots
+// → fade → restart loop without ever touching their mic.
+//
+// Cycle:
+//   listening (4.5s)  →  polishing (2s)  →  fade (0.4s)  →  reset
+//
+// Amplitudes are driven by a sum of three sine waves at speech-like
+// frequencies plus a slow envelope so the bars rise and fall in
+// realistic-feeling waves rather than a flat oscillation.
 
-export function OverlayDemo() {
-  const [phase, setPhase] = useState<Phase>("idle");
+type Mode = "listening" | "polishing";
 
+const SAMPLE_COUNT = 24;
+const FRAME_INTERVAL_MS = 50; // ~20fps update rate
+
+const PHASE_DURATION_MS = {
+  listening: 4500,
+  polishing: 2000,
+  dismiss: 400,
+} as const;
+
+function generateAmplitudes(t: number): number[] {
+  // t in seconds. Build a speech-envelope-like pattern.
+  const out: number[] = [];
+  for (let i = 0; i < SAMPLE_COUNT; i++) {
+    const phase = (i / SAMPLE_COUNT) * Math.PI * 2;
+    // Three layered oscillators at speech-like rates.
+    const v1 = Math.sin(t * 4.7 + phase) * 0.5 + 0.5;
+    const v2 = Math.sin(t * 9.3 + phase * 1.7) * 0.5 + 0.5;
+    const v3 = Math.sin(t * 2.1 + phase * 0.6) * 0.5 + 0.5;
+    // Slow envelope simulates breath / sentence rhythm.
+    const env = (Math.sin(t * 1.3) * 0.5 + 0.5) * 0.7 + 0.3;
+    const blend = (v1 * 0.5 + v2 * 0.3 + v3 * 0.2) * env;
+    // Mild per-bar randomness so peaks don't all align.
+    const jitter = (Math.sin(t * 17 + i * 3.1) * 0.5 + 0.5) * 0.15;
+    out.push(Math.min(1, blend + jitter));
+  }
+  return out;
+}
+
+interface OverlayDemoProps {
+  className?: string;
+}
+
+export function OverlayDemo({ className = "" }: OverlayDemoProps) {
+  const [mode, setMode] = useState<Mode>("listening");
+  const [amplitudes, setAmplitudes] = useState<number[]>(() =>
+    generateAmplitudes(0),
+  );
+  const [dismissing, setDismissing] = useState(false);
+  const [visible, setVisible] = useState(true);
+
+  const startTimeRef = useRef<number>(0);
+
+  // Frame loop — updates synthetic amplitudes while listening.
   useEffect(() => {
-    // Cycle through states to demonstrate the morphing pill
-    const cycle = async () => {
-      // 1. Idle (Passive)
-      setPhase("idle");
-      await new Promise((r) => setTimeout(r, 2000));
-      
-      // 2. Listening
-      setPhase("listening");
-      await new Promise((r) => setTimeout(r, 2500));
-      
-      // 3. Processing
-      setPhase("processing");
-      await new Promise((r) => setTimeout(r, 1500));
-      
-      // 4. Done
-      setPhase("done");
-      await new Promise((r) => setTimeout(r, 1000));
-      
-      // Loop
-      cycle();
-    };
-    
-    cycle();
-  }, []);
+    if (mode !== "listening" || !visible) return;
+    if (startTimeRef.current === 0) {
+      startTimeRef.current = performance.now();
+    }
+    const interval = setInterval(() => {
+      const t = (performance.now() - startTimeRef.current) / 1000;
+      setAmplitudes(generateAmplitudes(t));
+    }, FRAME_INTERVAL_MS);
+    return () => clearInterval(interval);
+  }, [mode, visible]);
 
-  const isActive = phase !== "idle";
+  // State-machine timer.
+  useEffect(() => {
+    if (!visible) return;
+    let timer: ReturnType<typeof setTimeout>;
+
+    if (mode === "listening") {
+      timer = setTimeout(() => {
+        setMode("polishing");
+      }, PHASE_DURATION_MS.listening);
+    } else if (mode === "polishing") {
+      timer = setTimeout(() => {
+        setDismissing(true);
+        setTimeout(() => {
+          // Reset for the next cycle.
+          setVisible(false);
+          setTimeout(() => {
+            startTimeRef.current = 0;
+            setMode("listening");
+            setDismissing(false);
+            setVisible(true);
+          }, 250);
+        }, PHASE_DURATION_MS.dismiss);
+      }, PHASE_DURATION_MS.polishing);
+    }
+
+    return () => clearTimeout(timer);
+  }, [mode, visible]);
 
   return (
-    <div className="relative mx-auto mt-16 w-full max-w-[800px] h-[320px] overflow-hidden rounded-[24px] border border-chirp-stone-200 bg-chirp-stone-50 shadow-inner flex flex-col items-center justify-center">
-      
-      {/* Abstract Desktop Wallpaper/Environment */}
-      <div className="absolute inset-0 opacity-10" style={{
-        backgroundImage: "radial-gradient(circle at 50% 50%, #f59e0b 0%, transparent 60%)"
-      }} />
-
-      {/* The Morphing Pill */}
-      <div className="absolute inset-x-0 bottom-40 z-20 flex justify-center">
-        <motion.div
-          animate={{
-            height: isActive ? 44 : 36, // h-11 vs h-9
-            paddingLeft: isActive ? 16 : 10, // px-4 vs px-2.5
-            paddingRight: isActive ? 16 : 10,
-            gap: isActive ? 12 : 8, // gap-3 vs gap-2
-          }}
-          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="flex items-center rounded-full border border-chirp-stone-200 bg-white shadow-overlay"
-        >
-          <BirdMark size={isActive ? 24 : 18} className={isActive ? "text-chirp-amber-500" : "text-chirp-stone-400"} />
-          
-          <AnimatePresence mode="wait">
-            {isActive && (
-              <motion.div
-                key={phase}
-                initial={{ opacity: 0, width: 0 }}
-                animate={{ opacity: 1, width: "auto" }}
-                exit={{ opacity: 0, width: 0 }}
-                className="flex items-center overflow-hidden whitespace-nowrap"
-              >
-                {phase === "listening" && (
-                  <div className="flex items-center gap-3">
-                    <span className="font-mono text-[12px] font-medium text-chirp-stone-600">Listening...</span>
-                    <div className="flex items-center gap-[2px] h-3">
-                      {[3, 8, 12, 6, 10].map((h, i) => (
-                        <motion.span
-                          key={i}
-                          animate={{ height: [h, Math.max(3, h - 4), h] }}
-                          transition={{ duration: 0.5, repeat: Infinity, delay: i * 0.1 }}
-                          className="w-[3px] rounded-full bg-chirp-amber-500 origin-center"
-                        />
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {phase === "processing" && (
-                  <span className="font-mono text-[12px] font-medium text-chirp-stone-600 flex items-center gap-2">
-                    <span className="animate-spin text-chirp-stone-400">✧</span> Processing
-                  </span>
-                )}
-                {phase === "done" && (
-                  <span className="font-mono text-[12px] font-medium text-chirp-success flex items-center gap-2">
-                    ✓ Copied to clipboard
-                  </span>
-                )}
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
-      </div>
-
-      {/* Explainer Text */}
-      <div className="absolute bottom-6 text-center w-full">
-        <p className="font-mono text-[11px] uppercase tracking-wider text-chirp-stone-400 font-semibold">
-          {isActive ? "Active State" : "Passive State"}
-        </p>
-      </div>
-
+    <div className={`flex items-center justify-center ${className}`}>
+      {visible ? (
+        <TransientCanvas
+          mode={mode}
+          amplitudes={amplitudes}
+          dismissing={dismissing}
+        />
+      ) : (
+        // Reserve the same footprint while the canvas is invisible
+        // so the surrounding layout doesn't reflow each cycle.
+        <div className="h-10 w-[120px]" aria-hidden />
+      )}
     </div>
   );
 }
