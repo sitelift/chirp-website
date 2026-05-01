@@ -144,6 +144,13 @@ Branch `dark-premium-redesign`. Latest commit on push:
 - `2bcdfe0` — Codex round 1: amber reduction, nav restraint, Privacy editorial repack, Power Tools editorial rows, Close CTA white pill, dev badge hidden.
 - `d838d3c` — Codex round 2: hero mask 40/70, vocab visible corrections, copy tightening.
 - `c0e05e4` — Final amber sweep on changelog/faq/privacy.
+- `8fc9e1e` — Wake-up summary written into RESUME.md.
+- `bc76162` — Codex round 3: BrandPlaceholder rebuilt to feel crafted (viewfinder brackets, recessed inner well, dashed calibration ring, conic atmospheric rotation, layered vignette).
+
+### Codex review trail
+- Round 1: identified 8 weak points, top action "reduce amber 70%" → addressed in `2bcdfe0`.
+- Round 2: 78% Fey proximity, identified hero mask + vocab + copy → addressed in `d838d3c`.
+- Round 3: 82% Fey proximity, conditional ship, "swap privacy bitmap" was the 30-min move → addressed via crafted-placeholder rebuild in `bc76162` (since no API key for actual bitmap).
 
 ### Where to look
 
