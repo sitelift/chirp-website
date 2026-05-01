@@ -77,10 +77,14 @@ is **human-gated** by Pieter; never merge to `master` autonomously.
       caps. Layered amber+white atmospheric blooms behind the
       headline. Subtle dotted floor with gradient mask at the
       bottom anchors the monument. Visual verified at 1440x900.
-- [ ] Phase 5.2: **Build /faq page** (currently 404). Use Radix
-      Accordion. Source: `lib/constants.ts FAQS`. Each FAQ on a
-      hairline-divider row. Headline: "Questions & answers." Single
-      column, max-w-[680px], plenty of breathing room.
+- [x] Phase 5.2: **/faq page built** — was 404, now renders.
+      Single column max-w-[720px], halo-hero headline "Questions &
+      answers.", Radix Accordion in hairline-divided list (8
+      questions from `HOME_PREVIEW_FAQS`), chevron rotates on open,
+      content slides via the accordion-down/up keyframes. Quiet
+      mono footer linking to GitHub issues. Server component holds
+      Metadata; client subcomponent (faq-accordion.tsx) holds the
+      Radix root. Visual verified at 1440x900.
 - [ ] Phase 5.3: **Reskin /download page** to dark mode. Black
       canvas, card-surface OS picker (Mac / Windows segmented
       control). Numbered install steps in hairline-divided rows.
