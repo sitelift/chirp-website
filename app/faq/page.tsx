@@ -43,7 +43,7 @@ export default function FAQPage() {
             href="https://github.com/sitelift/Chirp/issues"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-chirp-amber-400 transition-colors hover:text-chirp-amber-300"
+            className="text-white/65 underline-offset-4 transition-colors hover:text-white hover:underline"
           >
             Open an issue on GitHub
           </a>

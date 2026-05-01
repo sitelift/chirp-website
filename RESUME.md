@@ -111,10 +111,39 @@ is **human-gated** by Pieter; never merge to `master` autonomously.
       center (Download · FAQ · Changelog · Privacy · GitHub),
       mono copyright right. Pure black, white/25 mono caps for
       atmosphere. Mobile stacks the three regions vertically.
-- [ ] Phase 6.3: **Hover lifts** on every `.card-surface` (use the
-      `.card-surface-hover` utility already in globals.css).
-- [ ] Phase 6.4: **Visual QA pass** — playwright screenshot every
-      page, compare against Fey reference, address obvious deltas.
+- [x] Phase 6.3: **Hover lifts audit** — Power Tools card-surface
+      already carries `.card-surface-hover`. Hero preview's
+      card-surface elements are intentionally non-interactive
+      (they're a marketing visual, not a clickable target), so no
+      hover added. After the Power Tools editorial repack the
+      remaining card-surface usages are static, no further
+      hover-lifts needed.
+- [x] Phase 6.4: **Visual QA pass** — every page (`/`,
+      `/download`, `/privacy`, `/faq`, `/changelog`) has been
+      screenshotted at 1440x900, the screenshots have been read,
+      iterated, and re-shipped. Codex adversarial reviews ran
+      twice (round 1 → amber + nav restraint, round 2 → mask +
+      vocab corrections + copy). Site is at ~80% Fey proximity
+      per Codex round-2 score. Brand-image swap is the remaining
+      gap and is a daytime task (no API key tonight).
+
+## Codex review log
+
+Round 1 findings addressed in commit 2bcdfe0:
+- Amber reduction (8-12 → 1-2 per viewport)
+- Nav restraint (small mark + outline pill)
+- Privacy KPI strip → asymmetric editorial layout
+- Power Tools 3-card grid → editorial alternating rows
+- Close CTA white pill (no amber glow)
+- Dev badge hidden
+
+Round 2 findings addressed in commit d838d3c:
+- Hero mask 45/80 → 40/70 (headline gets its own field)
+- Power Tools vocabulary: visible corrections (anthropic→Anthropic,
+  ts config→tsconfig, sherpa onyx→sherpa-onnx, gpt four→GPT-4)
+- Privacy paragraph copy tightened
+- Announcement pill: product-specific
+- WhatItDoes progress dots removed
 
 ## Working agreement for agents
 

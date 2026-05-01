@@ -40,14 +40,14 @@ export default function ChangelogPage() {
           >
             <div className="flex items-baseline gap-3">
               <span
-                className="font-mono text-[14px] font-medium text-chirp-amber-400"
+                className="font-mono text-[12px] uppercase tracking-[0.18em] text-white/85"
                 style={{ fontFeatureSettings: '"tnum"' }}
               >
                 {release.version}
               </span>
               <span className="text-white/15">·</span>
               <span
-                className="font-mono text-[12px] uppercase tracking-[0.16em] text-white/40"
+                className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/40"
                 style={{ fontFeatureSettings: '"tnum"' }}
               >
                 {release.date}
@@ -82,7 +82,7 @@ export default function ChangelogPage() {
             href="https://github.com/sitelift/Chirp/blob/master/CHANGELOG.md"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-chirp-amber-400 transition-colors hover:text-chirp-amber-300"
+            className="text-white/65 underline-offset-4 transition-colors hover:text-white hover:underline"
           >
             CHANGELOG.md on GitHub
           </a>

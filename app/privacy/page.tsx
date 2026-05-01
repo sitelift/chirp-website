@@ -129,7 +129,7 @@ export default function PrivacyPolicy() {
             If you have a privacy concern, reach out at{" "}
             <a
               href="mailto:hello@chirptype.com"
-              className="text-chirp-amber-400 transition-colors hover:text-chirp-amber-300"
+              className="text-white/85 underline-offset-4 transition-colors hover:text-white hover:underline"
             >
               hello@chirptype.com
             </a>
