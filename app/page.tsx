@@ -12,7 +12,7 @@ import { HeroAppPreview } from "@/components/hero-app-preview";
 export default function Home() {
   return (
     <>
-      <section className="relative flex flex-col items-center overflow-hidden px-6 pb-16 pt-6 md:pt-10">
+      <section className="relative flex min-h-[60vh] flex-col items-center justify-center overflow-hidden px-6 py-[8vh] md:py-[10vh]">
         {/* Cursor-following amber spotlight, behind everything. */}
         <CursorSpotlight />
 
