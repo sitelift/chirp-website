@@ -95,27 +95,55 @@ is **human-gated** by Pieter; never merge to `master` autonomously.
 
 ## Working agreement for agents
 
-1. Pick the **first** unchecked item.
+1. Pick the **first** unchecked item under "Next".
 2. Read CLAUDE.md (`C:/Users/dutch/chirp/CLAUDE.md`) for
    tokens/architecture if needed.
 3. Read this file's "Visual language" section before writing any code.
 4. Implement the item with `Read`/`Edit`/`Write` against
-   `C:/Users/dutch/chirp-website/`.
+   `C:/Users/dutch/chirp-website/`. Reference shipped components
+   under `C:/Users/dutch/chirp/src/components/` for the visual
+   language.
 5. `cd C:/Users/dutch/chirp-website && npm run build` — must be clean.
-6. Commit on `dark-premium-redesign` with a Conventional Commit
+6. **Visual verification is required before declaring an item done.**
+   Ensure `npm run dev` is running on port 5173 (start it in the
+   background if not). Use Playwright MCP to navigate to
+   `http://localhost:5173/`, screenshot the affected page or
+   section, **look at the screenshot**, and iterate until it reads
+   as premium and brand-consistent. "Renders without errors" is
+   not the bar.
+7. Commit on `dark-premium-redesign` with a Conventional Commit
    message describing what shipped.
-7. Push.
-8. Update **this file** — mark the item `[x]`.
-9. Commit + push the RESUME update.
-10. Stop. (Don't try to do multiple items in one fire.)
+8. **Do NOT push every commit.** Vercel build minutes are limited.
+   Push only when a top-level item under "Next" flips from `[ ]`
+   to `[x]` — i.e., once per scene/page completion, not once per
+   incremental commit.
+9. Update **this file** — mark the item `[x]`.
+10. Commit + push the RESUME.md update (this is the one push that
+    happens per item).
+11. Continue to the next item OR stop if all items are `[x]`.
 
 ## What NOT to do
 
 - Don't push to `master`. Don't merge anything.
+- Don't push every commit (saves Vercel minutes — push once per
+  completed top-level item, see step 8 above).
 - Don't introduce light-mode CSS. Pure black canvas only.
 - Don't add new dependencies without strong justification.
-- Don't write CLAUDE.md updates from a cron — that's the human's
+- Don't write CLAUDE.md updates from an agent — that's Pieter's
   source of truth.
 - Don't add `// TODO: figure out X later` comments. If you can't
-  finish a step, leave it `[ ]` and stop, don't ship a half-done
-  scene.
+  finish a step, leave the item `[ ]` and document the blocker as
+  a new `[ ]` item describing what needs human input, then move on
+  to the next pickable item.
+- Don't claim a scene is "done" without seeing the screenshot
+  yourself first.
+
+## Image generation status (2026-05-01)
+
+Codex `gpt-image-1` access is unavailable in this environment
+(read-only Codex sandbox, no model selector exposed). User has
+ChatGPT OAuth (no API key) which can't be reached via Playwright
+MCP without a manual login session — deferred to a daytime task.
+For tonight's work, all atmospheric imagery uses CSS-driven
+compositions built from shipped tokens (BirdMark + halo + dotted
+backgrounds + radial pools etc.), NOT bitmap brand assets.
