@@ -49,42 +49,36 @@ const RECENT_ENTRIES = [
 
 export function HeroAppPreview() {
   return (
-    <div className="relative w-full max-w-[1100px]">
-      {/* App window frame — pure-black canvas + faux titlebar with
-          window controls on the right. Mirrors the desktop app's
-          chassis. */}
-      <div className="card-surface overflow-hidden">
-        {/* Titlebar */}
-        <div className="flex h-10 items-center justify-end px-3">
-          <div className="flex h-full items-stretch">
-            <div className="flex w-10 items-center justify-center text-white/35">
-              <svg width="14" height="2" viewBox="0 0 14 2" fill="none">
-                <rect width="14" height="2" rx="1" fill="currentColor" />
-              </svg>
-            </div>
-            <div className="flex w-10 items-center justify-center text-white/35">
-              <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                <rect
-                  x="0.5"
-                  y="0.5"
-                  width="10"
-                  height="10"
-                  rx="0.5"
-                  stroke="currentColor"
-                />
-              </svg>
-            </div>
-            <div className="flex w-10 items-center justify-center text-white/35">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path
-                  d="M1 1L13 13M1 13L13 1"
-                  stroke="currentColor"
-                  strokeWidth="1.25"
-                />
-              </svg>
-            </div>
-          </div>
-        </div>
+    <div
+      className="relative w-full max-w-[1100px]"
+      style={{
+        // Fade the bottom 38% of the preview into the page canvas
+        // so the app reads as if it extends beyond the visible frame.
+        // Direct port of Fey's hero treatment.
+        WebkitMaskImage:
+          "linear-gradient(to bottom, black 0%, black 62%, transparent 100%)",
+        maskImage:
+          "linear-gradient(to bottom, black 0%, black 62%, transparent 100%)",
+      }}
+    >
+      {/* App window frame — top-rounded only, no bottom corners or
+          border. The mask above dissolves the bottom into the canvas;
+          a closed bottom edge would fight that effect. */}
+      <div
+        className="overflow-hidden bg-[#0E0E10]"
+        style={{
+          borderTopLeftRadius: 14,
+          borderTopRightRadius: 14,
+          borderTop: "1px solid rgba(255,255,255,0.08)",
+          borderLeft: "1px solid rgba(255,255,255,0.06)",
+          borderRight: "1px solid rgba(255,255,255,0.06)",
+          boxShadow: "inset 0 1px 0 rgba(255,255,255,0.05)",
+        }}
+      >
+        {/* Slim titlebar — drag-region only, no window controls. The
+            controls would imply a closed window; we want the app to
+            feel like it extends past the visible frame. */}
+        <div className="h-7" />
 
         {/* Page content */}
         <div className="px-12 pb-10 pt-2">
@@ -222,17 +216,8 @@ export function HeroAppPreview() {
         </div>
       </div>
 
-      {/* Soft drop shadow + subtle amber halo behind the whole frame
-          to lift it off the canvas. Lightweight — pure CSS, no heavy
-          glow. */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -inset-x-12 -bottom-12 -top-4 -z-10"
-        style={{
-          background:
-            "radial-gradient(ellipse 60% 40% at 50% 60%, rgba(240,183,35,0.10), transparent 70%)",
-        }}
-      />
+      {/* No amber halo here — the mask gradient creates the atmospheric
+          fade on its own; an additional glow fights the dissolve. */}
     </div>
   );
 }

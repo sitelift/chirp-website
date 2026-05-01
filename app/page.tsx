@@ -13,12 +13,12 @@ import { BirdMark } from "@/components/bird-mark";
 export default function Home() {
   return (
     <>
-      <section className="relative flex flex-col items-center overflow-hidden px-6 pb-20 pt-10 md:pt-14">
+      <section className="relative flex flex-col items-center overflow-hidden px-6 pb-16 pt-6 md:pt-10">
         {/* Cursor-following amber spotlight, behind everything. */}
         <CursorSpotlight />
 
         {/* Announcement pill above the hero, links to /changelog. */}
-        <motion.div {...staggerChild} className="relative z-10 mb-8 md:mb-10">
+        <motion.div {...staggerChild} className="relative z-10 mb-6 md:mb-8">
           <AnnouncementPill
             href="/changelog"
             badge="New"
@@ -26,7 +26,8 @@ export default function Home() {
           />
         </motion.div>
 
-        {/* Hero app preview — dominant, the fold's centerpiece. */}
+        {/* Hero app preview — dominant, with its bottom 38% masked
+            into the canvas so it dissolves into the page. */}
         <motion.div
           {...staggerChild}
           className="relative z-10 w-full max-w-[1100px]"
@@ -34,12 +35,13 @@ export default function Home() {
           <HeroAppPreview />
         </motion.div>
 
-        {/* Brand mark + headline anchor below the app preview, Fey-
-            style. Aligned to the left edge of the preview's content
-            column for a tight visual stack. */}
+        {/* Brand mark + headline anchor pulled UP into the faded
+            bottom of the preview. Negative top margin overlaps the
+            preview's dissolved zone so the visual stack reads tight,
+            no void between the screenshot and the text. */}
         <motion.div
           {...staggerContainer}
-          className="relative z-10 mt-12 flex w-full max-w-[1100px] flex-col items-start md:mt-16"
+          className="relative z-20 -mt-24 flex w-full max-w-[1100px] flex-col items-start md:-mt-32"
         >
           <motion.div
             {...staggerChild}
@@ -54,7 +56,7 @@ export default function Home() {
             {...staggerChild}
             className="halo-hero relative font-display font-semibold leading-[0.95] tracking-tight text-white"
             style={{
-              fontSize: "clamp(44px, 7vw, 96px)",
+              fontSize: "clamp(40px, 6.5vw, 88px)",
               letterSpacing: "-0.03em",
             }}
           >
