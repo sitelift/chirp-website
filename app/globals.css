@@ -1,14 +1,24 @@
 @import "tailwindcss";
+@import "@fontsource-variable/geist/index.css";
+@import "@fontsource-variable/geist-mono/index.css";
 
 @theme inline {
-  --color-background: #ffffff;
-  --color-foreground: #1C1917;
+  /* Pitch-black canvas (matches the Chirp app's theme-pitch palette). */
+  --color-background: #000000;
+  --color-foreground: #ffffff;
 
-  --font-display: var(--font-nunito);
-  --font-body: var(--font-inter);
-  --font-mono: var(--font-jetbrains);
+  /* Card surface — slightly lifted from the canvas, defined here so
+     Tailwind classes (e.g. bg-card-surface) work; the .card-surface
+     utility below adds the border + inset highlight. */
+  --color-card-surface: #0E0E10;
 
-  /* Chirp Amber */
+  /* Geist Sans for display + body, Geist Mono for hotkey/key/version
+     glyphs. Same stack as the Chirp app. */
+  --font-display: "Geist Variable", "Inter", system-ui, sans-serif;
+  --font-body: "Geist Variable", "Inter", system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", "JetBrains Mono", Consolas, monospace;
+
+  /* Chirp Amber — kept for accents, signal moments, the brand mark. */
   --color-chirp-amber-50: #FFFBEB;
   --color-chirp-amber-100: #FEF3C7;
   --color-chirp-amber-200: #FDE68A;
@@ -19,7 +29,8 @@
   --color-chirp-amber-700: #B45309;
   --color-chirp-amber-800: #92400E;
 
-  /* Chirp Stone */
+  /* Chirp Stone — retained for text-on-dark fallbacks; most usages
+     should migrate to white/N opacities. */
   --color-chirp-stone-50: #FAFAF9;
   --color-chirp-stone-100: #F5F5F4;
   --color-chirp-stone-200: #E7E5E4;
@@ -31,44 +42,168 @@
   --color-chirp-stone-800: #292524;
   --color-chirp-stone-900: #1C1917;
 
-  /* Chirp Yellow */
+  /* Chirp Yellow — brand mark only. */
   --color-chirp-yellow: #F0B723;
 
-  /* Shadows */
-  --shadow-surface: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
-  --shadow-lifted: 0 4px 12px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
-  --shadow-elevated: 0 8px 30px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
-  --shadow-hero: 0 20px 60px rgba(0,0,0,0.10), 0 4px 16px rgba(0,0,0,0.06);
-  --shadow-amber: 0 4px 14px rgba(245,158,11,0.20), 0 1px 3px rgba(245,158,11,0.10);
-  --shadow-amber-hover: 0 6px 20px rgba(245,158,11,0.28), 0 2px 4px rgba(245,158,11,0.12);
+  /* Shadows tuned for dark canvas. */
+  --shadow-card-rest: inset 0 1px 0 rgba(255,255,255,0.04);
+  --shadow-card-hover: inset 0 1px 0 rgba(255,255,255,0.06), 0 8px 32px rgba(0,0,0,0.4);
+  --shadow-amber: 0 4px 14px rgba(240,183,35,0.20), 0 1px 3px rgba(240,183,35,0.10);
+  --shadow-amber-hover: 0 6px 20px rgba(240,183,35,0.32), 0 2px 4px rgba(240,183,35,0.18);
 
-  /* Accordion animations */
+  /* Spring easing — matches the Chirp app's --spring-bounce. */
+  --spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Animations — names are exposed as utilities (animate-*). */
+  --animate-fade-in: fade-in 200ms ease-out;
+  --animate-slide-up: slide-up 400ms ease-out both;
+  --animate-popup-in: popup-in 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-saved-pop: saved-pop 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  --animate-sparkline-draw: sparkline-draw-in 600ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  --animate-sparkline-dot: sparkline-dot-in 200ms cubic-bezier(0.4, 0, 0.2, 1) 600ms both;
+  --animate-overlay-dot-pulse: overlay-dot-pulse 900ms ease-in-out infinite;
   --animate-accordion-down: accordion-down 200ms ease-out;
   --animate-accordion-up: accordion-up 200ms ease-out forwards;
-
-  /* Testimonial scroll */
   --animate-testimonial-scroll: testimonial-scroll 30s linear infinite;
-
-  /* Marquee logo strip */
   --animate-marquee: marquee 30s linear infinite;
 }
 
 body {
   background: var(--color-background);
   color: var(--color-foreground);
-  font-family: var(--font-body), sans-serif;
+  font-family: var(--font-body);
 }
 
+/* ── Card surface ─────────────────────────────────────────
+   Slightly lifted black with a hairline border + faint inset top
+   highlight. Direct port from the Chirp app's globals.css. */
+.card-surface {
+  background-color: #0E0E10;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  border-radius: 14px;
+}
 
+.card-surface-hover {
+  transition: transform 250ms var(--spring-bounce), box-shadow 250ms ease, border-color 200ms ease;
+}
+.card-surface-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 8px 32px rgba(0,0,0,0.4);
+  border-color: rgba(255, 255, 255, 0.10);
+}
 
-/* Architecture diagram connector animation */
+/* ── Halos ────────────────────────────────────────────────
+   Element-anchored radial blooms behind specific weight points
+   (hero headlines, brand marks, active nav). Render via ::before. */
+.halo-hero {
+  position: relative;
+  isolation: isolate;
+}
+.halo-hero::before {
+  content: '';
+  position: absolute;
+  inset: -90px;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.06) 0%, transparent 60%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.halo-mark {
+  position: relative;
+  isolation: isolate;
+}
+.halo-mark::before {
+  content: '';
+  position: absolute;
+  inset: -32px;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 0%, transparent 65%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.halo-amber {
+  position: relative;
+  isolation: isolate;
+}
+.halo-amber::before {
+  content: '';
+  position: absolute;
+  inset: -120px;
+  background: radial-gradient(ellipse at center, rgba(240, 183, 35, 0.14) 0%, transparent 55%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ── Stagger entrance delays ──────────────────────────────
+   Use with animate-slide-up / animate-fade-in for choreographed
+   page mounts. */
+.stagger-1 { animation-delay: 80ms; }
+.stagger-2 { animation-delay: 160ms; }
+.stagger-3 { animation-delay: 240ms; }
+.stagger-4 { animation-delay: 320ms; }
+.stagger-5 { animation-delay: 400ms; }
+.stagger-6 { animation-delay: 480ms; }
+.stagger-7 { animation-delay: 560ms; }
+.stagger-8 { animation-delay: 640ms; }
+
+/* ── Keyframes ────────────────────────────────────────────
+   App's animation grammar, ported intact. */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes popup-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes saved-pop {
+  from { opacity: 0; transform: translateY(10px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes sparkline-draw-in {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes sparkline-dot-in {
+  from { opacity: 0; transform: scale(0.6); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes overlay-dot-pulse {
+  0%, 100% { opacity: 0.6; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+/* ── Sparkline stroke prep ────────────────────────────────
+   Pairs with pathLength={1} on the polyline so the dasharray trick
+   works under preserveAspectRatio="none". */
+.animate-sparkline-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: sparkline-draw-in 600ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+.animate-sparkline-dot {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: sparkline-dot-in 200ms cubic-bezier(0.4, 0, 0.2, 1) 600ms both;
+}
+
+/* ── Connector flow (architecture diagram) ────────────────
+   Retained from prior site for the privacy-data-flow visual; may
+   be removed if the privacy scene rebuild drops the connector. */
 @keyframes flow-down {
-  0% {
-    background-position: 0 -40px;
-  }
-  100% {
-    background-position: 0 40px;
-  }
+  0% { background-position: 0 -40px; }
+  100% { background-position: 0 40px; }
 }
 
 .connector-flow {
@@ -83,11 +218,12 @@ body {
   animation: flow-down 2s linear infinite;
 }
 
-/* Keyboard key press animation */
+/* ── Keyboard key press animation ─────────────────────────
+   Used by keyboard-demo / key-badge for press feedback. */
 @keyframes key-press {
   0%, 85%, 100% {
     transform: translateY(0);
-    box-shadow: 0 2px 0 0 rgba(0,0,0,0.06);
+    box-shadow: 0 2px 0 0 rgba(255,255,255,0.10);
   }
   90% {
     transform: translateY(2px);
@@ -95,78 +231,74 @@ body {
   }
 }
 
-/* Waveform bar animation */
+/* ── Waveform bar (legacy from old waveform.tsx) ─────────
+   New work should use the ported TransientCanvas / Sparkline. */
 @keyframes waveform-bar {
   0%, 100% { transform: scaleY(0.3); }
   50% { transform: scaleY(1); }
 }
 
-/* Accordion height animations */
+/* ── Radix accordion heights ──────────────────────────────
+   Used by FAQ accordion via @radix-ui/react-accordion. */
 @keyframes accordion-down {
-  from {
-    height: 0;
-  }
-  to {
-    height: var(--radix-accordion-content-height);
-  }
+  from { height: 0; }
+  to { height: var(--radix-accordion-content-height); }
 }
 
 @keyframes accordion-up {
-  from {
-    height: var(--radix-accordion-content-height);
-  }
-  to {
-    height: 0;
-  }
+  from { height: var(--radix-accordion-content-height); }
+  to { height: 0; }
 }
 
-/* Dotted background pattern */
+/* ── Dotted background ────────────────────────────────────
+   Restyled for dark canvas — was rgba(0,0,0,0.06) on light. */
 .bg-dotted {
-  background-image: radial-gradient(circle, rgba(0,0,0,0.06) 1px, transparent 0);
+  background-image: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 0);
   background-size: 20px 20px;
 }
 
-/* Warm amber gradient background */
-.bg-amber-warm {
-  background: linear-gradient(165deg, #FEF3C7 0%, #FDE68A 40%, #FCD34D 100%);
-}
-
-/* Pill section label */
+/* ── Pill labels ──────────────────────────────────────────
+   Small uppercase mono pills used for status / scene labels. Kept
+   for now; the new direction prefers no eyebrows so most callsites
+   should be removed in scene rebuilds. */
 .pill-label {
   display: inline-flex;
   align-items: center;
   padding: 4px 14px;
   border-radius: 9999px;
   font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
+  font-weight: 600;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   font-family: var(--font-mono);
 }
 
-.pill-label-light {
-  background: rgba(245,158,11,0.1);
-  color: #D97706;
-}
-
 .pill-label-dark {
-  background: rgba(251,191,36,0.15);
-  color: #FBBF24;
+  background: rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.65);
+  border: 1px solid rgba(255,255,255,0.08);
 }
 
-/* Testimonial auto-scroll */
+.pill-label-amber {
+  background: rgba(240,183,35,0.10);
+  color: #FBBF24;
+  border: 1px solid rgba(240,183,35,0.25);
+}
+
+/* ── Marquee + testimonial scrolls ────────────────────────
+   Used by logo strips + testimonial section. */
 @keyframes testimonial-scroll {
   0% { transform: translateY(0); }
   100% { transform: translateY(-50%); }
 }
 
-/* Marquee scroll for logo strip */
 @keyframes marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
 
-/* Hide scrollbar */
+/* ── Hide scrollbar ───────────────────────────────────────
+   Used in scrolling rows / marquees that shouldn't show a bar. */
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -175,7 +307,8 @@ body {
   display: none;
 }
 
-/* Reduced motion */
+/* ── Reduced motion ───────────────────────────────────────
+   Honor prefers-reduced-motion across all animations. */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

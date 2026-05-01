@@ -1,26 +1,11 @@
 import type { Metadata } from "next";
-import { Nunito, Inter, JetBrains_Mono } from "next/font/google";
 import { Nav } from "@/components/nav";
 import { ConditionalFooter } from "@/components/conditional-footer";
 import "./globals.css";
 
-const nunito = Nunito({
-  variable: "--font-nunito",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const jetbrains = JetBrains_Mono({
-  variable: "--font-jetbrains",
-  subsets: ["latin"],
-  display: "swap",
-});
+// Geist Sans + Geist Mono are imported via globals.css (@fontsource-
+// variable/geist) so the @font-face declarations register before any
+// component renders. Same stack used by the Chirp desktop app.
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://chirptype.com"),
@@ -69,9 +54,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${nunito.variable} ${inter.variable} ${jetbrains.variable} font-body antialiased`}
-      >
+      <body className="font-body antialiased bg-background text-foreground">
         <Nav />
         <main>{children}</main>
         <ConditionalFooter />
