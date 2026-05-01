@@ -11,8 +11,8 @@ import { useEffect, useRef, useState } from "react";
 
 interface CountUpProps {
   to: number;
-  /** Total animation duration in ms. Default 1400ms — matches the
-   *  sparkline draw-in so they finish in lockstep. */
+  /** Total animation duration in ms. Default 700ms — matches the
+   *  Chirp app's `useAnimatedNumber` hook in HeroMetric.tsx exactly. */
   durationMs?: number;
   /** Optional delay before the count starts. */
   delayMs?: number;
@@ -22,7 +22,7 @@ interface CountUpProps {
 
 export function CountUp({
   to,
-  durationMs = 1400,
+  durationMs = 700,
   delayMs = 0,
   className,
   style,

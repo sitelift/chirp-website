@@ -77,8 +77,10 @@ export function HeroAppPreview() {
             </div>
           </div>
 
-          {/* Hero card — words this month + sparkline */}
-          <section className="card-surface halo-hero relative overflow-hidden">
+          {/* Hero card — words this month + sparkline. Wrapped in
+              animate-slide-up to match the app's HomePage choreography
+              (the HeroMetric wrapper has the same class). */}
+          <section className="card-surface halo-hero relative animate-slide-up overflow-hidden">
             <div className="px-8 pt-7">
               <div className="flex justify-end">
                 <div className="flex items-center gap-1 font-display text-[11px] uppercase tracking-[0.16em]">
@@ -100,7 +102,6 @@ export function HeroAppPreview() {
               <div className="mt-2 flex items-end gap-5">
                 <CountUp
                   to={23194}
-                  durationMs={1400}
                   className="block font-display font-semibold leading-none text-white"
                   style={{
                     fontFeatureSettings: '"tnum"',
@@ -108,7 +109,7 @@ export function HeroAppPreview() {
                     fontSize: "clamp(56px, 7vw, 96px)",
                   }}
                 />
-                <span className="mb-3 block font-display text-[11px] font-medium uppercase tracking-[0.18em] text-white/45">
+                <span className="mb-3 block animate-fade-in font-display text-[11px] font-medium uppercase tracking-[0.18em] text-white/45">
                   Words this month
                 </span>
               </div>
@@ -125,22 +126,28 @@ export function HeroAppPreview() {
             </div>
           </section>
 
-          {/* Quick Actions — Smart Cleanup + Tone */}
+          {/* Quick Actions — Smart Cleanup + Tone. Each card wrapped
+              in animate-slide-up with staggered delays, matching the
+              app's QuickActions composition exactly. */}
           <section className="mt-8 grid grid-cols-1 items-stretch gap-4 lg:grid-cols-2">
-            <QuickActionCard
-              title="Smart Cleanup"
-              valueLabel="Cloud"
-              description="Cloud key set"
-              segments={["Off", "Local", "Cloud"]}
-              activeIndex={2}
-            />
-            <QuickActionCard
-              title="Tone"
-              valueLabel="Message"
-              description="Natural conversational tone"
-              segments={["Message", "Email"]}
-              activeIndex={0}
-            />
+            <div className="animate-slide-up stagger-1 flex">
+              <QuickActionCard
+                title="Smart Cleanup"
+                valueLabel="Cloud"
+                description="Cloud key set"
+                segments={["Off", "Local", "Cloud"]}
+                activeIndex={2}
+              />
+            </div>
+            <div className="animate-slide-up stagger-2 flex">
+              <QuickActionCard
+                title="Tone"
+                valueLabel="Message"
+                description="Natural conversational tone"
+                segments={["Message", "Email"]}
+                activeIndex={0}
+              />
+            </div>
           </section>
 
           {/* Recent entries dropped from the hero composition — the
