@@ -127,6 +127,58 @@ is **human-gated** by Pieter; never merge to `master` autonomously.
       per Codex round-2 score. Brand-image swap is the remaining
       gap and is a daytime task (no API key tonight).
 
+## Wake-up summary (for Pieter, 2026-05-01 morning)
+
+Branch `dark-premium-redesign`. Latest commit on push:
+`c0e05e4`. All RESUME phases marked `[x]`.
+
+### What shipped overnight (in commit order)
+
+- `6e62e94` — Privacy scene rebuilt Fey-style + cursor spotlight killed.
+- `f9f4f3a` — Power Tools 3-card scene (later replaced with editorial rows).
+- `bdb779a` — Close CTA scene.
+- `faed2ee` — /faq page built (was 404).
+- `6f4475b` — Nav + footer rebuilt for the dark canvas.
+- `2ad1ff2` — /download page reskinned.
+- `a226101` — /privacy page reskinned.
+- `2bcdfe0` — Codex round 1: amber reduction, nav restraint, Privacy editorial repack, Power Tools editorial rows, Close CTA white pill, dev badge hidden.
+- `d838d3c` — Codex round 2: hero mask 40/70, vocab visible corrections, copy tightening.
+- `c0e05e4` — Final amber sweep on changelog/faq/privacy.
+
+### Where to look
+
+Morning screenshots at `C:/Users/dutch/chirp/.playwright-mcp/`:
+- `MORNING-1-hero.png` — hero with new mask + restrained nav
+- `MORNING-2-what-it-does.png` — auto-cycle scene mid-transition
+- `MORNING-3-privacy.png` — asymmetric privacy editorial
+- `MORNING-4-power-tools.png` — editorial rows w/ visible vocab corrections
+- `MORNING-5-close-cta.png` — "Try Chirp." monument
+- `iter12-download-polished.png` — /download
+- `iter15-changelog-no-amber.png` — /changelog
+- `iter6-faq-with-new-nav-footer.png` — /faq
+- `iter8-privacy-page.png` — /privacy
+- `REF-fey-home-fullpage.png`, `REF-fey-pricing-fullpage.png` — Fey baselines
+
+### Brand image slots awaiting morning ChatGPT pass
+
+See `BRAND_IMAGE_SLOTS.md`:
+- `privacy-vault` (16 / 10 portrait, padlock embossed with BirdMark, cinematic dark)
+
+The Close CTA's previous monument slot was dropped — the headline +
+white pill carry the moment without a bitmap. So the morning
+image-gen pass needs ONE bitmap, not the original ~16-asset list.
+
+### Known polish opportunities for morning
+
+- Brand bitmaps (one slot above) — daytime ChatGPT image-gen task.
+- Hero card "Tuesday, April 30" greeting is hardcoded; could
+  dynamic-date or leave as stylized example.
+- /faq + /privacy + /changelog rhythm is similar; could add a
+  distinguishing flourish to one of them if it reads same-y.
+- Codex round-2 score: 78% Fey proximity. Round-3 dispatched at
+  c0e05e4 timestamp — see codex-rescue agent output for any
+  remaining surgical moves.
+
 ## Codex review log
 
 Round 1 findings addressed in commit 2bcdfe0:
