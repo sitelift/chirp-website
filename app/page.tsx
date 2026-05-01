@@ -5,45 +5,71 @@ import { motion } from "framer-motion";
 import { staggerContainer, staggerChild } from "@/lib/motion";
 import { PRODUCT } from "@/lib/constants";
 import { HomeSections } from "@/components/home-sections";
-import { OverlayDemo } from "@/components/overlay-demo";
 import { CursorSpotlight } from "@/components/cursor-spotlight";
 import { AnnouncementPill } from "@/components/announcement-pill";
+import { HeroAppPreview } from "@/components/hero-app-preview";
+import { BirdMark } from "@/components/bird-mark";
 
 export default function Home() {
   return (
     <>
-      <section className="relative flex min-h-[88vh] flex-col items-center justify-center overflow-hidden px-6 pb-24 pt-32 md:pb-32 md:pt-40 lg:pb-40 lg:pt-48">
-        {/* Cursor-following amber spotlight overlay. Disables under
-            prefers-reduced-motion. Sits behind everything else. */}
+      <section className="relative flex flex-col items-center overflow-hidden px-6 pb-32 pt-24 md:pt-28 lg:pt-32">
+        {/* Cursor-following amber spotlight, behind everything. */}
         <CursorSpotlight />
 
+        {/* Announcement pill above the hero, links to /changelog. */}
+        <motion.div
+          {...staggerChild}
+          className="relative z-10 mb-12 md:mb-16"
+        >
+          <AnnouncementPill
+            href="/changelog"
+            badge="New"
+            label="The dark redesign just shipped"
+          />
+        </motion.div>
+
+        {/* Hero app preview — dominant, takes the upper viewport.
+            Static composition using ported components (Sparkline,
+            card-surface, etc.) so it reads identical to the real app. */}
+        <motion.div
+          {...staggerChild}
+          className="relative z-10 w-full max-w-[1100px]"
+        >
+          <HeroAppPreview />
+        </motion.div>
+
+        {/* Brand mark + headline anchor below the app preview, Fey-
+            style. Eyebrow brand wordmark, then the giant statement. */}
         <motion.div
           {...staggerContainer}
-          className="relative z-10 flex w-full min-w-0 max-w-6xl flex-col items-center"
+          className="relative z-10 mt-20 flex w-full max-w-4xl flex-col items-start md:mt-28"
         >
-          {/* Announcement pill above the headline, links to /changelog. */}
-          <motion.div {...staggerChild} className="mb-8">
-            <AnnouncementPill
-              href="/changelog"
-              badge="New"
-              label="The dark redesign just shipped"
-            />
+          <motion.div
+            {...staggerChild}
+            className="mb-3 flex items-center gap-2"
+          >
+            <BirdMark size={18} color="#F0B723" />
+            <span className="font-display text-[15px] font-semibold tracking-tight text-white/55">
+              Chirp
+            </span>
           </motion.div>
-
           <motion.h1
             {...staggerChild}
-            className="halo-hero relative max-w-4xl text-center font-display font-semibold leading-[0.95] tracking-tight text-white"
+            className="halo-hero relative font-display font-semibold leading-[0.92] tracking-tight text-white"
             style={{
-              fontSize: "clamp(56px, 9vw, 124px)",
+              fontSize: "clamp(48px, 8vw, 116px)",
               letterSpacing: "-0.03em",
             }}
           >
-            Speak freely.
+            Type at the speed
+            <br />
+            of thought.
           </motion.h1>
 
           <motion.p
             {...staggerChild}
-            className="mt-7 max-w-xl text-center font-body text-base leading-relaxed text-white/65 sm:mt-8 sm:text-lg md:text-xl"
+            className="mt-7 max-w-xl font-body text-base leading-relaxed text-white/60 sm:text-lg md:text-xl"
           >
             Voice-to-text that runs entirely on your machine.
             <br className="hidden sm:inline" />
@@ -52,7 +78,7 @@ export default function Home() {
 
           <motion.div
             {...staggerChild}
-            className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:gap-4"
+            className="mt-10 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-4"
           >
             <Link
               href="/download"
@@ -72,19 +98,10 @@ export default function Home() {
 
           <motion.p
             {...staggerChild}
-            className="mt-4 text-center font-mono text-[11px] uppercase tracking-[0.18em] text-white/35"
+            className="mt-4 font-mono text-[11px] uppercase tracking-[0.18em] text-white/35"
           >
             {PRODUCT.version} · {PRODUCT.os}
           </motion.p>
-
-          {/* Live overlay demo — looping listening waveform → polishing
-              dots → fade. The hero's product moment. */}
-          <motion.div
-            {...staggerChild}
-            className="mt-16 flex items-center justify-center md:mt-20"
-          >
-            <OverlayDemo />
-          </motion.div>
         </motion.div>
       </section>
 
