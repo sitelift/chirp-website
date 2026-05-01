@@ -28,13 +28,14 @@ export function Nav() {
     <>
       <nav className="fixed left-0 right-0 top-0 z-50 h-14 border-b border-white/[0.06] bg-black/85 backdrop-blur-md">
         <div className="mx-auto flex h-full max-w-[1180px] items-center justify-between px-6">
-          {/* Brand. */}
+          {/* Brand — small mono wordmark instead of the bright bird +
+              display-bold. Reads as a chapter mark, not a logo dump. */}
           <Link
             href="/"
-            className="flex items-center gap-2.5 transition-opacity duration-150 hover:opacity-85"
+            className="group flex items-center gap-2 transition-opacity duration-150 hover:opacity-90"
           >
-            <BirdMark size={22} />
-            <span className="font-display text-[15px] font-semibold tracking-tight text-white">
+            <BirdMark size={16} className="opacity-85 transition-opacity group-hover:opacity-100" />
+            <span className="font-display text-[13px] font-medium tracking-tight text-white/85">
               chirp
             </span>
           </Link>
@@ -46,22 +47,20 @@ export function Nav() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="font-display text-[13px] font-medium text-white/55 transition-colors duration-150 hover:text-white"
+                className="font-display text-[13px] font-medium text-white/45 transition-colors duration-150 hover:text-white"
               >
                 {link.label}
               </Link>
             ))}
           </div>
 
-          {/* Right CTA. */}
+          {/* Right CTA — restrained outline pill. The hero CTAs
+              already carry the amber moment; the nav doesn't need
+              to repeat it. */}
           <div className="hidden md:block">
             <Link
               href="/download"
-              className="group inline-flex h-9 items-center justify-center rounded-full bg-chirp-amber-400 px-4 font-display text-[13px] font-semibold text-black transition-all duration-150 hover:-translate-y-px hover:bg-chirp-amber-300 active:translate-y-0 active:scale-[0.98]"
-              style={{
-                boxShadow:
-                  "0 2px 12px rgba(240,183,35,0.20), inset 0 1px 0 rgba(255,255,255,0.18)",
-              }}
+              className="group inline-flex h-8 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] px-4 font-display text-[12px] font-medium text-white/85 backdrop-blur-md transition-all duration-150 hover:border-white/25 hover:bg-white/[0.08] hover:text-white active:scale-[0.98]"
             >
               Download
             </Link>

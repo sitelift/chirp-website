@@ -175,10 +175,11 @@ export function WhatItDoesScene() {
       {/* Stage — content sits centered within a fixed-height area so
           beats don't shift the section's overall vertical rhythm. */}
       <div className="relative flex h-[60vh] w-full max-w-[1080px] items-center justify-center">
-        {/* Beat 1: keyboard. Scaled up via wrapper (HotkeyTrio's
-            internals stay token-locked). */}
+        {/* Beat 1: keyboard. Scaled responsively — the trio's natural
+            width is ~270px so on mobile we need to stay below the
+            375px viewport. Internals stay token-locked. */}
         <div
-          className="absolute scale-[2.4] transition-opacity duration-[600ms] ease-out md:scale-[2.8]"
+          className="absolute scale-[1.4] transition-opacity duration-[600ms] ease-out sm:scale-[1.8] md:scale-[2.4] lg:scale-[2.8]"
           style={{
             opacity: showKeyboard ? 1 : 0,
             pointerEvents: showKeyboard ? "auto" : "none",
@@ -196,7 +197,7 @@ export function WhatItDoesScene() {
           }}
         >
           <div
-            className="scale-[2.2] md:scale-[2.6]"
+            className="scale-[1.4] sm:scale-[1.7] md:scale-[2.2] lg:scale-[2.6]"
             style={{
               opacity: pillOpacity,
               transition: "opacity 500ms ease-out",

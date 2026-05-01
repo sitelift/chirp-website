@@ -41,10 +41,11 @@ export default function Home() {
         >
           <motion.h1
             {...staggerChild}
-            className="halo-hero relative font-display font-semibold leading-[0.95] tracking-tight text-white"
+            className="halo-hero relative font-display font-semibold leading-[0.95] tracking-tight"
             style={{
               fontSize: "clamp(40px, 6.5vw, 88px)",
               letterSpacing: "-0.03em",
+              color: "rgba(255,255,255,0.94)",
             }}
           >
             Speak freely.

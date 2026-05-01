@@ -37,13 +37,14 @@ export default function DownloadPage() {
 
   return (
     <main className="relative mx-auto flex min-h-[100vh] max-w-[820px] flex-col items-center px-6 pt-32 pb-32 md:pt-40">
-      {/* Atmospheric amber bloom behind the BirdMark anchor. */}
+      {/* Quiet white halo behind the headline anchor — replaced
+          the amber bloom that fought the rest of the redesign. */}
       <div
         aria-hidden
         className="pointer-events-none absolute left-1/2 top-[30%] h-[640px] w-[820px] -translate-x-1/2 -translate-y-1/2 rounded-full"
         style={{
           background:
-            "radial-gradient(ellipse at center, rgba(240,183,35,0.08) 0%, rgba(240,183,35,0.02) 40%, transparent 70%)",
+            "radial-gradient(ellipse at center, rgba(255,255,255,0.04) 0%, transparent 65%)",
         }}
       />
 
@@ -89,19 +90,22 @@ export default function DownloadPage() {
 
         {/* Big amber download CTA. */}
         <motion.div {...staggerChild} className="mt-7">
+          {/* Single signal moment for amber on this page — kept on
+              the primary CTA but with a softer glow than the
+              startup-template version. */}
           <a
             href={downloadUrl}
-            className="group inline-flex items-center justify-center rounded-full bg-chirp-amber-400 px-9 font-display text-[16px] font-semibold text-black transition-all duration-200 hover:-translate-y-px hover:bg-chirp-amber-300 active:translate-y-0 active:scale-[0.98]"
+            className="group inline-flex items-center justify-center rounded-full bg-chirp-amber-400 px-9 font-display text-[15.5px] font-semibold text-black transition-all duration-200 hover:-translate-y-px hover:bg-chirp-amber-300 active:translate-y-0 active:scale-[0.98]"
             style={{
-              height: 56,
+              height: 54,
               boxShadow:
-                "0 8px 28px rgba(240,183,35,0.32), 0 2px 4px rgba(240,183,35,0.20), inset 0 1px 0 rgba(255,255,255,0.20)",
+                "0 4px 18px rgba(240,183,35,0.18), inset 0 1px 0 rgba(255,255,255,0.22)",
             }}
           >
             Download for {osLabel}
             <span
               aria-hidden
-              className="ml-2 transition-transform duration-200 group-hover:translate-x-0.5"
+              className="ml-2 text-black/60 transition-all duration-200 group-hover:translate-x-0.5 group-hover:text-black"
             >
               →
             </span>
@@ -189,7 +193,7 @@ function Step({
   return (
     <li className="flex gap-6 border-t border-white/[0.08] py-7 first:border-t-0 first:pt-0">
       <span
-        className="font-mono text-[13px] uppercase tracking-[0.18em] text-chirp-amber-400"
+        className="font-mono text-[13px] uppercase tracking-[0.18em] text-white/35"
         style={{ fontFeatureSettings: '"tnum"' }}
       >
         {number}

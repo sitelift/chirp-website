@@ -29,8 +29,8 @@ function Section({
       <h2 className="flex items-center gap-3 font-display text-[20px] font-semibold tracking-tight text-white md:text-[22px]">
         <Icon
           size={18}
-          strokeWidth={1.6}
-          className="shrink-0 text-chirp-amber-400"
+          strokeWidth={1.5}
+          className="shrink-0 text-white/40"
           aria-hidden
         />
         {title}
