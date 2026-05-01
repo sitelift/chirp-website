@@ -37,7 +37,7 @@ export default function Home() {
             identity on its own. */}
         <motion.div
           {...staggerContainer}
-          className="relative z-20 -mt-24 flex w-full max-w-[1100px] flex-col items-start md:-mt-32"
+          className="relative z-20 -mt-48 flex w-full max-w-[1100px] flex-col items-start md:-mt-32"
         >
           <motion.h1
             {...staggerChild}
@@ -56,7 +56,7 @@ export default function Home() {
             className="mt-5 max-w-xl font-body text-base leading-relaxed text-white/60 md:text-lg"
           >
             Voice-to-text that runs entirely on your machine. No cloud, no
-            account, no subscription.
+            account.
           </motion.p>
 
           <motion.div

@@ -6,7 +6,7 @@
 // shipped-app tokens; new scenes are added here one iteration at a
 // time as the redesign progresses.
 
-import { WhatItDoesScene } from "./what-it-does-scene";
+import { VideoDemoScene } from "./video-demo-scene";
 import { PrivacyScene } from "./privacy-scene";
 import { PowerToolsScene } from "./power-tools-scene";
 import { CloseCtaScene } from "./close-cta-scene";
@@ -14,7 +14,7 @@ import { CloseCtaScene } from "./close-cta-scene";
 export function HomeSections() {
   return (
     <main className="relative z-10">
-      <WhatItDoesScene />
+      <VideoDemoScene />
       <PrivacyScene />
       <PowerToolsScene />
       <CloseCtaScene />
