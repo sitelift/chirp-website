@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Nav } from "@/components/nav";
 import { ConditionalFooter } from "@/components/conditional-footer";
+import { MotionProvider } from "@/components/motion-provider";
 import "./globals.css";
 
 // Geist Sans + Geist Mono are imported via globals.css (@fontsource-
@@ -55,9 +56,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-body antialiased bg-background text-foreground">
-        <Nav />
-        <main>{children}</main>
-        <ConditionalFooter />
+        <MotionProvider>
+          <Nav />
+          <main>{children}</main>
+          <ConditionalFooter />
+        </MotionProvider>
       </body>
     </html>
   );
