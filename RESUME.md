@@ -85,10 +85,14 @@ is **human-gated** by Pieter; never merge to `master` autonomously.
       mono footer linking to GitHub issues. Server component holds
       Metadata; client subcomponent (faq-accordion.tsx) holds the
       Radix root. Visual verified at 1440x900.
-- [ ] Phase 5.3: **Reskin /download page** to dark mode. Black
-      canvas, card-surface OS picker (Mac / Windows segmented
-      control). Numbered install steps in hairline-divided rows.
-      No cream cards.
+- [x] Phase 5.3: **/download reskinned dark** — pure black canvas,
+      halo'd BirdMark anchor, halo-hero "Get Chirp." headline,
+      OS picker segmented control (Mac/Windows) with auto-detect via
+      navigator.userAgent, big amber CTA with amber-glow shadow,
+      version+size+license mono stamp, three hairline-divided
+      numbered install steps (amber numerals), 3-column system
+      requirements row at bottom (OS · Disk · Memory). Visual
+      verified at 1440x900.
 - [ ] Phase 5.4: **Reskin /privacy page** to dark mode. Cream cards
       → card-surface. Headings white, body white/65. Section
       headings stay; remove any amber decoration that's not signal.
