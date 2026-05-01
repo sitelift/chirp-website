@@ -20,45 +20,19 @@ const SPARK_DATA = [
   1450, 1120,
 ];
 
-const RECENT_ENTRIES = [
-  {
-    time: "9:42a",
-    text: "I think we should ship the dark theme this week before Friday.",
-    app: "Slack",
-    duration: "12s",
-    words: 14,
-    polished: true,
-  },
-  {
-    time: "9:18a",
-    text: "Let's move the meeting to Thursday afternoon if that works.",
-    app: "Linear",
-    duration: "8s",
-    words: 11,
-    polished: true,
-  },
-  {
-    time: "8:53a",
-    text: "Quick reminder — pick up groceries on the way home.",
-    app: "Notes",
-    duration: "5s",
-    words: 9,
-    polished: false,
-  },
-];
-
 export function HeroAppPreview() {
   return (
     <div
       className="relative w-full max-w-[1100px]"
       style={{
-        // Fade the bottom 38% of the preview into the page canvas
-        // so the app reads as if it extends beyond the visible frame.
-        // Direct port of Fey's hero treatment.
+        // Aggressive fade — bottom half dissolves into canvas. Black
+        // through the top 45%, transparent by 80%. Direct port of
+        // Fey's hero treatment, with a harsher curve so the
+        // dissolve feels intentional, not gentle.
         WebkitMaskImage:
-          "linear-gradient(to bottom, black 0%, black 62%, transparent 100%)",
+          "linear-gradient(to bottom, black 0%, black 45%, transparent 80%)",
         maskImage:
-          "linear-gradient(to bottom, black 0%, black 62%, transparent 100%)",
+          "linear-gradient(to bottom, black 0%, black 45%, transparent 80%)",
       }}
     >
       {/* App window frame — top-rounded only, no bottom corners or
@@ -168,51 +142,10 @@ export function HeroAppPreview() {
             />
           </section>
 
-          {/* Recent dictations — collapsed list, no expand drawer in
-              the hero (we want to keep it short and visual). */}
-          <section className="mt-8">
-            <header className="mb-3 flex items-center justify-between px-1">
-              <span className="font-display text-[10px] font-medium uppercase tracking-[0.2em] text-white/45">
-                Recent
-              </span>
-              <span className="font-display text-[11px] text-white/55">
-                View all →
-              </span>
-            </header>
-            <ul className="card-surface divide-y divide-white/[0.06] px-5">
-              {RECENT_ENTRIES.map((entry, i) => (
-                <li
-                  key={i}
-                  className="grid grid-cols-[64px_1fr] items-start gap-4 py-3"
-                >
-                  <span
-                    className="pt-0.5 font-mono text-[11px] text-white/35"
-                    style={{ fontFeatureSettings: '"tnum"' }}
-                  >
-                    {entry.time}
-                  </span>
-                  <div className="flex min-w-0 flex-col gap-1">
-                    <p className="truncate font-display text-[13px] text-white/85">
-                      {entry.text}
-                    </p>
-                    <div className="flex items-center gap-2 font-display text-[11px] text-white/40">
-                      <span>{entry.app}</span>
-                      <span className="text-white/20">·</span>
-                      <span>{entry.duration}</span>
-                      <span className="text-white/20">·</span>
-                      <span>{entry.words} words</span>
-                      {entry.polished && (
-                        <>
-                          <span className="text-white/20">·</span>
-                          <span className="text-chirp-amber-400">polished</span>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </section>
+          {/* Recent entries dropped from the hero composition — the
+              bottom dissolve makes them invisible anyway, and shorter
+              preview = tighter fold. The full Recent list lives on
+              the actual app surface, not in the marketing teaser. */}
         </div>
       </div>
 

@@ -8,7 +8,6 @@ import { HomeSections } from "@/components/home-sections";
 import { CursorSpotlight } from "@/components/cursor-spotlight";
 import { AnnouncementPill } from "@/components/announcement-pill";
 import { HeroAppPreview } from "@/components/hero-app-preview";
-import { BirdMark } from "@/components/bird-mark";
 
 export default function Home() {
   return (
@@ -35,23 +34,15 @@ export default function Home() {
           <HeroAppPreview />
         </motion.div>
 
-        {/* Brand mark + headline anchor pulled UP into the faded
-            bottom of the preview. Negative top margin overlaps the
-            preview's dissolved zone so the visual stack reads tight,
-            no void between the screenshot and the text. */}
+        {/* Headline anchor pulled UP into the faded bottom of the
+            preview. Negative top margin overlaps the dissolved zone
+            so the stack reads tight — no void between image and
+            text. No brand eyebrow; the giant headline carries
+            identity on its own. */}
         <motion.div
           {...staggerContainer}
           className="relative z-20 -mt-24 flex w-full max-w-[1100px] flex-col items-start md:-mt-32"
         >
-          <motion.div
-            {...staggerChild}
-            className="mb-2 flex items-center gap-2"
-          >
-            <BirdMark size={16} color="#F0B723" />
-            <span className="font-display text-[14px] font-medium tracking-tight text-white/55">
-              Chirp
-            </span>
-          </motion.div>
           <motion.h1
             {...staggerChild}
             className="halo-hero relative font-display font-semibold leading-[0.95] tracking-tight text-white"
