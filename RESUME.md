@@ -92,12 +92,17 @@ is **human-gated** by Pieter; never merge to `master` autonomously.
 - [ ] Phase 5.4: **Reskin /privacy page** to dark mode. Cream cards
       → card-surface. Headings white, body white/65. Section
       headings stay; remove any amber decoration that's not signal.
-- [ ] Phase 6.1: **Nav cleanup**. Confirm dark styling matches the
-      hero. Announcement pill integrated. Logo + nav links + CTA
-      align to the spec.
-- [ ] Phase 6.2: **Footer cleanup**. Collapse to a single hairline
-      row with copyright + a few minimal links. No big footer
-      backdrop image.
+- [x] Phase 6.1: **Nav cleanup** — dropped scroll-driven
+      transparency, always solid black/85 with hairline border-b.
+      Brand left, Download/FAQ/Changelog text links center, amber
+      Download CTA pill right (with amber glow shadow). Mobile
+      hamburger collapses to a full-screen black/95 overlay.
+- [x] Phase 6.2: **Footer cleanup** — collapsed from cream
+      multi-column to a single hairline row at the bottom of every
+      non-home page. Brand + version stamp left, inline link nav
+      center (Download · FAQ · Changelog · Privacy · GitHub),
+      mono copyright right. Pure black, white/25 mono caps for
+      atmosphere. Mobile stacks the three regions vertically.
 - [ ] Phase 6.3: **Hover lifts** on every `.card-surface` (use the
       `.card-surface-hover` utility already in globals.css).
 - [ ] Phase 6.4: **Visual QA pass** — playwright screenshot every
