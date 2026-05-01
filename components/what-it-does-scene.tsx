@@ -2,106 +2,109 @@
 
 import { motion } from "framer-motion";
 import { staggerContainer, staggerChild } from "@/lib/motion";
-import { OverlayDemo } from "./overlay-demo";
+import { ListeningCanvas } from "./listening-canvas";
+import { HotkeyTrio } from "./hotkey-trio";
+import { TypingText } from "./typing-text";
 
-// "What it does" — the home page's second scene, sitting right
-// below the hero. Sells the core interaction in one beat: a
-// centered headline + the live ported OverlayDemo pill cycling
-// through listening → polishing → reset, framed by a stylized
-// "desktop surface" so the visitor sees the overlay the way it
-// actually appears on a real machine.
+// "What it does" — three-beat cascade on the open dark canvas.
+// No card-surface frame, no captions, no per-frame labels. The
+// visuals carry the value prop: press the hotkey → speak loosely
+// (raw transcript with fillers, lowercase, spoken punctuation as
+// words) → paste clean text (proper case, real punctuation,
+// numbers normalized, fillers gone). The transformation between
+// frame 2's raw stream and frame 3's polished sentence IS the
+// product.
 //
-// All chrome here uses shipped app tokens (card-surface, halo,
-// dotted bg) so the look is byte-identical to the desktop app's
-// visual language.
+// Both typewriters share a 9000ms cycle. Frame 2 types 300–3300ms,
+// frame 3 starts at 3700ms (small breath after raw text settles)
+// and types over 2000ms, both hold to cycle end. Mounted at scene
+// mount so they stay in lockstep.
+
+const RAW =
+  "send john the doc by friday at three pm period question mark do you have his email address";
+const CLEAN =
+  "Send John the doc by Friday at 3 PM. Do you have his email address?";
+
+const CYCLE_MS = 9000;
 
 export function WhatItDoesScene() {
   return (
-    <section className="relative overflow-hidden border-t border-white/[0.06] px-6 py-28 md:py-36 lg:py-40">
+    <section className="relative overflow-hidden px-6 py-32 md:py-44 lg:py-48">
       <motion.div
         {...staggerContainer}
-        className="relative z-10 mx-auto flex w-full max-w-[1100px] flex-col items-center text-center"
+        className="relative z-10 mx-auto flex w-full max-w-[1180px] flex-col items-stretch md:flex-row md:items-center md:justify-between md:gap-6"
       >
-        {/* Headline — three-word procedural beat that mirrors the
-            hero's "Speak freely." cadence with the action loop. */}
-        <motion.h2
-          {...staggerChild}
-          className="halo-hero relative font-display font-semibold tracking-tight text-white"
-          style={{
-            fontSize: "clamp(36px, 5.5vw, 72px)",
-            letterSpacing: "-0.03em",
-            lineHeight: 1.0,
-          }}
-        >
-          Press, speak, paste.
-        </motion.h2>
-
-        <motion.p
-          {...staggerChild}
-          className="mt-6 max-w-[560px] font-body text-base leading-relaxed text-white/55 md:text-[17px]"
-        >
-          Hit the hotkey. The overlay listens locally, polishes the
-          dictation on-device, and drops the clean text wherever your
-          cursor was. No app to switch to.
-        </motion.p>
-
-        {/* Overlay centerpiece — wide card-surface with a soft
-            amber pool underneath the pill, suggesting the overlay
-            sits on top of whatever app the user is in. The
-            OverlayDemo cycles automatically. */}
+        {/* Frame 1 — the hotkey trio */}
         <motion.div
           {...staggerChild}
-          className="relative mt-14 w-full max-w-[880px] md:mt-20"
+          className="flex min-h-[180px] flex-1 items-center justify-center"
         >
-          <div className="card-surface relative flex h-[320px] items-center justify-center overflow-hidden md:h-[400px]">
-            {/* Dotted ambient backdrop. */}
-            <div
-              className="absolute inset-0 bg-dotted opacity-50"
-              aria-hidden
-            />
-            {/* Soft amber pool under the pill — implies a glow
-                emanating from the overlay onto the surface below. */}
-            <div
-              aria-hidden
-              className="pointer-events-none absolute left-1/2 top-1/2 h-[320px] w-[320px] -translate-x-1/2 -translate-y-1/2 rounded-full"
-              style={{
-                background:
-                  "radial-gradient(circle at center, rgba(240,183,35,0.12) 0%, transparent 70%)",
-              }}
-            />
-            {/* Subtle inset top highlight reinforces the lift. */}
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent"
-            />
-            {/* The live overlay pill, scaled up for visual weight
-                without re-implementing the size as a prop. */}
-            <div className="relative z-10 scale-[1.5] md:scale-[1.85]">
-              <OverlayDemo />
-            </div>
-          </div>
-
-          {/* Hairline frame caption — gives the impression that
-              this is a captured fragment of a real desktop. */}
-          <div className="mt-3 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.18em] text-white/30">
-            <span>Live preview · synthetic audio</span>
-            <span>Loops every 7s</span>
-          </div>
+          <HotkeyTrio />
         </motion.div>
 
-        {/* Three-stage caption row — sets the mental model so the
-            visitor knows what to look for as the demo cycles. */}
+        {/* Connector — thin hairline that bridges frames on desktop. */}
+        <Connector />
+
+        {/* Frame 2 — listening overlay + raw transcript streaming */}
         <motion.div
           {...staggerChild}
-          className="mt-14 flex items-center gap-4 font-mono text-[11px] uppercase tracking-[0.2em] text-white/45 md:gap-5 md:text-[12px]"
+          className="flex min-h-[180px] flex-1 flex-col items-center justify-center gap-8"
         >
-          <span>Listen</span>
-          <span className="h-px w-10 bg-white/15" aria-hidden />
-          <span>Clean</span>
-          <span className="h-px w-10 bg-white/15" aria-hidden />
-          <span>Paste</span>
+          <ListeningCanvas />
+          <p
+            className="font-mono text-[13px] leading-[1.7] text-white/35"
+            style={{
+              maxWidth: "32ch",
+              minHeight: "5.5em",
+              textAlign: "center",
+            }}
+          >
+            <TypingText
+              text={RAW}
+              cycleMs={CYCLE_MS}
+              startMs={300}
+              typeMs={3000}
+            />
+          </p>
+        </motion.div>
+
+        <Connector />
+
+        {/* Frame 3 — polished output */}
+        <motion.div
+          {...staggerChild}
+          className="flex min-h-[180px] flex-1 items-center justify-center"
+        >
+          <p
+            className="font-display text-[16px] font-medium leading-[1.55] text-white"
+            style={{
+              maxWidth: "32ch",
+              minHeight: "5.5em",
+              textAlign: "center",
+              letterSpacing: "-0.005em",
+            }}
+          >
+            <TypingText
+              text={CLEAN}
+              cycleMs={CYCLE_MS}
+              startMs={3700}
+              typeMs={2000}
+            />
+          </p>
         </motion.div>
       </motion.div>
     </section>
+  );
+}
+
+// Hairline connector between frames. Hidden on mobile (frames stack
+// vertically), shown as a short horizontal line on desktop. Subtle
+// amber pulse implies flow without screaming for attention.
+function Connector() {
+  return (
+    <div
+      aria-hidden
+      className="hidden md:block md:h-px md:w-12 md:shrink-0 md:bg-gradient-to-r md:from-white/5 md:via-white/15 md:to-white/5"
+    />
   );
 }
