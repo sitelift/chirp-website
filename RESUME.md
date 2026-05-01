@@ -59,13 +59,15 @@ is **human-gated** by Pieter; never merge to `master` autonomously.
       Cursor-flashlight effect deleted from app/page.tsx (Fey
       doesn't have one and user explicitly called it shit). Visual
       verified at 1440x900 + 375x812.
-- [ ] Phase 4.3: **Power tools scene** for home page. Three feature
-      cards: Vocabulary, Snippets, Smart Cleanup. Each card uses
-      `.card-surface` with hover-lift, real app element previews
-      built from ported components where possible (a mini
-      vocabulary table mock, a snippets mock, a Smart Cleanup
-      SegmentedControl preview). No screenshots. Headline above:
-      "Your dictation, finely tuned." or similar.
+- [x] Phase 4.3: **Power tools scene** — Fey-style centered halo
+      headline "Tuned for how you talk." with two-line subhead, then
+      a 3-column card-surface grid (Vocabulary / Snippets / Smart
+      Cleanup). Each card has a top preview region with dotted bg +
+      amber halo that renders a real shipped-app pattern (vocab
+      entry rows, trigger→expansion snippet, Off/Local/Cloud
+      segmented control + Tone toggle), and a bottom title + body.
+      hover-lift via card-surface-hover. Visual verified at 1440x900
+      + 375x812 (cards stack cleanly to single column on mobile).
 - [ ] Phase 4.4: **Close CTA scene** for home page. Full-bleed
       atmospheric dark moment. Centered: small BirdMark, halo-hero
       headline "Try Chirp.", subhead "Free. Local. Yours.",

@@ -8,12 +8,14 @@
 
 import { WhatItDoesScene } from "./what-it-does-scene";
 import { PrivacyScene } from "./privacy-scene";
+import { PowerToolsScene } from "./power-tools-scene";
 
 export function HomeSections() {
   return (
     <main className="relative z-10">
       <WhatItDoesScene />
       <PrivacyScene />
+      <PowerToolsScene />
     </main>
   );
 }
