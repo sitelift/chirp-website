@@ -93,9 +93,13 @@ is **human-gated** by Pieter; never merge to `master` autonomously.
       numbered install steps (amber numerals), 3-column system
       requirements row at bottom (OS · Disk · Memory). Visual
       verified at 1440x900.
-- [ ] Phase 5.4: **Reskin /privacy page** to dark mode. Cream cards
-      → card-surface. Headings white, body white/65. Section
-      headings stay; remove any amber decoration that's not signal.
+- [x] Phase 5.4: **/privacy reskinned dark** — cream cards
+      replaced with hairline-divided sections (border-t white/8).
+      Halo-hero "Privacy." headline at top with subhead in
+      white/55 + mono caps "Last updated · March 2026". Each
+      section has a small amber icon + display title in white +
+      body in white/65 at 60ch max width. Email link in amber.
+      Visual verified at 1440x900.
 - [x] Phase 6.1: **Nav cleanup** — dropped scroll-driven
       transparency, always solid black/85 with hairline border-b.
       Brand left, Download/FAQ/Changelog text links center, amber
