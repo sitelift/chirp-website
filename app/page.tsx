@@ -16,8 +16,8 @@ export default function Home() {
         <motion.div {...staggerChild} className="relative z-10 mb-6 md:mb-8">
           <AnnouncementPill
             href="/changelog"
-            badge="New"
-            label="The dark redesign just shipped"
+            badge="v1.3.4"
+            label="Smart Cleanup CPU fallback shipped"
           />
         </motion.div>
 

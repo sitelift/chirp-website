@@ -26,14 +26,15 @@ export function HeroAppPreview() {
     <div
       className="relative w-full max-w-[1100px]"
       style={{
-        // Aggressive fade — bottom half dissolves into canvas. Black
-        // through the top 45%, transparent by 80%. Direct port of
-        // Fey's hero treatment, with a harsher curve so the
-        // dissolve feels intentional, not gentle.
+        // Earlier dissolve — Codex flagged the headline overlapped
+        // the lower dashboard fade. Tuned from 45/80 → 40/70:
+        // the headline gets its own black field, the hero number
+        // and sparkline stay legible at the top, the Quick Actions
+        // row dissolves entirely.
         WebkitMaskImage:
-          "linear-gradient(to bottom, black 0%, black 45%, transparent 80%)",
+          "linear-gradient(to bottom, black 0%, black 40%, transparent 70%)",
         maskImage:
-          "linear-gradient(to bottom, black 0%, black 45%, transparent 80%)",
+          "linear-gradient(to bottom, black 0%, black 40%, transparent 70%)",
       }}
     >
       {/* App window frame — top-rounded only, no bottom corners or

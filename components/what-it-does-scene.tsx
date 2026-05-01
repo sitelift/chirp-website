@@ -54,17 +54,6 @@ const PHASES = [
 type PhaseName = typeof PHASES[number]["name"];
 const TOTAL = PHASES.reduce((s, p) => s + p.duration, 0);
 
-// Cumulative end time of each phase, for progress-bar math.
-const PHASE_END: Record<PhaseName, number> = (() => {
-  let cursor = 0;
-  const out = {} as Record<PhaseName, number>;
-  for (const p of PHASES) {
-    cursor += p.duration;
-    out[p.name] = cursor;
-  }
-  return out;
-})();
-
 function getPhase(t: number) {
   let cursor = 0;
   for (const p of PHASES) {
@@ -76,11 +65,6 @@ function getPhase(t: number) {
   const last = PHASES[PHASES.length - 1];
   return { name: last.name, t: last.duration, duration: last.duration };
 }
-
-// Beat boundaries for the three progress bars. Beat 1 = "press".
-// Beat 2 = "listen" + "settle". Beat 3 = the rest.
-const BEAT_2_START = PHASE_END.press;
-const BEAT_3_START = PHASE_END.settle;
 
 export function WhatItDoesScene() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -160,13 +144,6 @@ export function WhatItDoesScene() {
     textColor = "rgba(255,255,255,1)";
   }
 
-  // ── Progress bar fills ─────────────────────────────────────────
-  const beat1Fill = clamp01(now / BEAT_2_START);
-  const beat2Fill = clamp01(
-    (now - BEAT_2_START) / (BEAT_3_START - BEAT_2_START),
-  );
-  const beat3Fill = clamp01((now - BEAT_3_START) / (TOTAL - BEAT_3_START));
-
   return (
     <section
       ref={sectionRef}
@@ -225,29 +202,10 @@ export function WhatItDoesScene() {
         </div>
       </div>
 
-      {/* Progress bars — three thin amber-fillable lines at the bottom.
-          The active beat's bar fills literally over its own duration,
-          so the bar is both progress + position indicator. */}
-      <div className="absolute bottom-12 flex items-center gap-4 md:bottom-16">
-        <ProgressBar fill={beat1Fill} />
-        <ProgressBar fill={beat2Fill} />
-        <ProgressBar fill={beat3Fill} />
-      </div>
+      {/* No progress dots — they read as generic carousel furniture
+          and Fey's scenes don't carry any. The cycle is implicit;
+          the visual transformation IS the cue. */}
     </section>
-  );
-}
-
-function ProgressBar({ fill }: { fill: number }) {
-  return (
-    <div className="relative h-[2px] w-12 overflow-hidden rounded-full bg-white/12">
-      <div
-        className="absolute inset-y-0 left-0 bg-chirp-amber-400"
-        style={{
-          width: `${fill * 100}%`,
-          transition: "width 60ms linear",
-        }}
-      />
-    </div>
   );
 }
 

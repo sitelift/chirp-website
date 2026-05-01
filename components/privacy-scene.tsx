@@ -83,9 +83,8 @@ export function PrivacyScene() {
             className="mt-7 max-w-[44ch] font-body text-[15px] leading-[1.75] text-white/60 md:text-[16.5px]"
           >
             Chirp listens, transcribes, polishes, and pastes — every
-            step on the device you&apos;re holding. Not a cleverly
-            worded encryption claim; an architecture choice that means
-            the network simply isn&apos;t in the loop.
+            step on the device you&apos;re holding. Audio never enters
+            a remote queue, because there isn&apos;t one.
           </motion.p>
 
           {/* Three quiet guarantee lines, hairline-divided. No giant

@@ -15,11 +15,17 @@ import { reveal, staggerContainer, staggerChild } from "@/lib/motion";
 // way Fey's product moments do, not behind dotted-bg+halo
 // containers.
 
+// Each row is what Chirp HEARS on the left vs what it WRITES on
+// the right after the dictionary applies. The spoken column shows
+// lowercase + phonetic guesses (what Parakeet would output without
+// dictionary hints); the written column shows the corrected,
+// disambiguated, properly-cased form.
 const VOCABULARY_ENTRIES = [
-  { spoken: "Anthropic", written: "Anthropic" },
-  { spoken: "Claude", written: "Claude" },
-  { spoken: "Tauri", written: "Tauri" },
-  { spoken: "Sherpa Onyx", written: "sherpa-onnx" },
+  { spoken: "anthropic", written: "Anthropic" },
+  { spoken: "claude", written: "Claude" },
+  { spoken: "ts config", written: "tsconfig" },
+  { spoken: "sherpa onyx", written: "sherpa-onnx" },
+  { spoken: "gpt four", written: "GPT-4" },
 ];
 
 export function PowerToolsScene() {
