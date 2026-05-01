@@ -9,6 +9,7 @@
 import { WhatItDoesScene } from "./what-it-does-scene";
 import { PrivacyScene } from "./privacy-scene";
 import { PowerToolsScene } from "./power-tools-scene";
+import { CloseCtaScene } from "./close-cta-scene";
 
 export function HomeSections() {
   return (
@@ -16,6 +17,7 @@ export function HomeSections() {
       <WhatItDoesScene />
       <PrivacyScene />
       <PowerToolsScene />
+      <CloseCtaScene />
     </main>
   );
 }

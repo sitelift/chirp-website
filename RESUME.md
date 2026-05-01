@@ -68,11 +68,15 @@ is **human-gated** by Pieter; never merge to `master` autonomously.
       segmented control + Tone toggle), and a bottom title + body.
       hover-lift via card-surface-hover. Visual verified at 1440x900
       + 375x812 (cards stack cleanly to single column on mobile).
-- [ ] Phase 4.4: **Close CTA scene** for home page. Full-bleed
-      atmospheric dark moment. Centered: small BirdMark, halo-hero
-      headline "Try Chirp.", subhead "Free. Local. Yours.",
-      single amber download CTA, version stamp underneath. No
-      light-mode artifacts — all dark canvas.
+- [x] Phase 4.4: **Close CTA scene** — min-h-screen monument
+      pattern. Small halo'd BirdMark anchor, "Try Chirp." in
+      clamp(72px, 12vw, 168px) display white as the dominant
+      element, "Free. Local. Yours." subhead in white/55,
+      amber download CTA (with amber glow shadow + arrow) plus
+      Source on GitHub secondary button, version stamp in mono
+      caps. Layered amber+white atmospheric blooms behind the
+      headline. Subtle dotted floor with gradient mask at the
+      bottom anchors the monument. Visual verified at 1440x900.
 - [ ] Phase 5.2: **Build /faq page** (currently 404). Use Radix
       Accordion. Source: `lib/constants.ts FAQS`. Each FAQ on a
       hairline-divider row. Headline: "Questions & answers." Single
