@@ -1,0 +1,36 @@
+[    1833ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://www.fey.com/marketing/images/screener/sparkle.svg:0
+[    1925ms] Error: Minified React error #425; visit https://reactjs.org/docs/error-decoder.html?invariant=425 for the full message or use the non-minified dev environment for full errors and additional helpful warnings.
+    at rm (https://www.fey.com/_next/static/chunks/framework-cda5f92a513aa5f9.js:1:50472)
+    at https://www.fey.com/_next/static/chunks/framework-cda5f92a513aa5f9.js:1:113673
+    at oD (https://www.fey.com/_next/static/chunks/framework-cda5f92a513aa5f9.js:1:116420)
+    at oO (https://www.fey.com/_next/static/chunks/framework-cda5f92a513aa5f9.js:1:109370)
+    at oF (https://www.fey.com/_next/static/chunks/framework-cda5f92a513aa5f9.js:1:109180)
+    at oS (https://www.fey.com/_next/static/chunks/framework-cda5f92a513aa5f9.js:1:104253)
+    at x (https://www.fey.com/_next/static/chunks/framework-cda5f92a513aa5f9.js:1:1484)
+    at MessagePort.T (https://www.fey.com/_next/static/chunks/framework-cda5f92a513aa5f9.js:1:2014)
+[    1925ms] Error: Minified React error #418; visit https://reactjs.org/docs/error-decoder.html?invariant=418 for the full message or use the non-minified dev environment for full errors and additional helpful warnings.
+    at lh (https://www.fey.com/_next/static/chunks/framework-cda5f92a513aa5f9.js:1:56763)
+    at i (https://www.fey.com/_next/static/chunks/framework-cda5f92a513aa5f9.js:1:131326)
+    at oO (https://www.fey.com/_next/static/chunks/framework-cda5f92a513aa5f9.js:1:109310)
+    at oF (https://www.fey.com/_next/static/chunks/framework-cda5f92a513aa5f9.js:1:109180)
+    at oS (https://www.fey.com/_next/static/chunks/framework-cda5f92a513aa5f9.js:1:104253)
+    at x (https://www.fey.com/_next/static/chunks/framework-cda5f92a513aa5f9.js:1:1484)
+    at MessagePort.T (https://www.fey.com/_next/static/chunks/framework-cda5f92a513aa5f9.js:1:2014)
+[    1925ms] Error: Minified React error #418; visit https://reactjs.org/docs/error-decoder.html?invariant=418 for the full message or use the non-minified dev environment for full errors and additional helpful warnings.
+    at lh (https://www.fey.com/_next/static/chunks/framework-cda5f92a513aa5f9.js:1:56763)
+    at i (https://www.fey.com/_next/static/chunks/framework-cda5f92a513aa5f9.js:1:131326)
+    at oO (https://www.fey.com/_next/static/chunks/framework-cda5f92a513aa5f9.js:1:109310)
+    at oF (https://www.fey.com/_next/static/chunks/framework-cda5f92a513aa5f9.js:1:109180)
+    at oS (https://www.fey.com/_next/static/chunks/framework-cda5f92a513aa5f9.js:1:104253)
+    at x (https://www.fey.com/_next/static/chunks/framework-cda5f92a513aa5f9.js:1:1484)
+    at MessagePort.T (https://www.fey.com/_next/static/chunks/framework-cda5f92a513aa5f9.js:1:2014)
+[    1925ms] Error: Minified React error #423; visit https://reactjs.org/docs/error-decoder.html?invariant=423 for the full message or use the non-minified dev environment for full errors and additional helpful warnings.
+    at i (https://www.fey.com/_next/static/chunks/framework-cda5f92a513aa5f9.js:1:130985)
+    at oO (https://www.fey.com/_next/static/chunks/framework-cda5f92a513aa5f9.js:1:109310)
+    at oF (https://www.fey.com/_next/static/chunks/framework-cda5f92a513aa5f9.js:1:109180)
+    at ox (https://www.fey.com/_next/static/chunks/framework-cda5f92a513aa5f9.js:1:105951)
+    at oS (https://www.fey.com/_next/static/chunks/framework-cda5f92a513aa5f9.js:1:104506)
+    at x (https://www.fey.com/_next/static/chunks/framework-cda5f92a513aa5f9.js:1:1484)
+    at MessagePort.T (https://www.fey.com/_next/static/chunks/framework-cda5f92a513aa5f9.js:1:2014)
+[    1932ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://www.fey.com/marketing/images/screener/sparkle.svg:0
+[    2128ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://www.fey.com/_next/data/uhdzVLHMlVEu23Q3-3qae/updates.json:0

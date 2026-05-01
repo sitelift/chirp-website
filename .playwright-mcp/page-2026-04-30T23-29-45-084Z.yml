@@ -1,0 +1,291 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - region "Notifications alt+T"
+    - navigation [ref=e3]:
+      - generic [ref=e4]:
+        - link [ref=e5] [cursor=pointer]:
+          - /url: /
+          - img [ref=e6]
+        - generic [ref=e8]:
+          - link "Features" [ref=e10] [cursor=pointer]:
+            - /url: /features
+            - text: Features
+            - img [ref=e11]
+          - link "Pricing" [ref=e14] [cursor=pointer]:
+            - /url: /pricing
+          - link "Updates" [ref=e16] [cursor=pointer]:
+            - /url: /updates
+          - link "Students" [ref=e18] [cursor=pointer]:
+            - /url: /students
+          - link "App" [ref=e20] [cursor=pointer]:
+            - /url: /download
+      - link "Fey has joined Wealthsimple Learn more" [ref=e22] [cursor=pointer]:
+        - /url: https://newsroom.wealthsimple.com/wealthsimple-acquires-investment-research-platform-fey
+        - heading "Fey has joined Wealthsimple" [level=4] [ref=e24]
+        - button "Learn more" [ref=e25]
+    - generic [ref=e27]:
+      - generic:
+        - img "Screenshot of the Fey investment platform UI, showcasing portfolio performance dashboard with charts and key financial figures."
+        - generic:
+          - generic:
+            - generic: $130,067.19
+            - generic: Portfolio value
+          - generic:
+            - generic:
+              - text: $31,155.42
+              - generic:
+                - text: +
+                - generic: "31.53"
+                - text: "%"
+            - generic: Past year returns
+        - generic:
+          - generic:
+            - generic:
+              - img
+              - img
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - img "Fey company logo"
+                  - generic: Morning recap
+              - generic:
+                - generic: Summarized at 1:13PM
+                - img
+            - paragraph: Trump's renewed tariff push is shaking markets. Q1 GDP shrank 0.3% as firms rushed imports and pulled guidance. With M&A slowing and consumer demand softening, Wall Street braces for more volatility. Read more
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img "Nvidia (NVDA) stock logo"
+                      - generic: NVDA
+                  - generic:
+                    - generic:
+                      - strong: Today
+                      - text: · Just now
+                - paragraph: Saudi Arabia partners with Nvidia to advance Al ambitions, bolstering cloud infrastructures through foreign collaborations, while Trump visits U.S. chip giant.
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img "Microsoft (MSFT) stock logo"
+                      - generic: MSFT
+                  - generic:
+                    - generic:
+                      - strong: Today
+                      - text: · 2 minutes ago
+                - paragraph: Microsoft cuts 3% of its 228,000 staff to streamline management layers and enhance efficiency, impacting the technology giant's workforce worldwide.
+      - generic [ref=e29]:
+        - heading "Fey" [level=2] [ref=e30]
+        - heading "Make better investments." [level=1] [ref=e31]
+    - generic [ref=e32]:
+      - generic [ref=e34]:
+        - generic [ref=e35]:
+          - heading "Highlights" [level=3] [ref=e36]
+          - paragraph [ref=e37]: Fey turns complex data, gated tools, and noisy news into instant earnings alerts, clear summaries, and a beautiful interface—so anyone can stay informed, without feeling overwhelmed.
+        - generic [ref=e38]:
+          - button [ref=e39] [cursor=pointer]:
+            - img [ref=e40]
+          - button [ref=e42] [cursor=pointer]:
+            - img [ref=e43]
+      - generic [ref=e46]:
+        - generic [ref=e47]:
+          - img "Beautiful Stock and ETF pages" [ref=e49]
+          - heading "Beautiful Stock and ETF pages" [level=3] [ref=e50]
+        - generic [ref=e51]:
+          - img "Insider transactions" [ref=e53]
+          - heading "Insider transactions" [level=3] [ref=e54]
+        - generic [ref=e55]:
+          - img "Graph comparison" [ref=e57]
+          - heading "Graph comparison" [level=3] [ref=e58]
+        - generic [ref=e59]:
+          - img "Advanced metrics" [ref=e61]
+          - heading "Advanced metrics" [level=3] [ref=e62]
+        - generic [ref=e63]:
+          - img "Instant press releases" [ref=e65]
+          - heading "Instant press releases" [level=3] [ref=e66]
+        - generic [ref=e67]:
+          - img "Watchlist" [ref=e69]
+          - heading "Watchlist" [level=3] [ref=e70]
+        - generic [ref=e71]:
+          - img "Secure broker sync" [ref=e73]
+          - heading "Secure broker sync" [level=3] [ref=e74]
+        - generic [ref=e75]:
+          - img "Economic calendar" [ref=e77]
+          - heading "Economic calendar" [level=3] [ref=e78]
+        - generic [ref=e79]:
+          - img "Proprietary APIs and real-time data" [ref=e81]
+          - heading "Proprietary APIs and real-time data" [level=3] [ref=e82]
+        - generic [ref=e83]:
+          - img "Reputable news sources" [ref=e85]
+          - heading "Reputable news sources" [level=3] [ref=e86]
+    - generic [ref=e87]:
+      - heading "From overwhelming to effortless." [level=2] [ref=e89]
+      - generic [ref=e90]:
+        - img "Abstract rock texture representing the Fey brand, part of the navigation dock interface." [ref=e92]
+        - generic [ref=e93]:
+          - img
+          - generic [ref=e94]:
+            - generic [ref=e95]:
+              - button "News and market overview" [ref=e96] [cursor=pointer]:
+                - img [ref=e97]
+              - button "Analysis" [ref=e101] [cursor=pointer]:
+                - img [ref=e102]
+              - button "Earnings" [ref=e105] [cursor=pointer]:
+                - img [ref=e106]:
+                  - generic [ref=e108]: "30"
+              - button "Watchlist and Holdings" [ref=e109] [cursor=pointer]:
+                - img [ref=e110]
+              - button "Graph comparison" [ref=e112] [cursor=pointer]:
+                - img [ref=e113]
+              - button "Stock Finder" [ref=e115] [cursor=pointer]:
+                - img [ref=e116]
+              - button "Settings" [ref=e119] [cursor=pointer]:
+                - img [ref=e120]
+            - img [ref=e125]
+          - generic [ref=e127]:
+            - heading "News and market overview" [level=3] [ref=e128]
+            - paragraph [ref=e129]: See your personalized feed with curated news, daily recaps, and market performance. Updated continuously to keep you ahead.
+    - generic [ref=e138]:
+      - generic [ref=e139]:
+        - generic [ref=e140]:
+          - link "Learn more" [ref=e141] [cursor=pointer]:
+            - /url: /features/earnings
+            - text: Learn more
+            - img [ref=e142]
+          - heading "Earnings in real time." [level=2] [ref=e144]:
+            - generic [ref=e145]: Earnings in real time.
+          - paragraph [ref=e146]: Fey alerts you the second earnings calls start and delivers clear summaries in real time. Listen live or catch up instantly, without missing key moments.
+        - generic:
+          - link "Learn more":
+            - /url: /features/finder
+            - text: Learn more
+            - img
+          - heading "Screener reimagined." [level=2]:
+            - generic: Screener reimagined.
+          - paragraph: Quickly discover stocks by typing exactly what you're looking for, no complicated filters. Fey turns your words into precise stock picks.
+        - generic:
+          - link "Learn more":
+            - /url: /features/portfolio
+            - text: Learn more
+            - img
+          - heading "Portfolio in sync." [level=2]:
+            - generic: Portfolio in sync.
+          - paragraph: Automatically sync all your brokerage accounts. Instantly track performance and see your investments clearly. All in one place.
+      - generic [ref=e147]:
+        - img "Fey's real-time earnings call summary interface, showing key moments and summaries." [ref=e149]
+        - generic [ref=e150]:
+          - generic:
+            - generic [ref=e151] [cursor=pointer]:
+              - generic [ref=e152]:
+                - img "Fey logo" [ref=e154]
+                - paragraph [ref=e155]:
+                  - strong [ref=e156]: Cloudflare
+                  - text: reports record Q2 earnings.
+                  - img [ref=e157]
+              - button "Press release" [ref=e160]:
+                - img [ref=e161]
+                - text: Press release
+            - generic [ref=e163] [cursor=pointer]:
+              - generic [ref=e164]:
+                - img "Fey logo" [ref=e166]
+                - paragraph [ref=e167]:
+                  - strong [ref=e168]: Cloudflare
+                  - text: earnings call just started.
+                  - img [ref=e169]
+              - button "Join live call" [ref=e171]:
+                - img [ref=e172]
+                - text: Join live call
+    - generic [ref=e176]:
+      - generic [ref=e177]:
+        - heading "Complex data, simplified." [level=2] [ref=e178]
+        - paragraph [ref=e179]: Fey uses deep analysis to turn dense financial statements, earnings data, and economic indicators into clear insights, instantly.
+      - generic [ref=e181]:
+        - img "Fey platform interface displaying simplified financial data and insights." [ref=e182]
+        - img "Video poster showing Fey's data analysis and insights platform." [ref=e183]
+        - img "Navigation bar of Fey's data analysis platform." [ref=e185]
+        - generic [ref=e186]: Thu Apr 30 6:29 PM
+    - generic [ref=e188]:
+      - generic [ref=e189]:
+        - generic [ref=e190]:
+          - heading "At your command." [level=2] [ref=e191]
+          - paragraph [ref=e192]: Navigate Fey with natural language. Quickly search stocks, find news, or manage your portfolio. Without lifting your hands from your keyboard.
+        - img "Fey's Command K interface, allowing natural language search for stocks, news, and portfolio management." [ref=e195]
+      - generic [ref=e196]:
+        - generic [ref=e197]:
+          - img "Preview of Fey's weekly insights newsletter card, showing personalized watchlist updates and market-moving stories." [ref=e200]
+          - generic: "1"
+        - generic [ref=e201]:
+          - heading "Weekly insights." [level=2] [ref=e202]
+          - paragraph [ref=e203]: Start each week ahead. Every Monday, get personalized insights on your watchlist, portfolio updates, and market-moving stories directly in your inbox.
+    - generic [ref=e209]:
+      - generic [ref=e210]: Coming soon
+      - heading "News you can trust." [level=2] [ref=e211]
+      - paragraph [ref=e212]: Fey cross-checks multiple news sources with company filings, earnings calls, and financial data—delivering only reliable, impactful news.
+      - generic [ref=e215]:
+        - generic [ref=e216]:
+          - img "Screenshot of Fey's news interface, showing how it cross-checks multiple sources and provides summarized, reliable news with price movement context and AI-powered stock finder ideas." [ref=e217]
+          - generic [ref=e219]: Price movement context
+          - generic [ref=e221]: Fact-checked context
+          - generic [ref=e223]:
+            - text: All headlines
+            - text: in one sentence
+          - generic [ref=e225]:
+            - text: AI-powered
+            - text: stock finder ideas
+          - generic [ref=e227]: Investor takeaways
+        - generic [ref=e228]:
+          - generic [ref=e229]:
+            - img [ref=e230]
+            - text: Generated at 5:00 PM
+          - generic [ref=e232]:
+            - generic [ref=e233]: Breakdown
+            - generic [ref=e234]: Headlines
+            - generic [ref=e235]: Insights
+          - generic [ref=e237]: Cross-checked sources
+    - generic [ref=e239]:
+      - generic [ref=e240]:
+        - heading "7-day free trial. Cancel anytime." [level=3] [ref=e241]
+        - heading "Finance made effortless." [level=2] [ref=e242]
+        - paragraph [ref=e243]: Clear insights on markets, economic trends, and breaking news for everyone.
+        - generic [ref=e246] [cursor=pointer]: Try it free
+      - generic:
+        - generic:
+          - img "MacBook showcasing the Fey platform"
+          - img "MacBook screen light effect"
+          - generic:
+            - img "MacBook keyboard backlight effect"
+    - contentinfo [ref=e247]:
+      - generic [ref=e248]:
+        - generic [ref=e249]: © 2026, Fey Labs Inc.
+        - generic [ref=e250]:
+          - link "Features" [ref=e251] [cursor=pointer]:
+            - /url: /features
+          - link "Earnings" [ref=e252] [cursor=pointer]:
+            - /url: /features/earnings
+          - link "Portfolio" [ref=e253] [cursor=pointer]:
+            - /url: /features/portfolio
+          - link "Finder" [ref=e254] [cursor=pointer]:
+            - /url: /features/finder
+          - link "Pricing" [ref=e255] [cursor=pointer]:
+            - /url: /pricing
+          - link "Updates" [ref=e256] [cursor=pointer]:
+            - /url: https://fey.com/updates
+          - link "Download" [ref=e257] [cursor=pointer]:
+            - /url: /download
+          - link "Privacy" [ref=e259] [cursor=pointer]:
+            - /url: /privacy
+          - link "Terms" [ref=e260] [cursor=pointer]:
+            - /url: /terms
+  - generic:
+    - img [ref=e261]
+    - img
+  - alert [ref=e262]

@@ -1,0 +1,75 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - generic [ref=e3]:
+      - link "chirp" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - img [ref=e5]
+        - generic [ref=e7]: chirp
+      - link "Download" [ref=e9] [cursor=pointer]:
+        - /url: /download
+  - main [ref=e10]:
+    - main [ref=e11]:
+      - generic [ref=e12]:
+        - heading "Privacy Policy" [level=1] [ref=e13]
+        - paragraph [ref=e14]: Last updated March 2026
+      - generic [ref=e15]:
+        - generic [ref=e16]:
+          - heading "The short version" [level=2] [ref=e17]:
+            - img [ref=e18]
+            - text: The short version
+          - paragraph [ref=e22]: Chirp processes everything on your device. We offer optional, anonymous analytics that you control. Your audio and text never leave your computer.
+        - generic [ref=e23]:
+          - heading "What happens when you use Chirp" [level=2] [ref=e24]:
+            - img [ref=e25]
+            - text: What happens when you use Chirp
+          - paragraph [ref=e29]: When you press the hotkey, Chirp captures audio from your microphone. That audio is processed by an AI model running on your computer. The model converts your speech to text. If Smart Cleanup is enabled, another local model cleans up the text. The result is pasted at your cursor. Every step happens on your device.
+        - generic [ref=e30]:
+          - heading "What we don't do" [level=2] [ref=e31]:
+            - img [ref=e32]
+            - text: What we don't do
+          - paragraph [ref=e37]: We don't send audio or text to any server. We don't store your recordings. We don't require an account, email, or personal information. We don't use cookies or tracking. We don't share data with third parties.
+        - generic [ref=e38]:
+          - heading "Optional analytics" [level=2] [ref=e39]:
+            - img [ref=e40]
+            - text: Optional analytics
+          - paragraph [ref=e43]: Chirp includes optional analytics powered by Aptabase and crash reporting via Sentry. Both are disabled by default. You choose whether to enable them in Settings. When enabled, we collect app launches, feature usage, and crash reports with stack traces. We never collect audio recordings, transcription text, dictionary entries, or personal information. You can disable analytics at any time.
+        - generic [ref=e44]:
+          - heading "Network activity" [level=2] [ref=e45]:
+            - img [ref=e46]
+            - text: Network activity
+          - paragraph [ref=e51]: Chirp connects to the internet to download AI models during setup, check for updates, and fetch announcements. If you enable analytics, anonymous usage data is sent periodically. Chirp works fully offline after the initial model download.
+        - generic [ref=e52]:
+          - heading "Your data" [level=2] [ref=e53]:
+            - img [ref=e54]
+            - text: Your data
+          - paragraph [ref=e57]: Audio is captured, processed, and immediately discarded. It is never written to disk and never transmitted. Transcriptions are stored locally on your device in your app data folder. You can view and delete them at any time. Settings are stored locally.
+        - generic [ref=e58]:
+          - heading "Transparency" [level=2] [ref=e59]:
+            - img [ref=e60]
+            - text: Transparency
+          - paragraph [ref=e64]: If you have a privacy concern, reach out to us at hello@chirptype.com. We take privacy seriously. It's the reason Chirp exists.
+  - contentinfo [ref=e65]:
+    - generic [ref=e66]:
+      - generic [ref=e67]:
+        - generic [ref=e68]:
+          - generic [ref=e69]:
+            - img [ref=e70]
+            - generic [ref=e72]: chirp
+          - paragraph [ref=e73]: Local voice-to-text.
+        - generic [ref=e74]:
+          - generic [ref=e75]:
+            - heading "Product" [level=3] [ref=e76]
+            - navigation [ref=e77]:
+              - link "Download" [ref=e78] [cursor=pointer]:
+                - /url: /download
+          - generic [ref=e79]:
+            - heading "Resources" [level=3] [ref=e80]
+            - navigation [ref=e81]:
+              - link "Privacy" [ref=e82] [cursor=pointer]:
+                - /url: /privacy
+              - link "GitHub" [ref=e83] [cursor=pointer]:
+                - /url: https://github.com/sitelift/Chirp
+      - generic [ref=e84]:
+        - paragraph [ref=e85]: Free Forever · No Subscription
+        - paragraph [ref=e86]: © 2026 Chirp. All rights reserved.
+  - alert [ref=e87]

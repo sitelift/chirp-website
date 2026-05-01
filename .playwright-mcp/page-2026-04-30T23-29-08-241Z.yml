@@ -1,0 +1,158 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - generic [ref=e3]:
+      - link "chirp" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - img [ref=e5]
+        - generic [ref=e7]: chirp
+      - link "Download" [ref=e9] [cursor=pointer]:
+        - /url: /download
+  - main [ref=e10]:
+    - generic [ref=e12]:
+      - heading "Speak freely." [level=1] [ref=e13]
+      - paragraph [ref=e14]: Voice-to-text that runs on your machine. No cloud, no account, no subscription.
+      - generic [ref=e15]:
+        - link "Download for Mac & Windows" [ref=e16] [cursor=pointer]:
+          - /url: /download
+        - link "Learn More" [ref=e17] [cursor=pointer]:
+          - /url: https://github.com/sitelift/Chirp
+      - paragraph [ref=e18]: v1.3.4 · Windows 10+ & macOS 13+
+      - generic [ref=e22]:
+        - generic [ref=e28]: New Message
+        - generic [ref=e29]:
+          - generic [ref=e30]:
+            - generic [ref=e31]: "To:"
+            - generic [ref=e32]: Team
+          - generic [ref=e33]:
+            - generic [ref=e34]: "Subject:"
+            - generic [ref=e35]: Moving Thursday's standup
+        - paragraph [ref=e40]: Place the cursor where you want text, press the hotkey, and start speaking. Transcription appears here.
+    - main [ref=e41]:
+      - generic [ref=e43]:
+        - generic [ref=e44]:
+          - generic [ref=e45]: Seamless Integration
+          - heading "Works where you do." [level=2] [ref=e46]
+          - paragraph [ref=e47]: Chirp isn't a walled garden. There's no app to switch to. You just press the hotkey, speak, and the clean text drops perfectly into wherever your cursor is.
+        - generic [ref=e49]:
+          - generic [ref=e50]:
+            - generic [ref=e53]: Slack
+            - generic [ref=e56]: Discord
+            - generic [ref=e59]: Notion
+            - generic [ref=e62]: WhatsApp
+            - generic [ref=e65]: Linear
+            - generic [ref=e68]: Figma
+            - generic [ref=e71]: GitHub
+            - generic [ref=e74]: X
+          - paragraph [ref=e77]: And literally any other text field
+      - generic [ref=e80]:
+        - generic [ref=e81]:
+          - generic [ref=e82]: Complete Control
+          - heading "Heavyweight power. Lightweight footprint." [level=2] [ref=e83]:
+            - text: Heavyweight power.
+            - text: Lightweight footprint.
+        - generic [ref=e84]:
+          - generic [ref=e85]:
+            - generic [ref=e86]:
+              - img [ref=e88]
+              - heading "Tone Modes" [level=3] [ref=e89]
+              - paragraph [ref=e90]: Instantly switch between Casual, Professional, and Concise phrasing. The AI adapts the transcription to match your exact intent without losing your core message.
+            - generic [ref=e91]:
+              - generic [ref=e92] [cursor=pointer]: Casual
+              - generic [ref=e93]: Professional
+              - generic [ref=e95] [cursor=pointer]: Concise
+          - generic [ref=e96]:
+            - img [ref=e98]
+            - heading "Custom Dict" [level=3] [ref=e101]
+            - paragraph [ref=e102]: Add your team's specific jargon, acronyms, and names. Chirp spells them flawlessly every time.
+            - generic [ref=e104]:
+              - generic [ref=e105]: Kubernetes
+              - generic [ref=e106]: ✓
+          - generic [ref=e107]:
+            - generic [ref=e108]:
+              - img [ref=e110]
+              - heading "Native Performance" [level=3] [ref=e112]
+              - paragraph [ref=e113]: Engineered in Rust and C++ for absolute maximum efficiency. Barely registers on your CPU, ensuring your other dev tools never skip a beat.
+            - generic [ref=e114]:
+              - generic [ref=e115]:
+                - generic [ref=e116]: M1+
+                - generic [ref=e117]: Apple Sil.
+              - generic [ref=e118]:
+                - generic [ref=e119]: x86
+                - generic [ref=e120]: Intel/AMD
+      - generic [ref=e122]:
+        - generic [ref=e123]:
+          - generic [ref=e124]: Absolute Privacy
+          - heading "Your voice never leaves your laptop." [level=2] [ref=e125]:
+            - text: Your voice never leaves
+            - text: your laptop.
+          - paragraph [ref=e126]: Everything runs locally on your own CPU. No telemetry, no API calls, no servers. Built from the ground up for strict confidentiality.
+        - generic [ref=e127]:
+          - generic [ref=e128]:
+            - generic [ref=e129]: "0"
+            - generic [ref=e130]: servers
+          - generic [ref=e132]:
+            - generic [ref=e133]: "0"
+            - generic [ref=e134]: network calls
+          - generic [ref=e136]:
+            - generic [ref=e137]: "0"
+            - generic [ref=e138]: bytes transmitted
+        - paragraph [ref=e139]: Offline-first · No analytics · No cloud pipeline
+      - generic [ref=e141]:
+        - generic [ref=e142]:
+          - generic [ref=e143]: Forever Free
+          - heading "Other apps charge. We don't." [level=2] [ref=e144]
+        - generic [ref=e145]:
+          - generic [ref=e146]:
+            - generic [ref=e147]: $10/mo
+            - generic [ref=e148]: $0
+            - generic [ref=e149]: forever
+          - generic [ref=e150]:
+            - generic [ref=e151]: Limited
+            - generic [ref=e152]: ∞
+            - generic [ref=e153]: usage
+          - generic [ref=e154]:
+            - generic [ref=e155]: Cloud lock-in
+            - generic [ref=e156]: Yours
+            - generic [ref=e157]: forever
+      - generic [ref=e160]:
+        - generic [ref=e161]:
+          - img "Pieter de Bruijn" [ref=e162]
+          - generic [ref=e163]:
+            - text: Pieter de Bruijn
+            - paragraph [ref=e164]: Creator of Chirp
+        - blockquote [ref=e165]: "\"I use voice-to-text every day. Every tool I tried was either expensive, slow, or sending my audio to the cloud. Chirp fixes all three.\""
+      - generic [ref=e167]:
+        - heading "Questions & Answers" [level=2] [ref=e169]
+        - generic [ref=e171]:
+          - button "Is it really 100% private?" [ref=e173]:
+            - generic [ref=e174]: Is it really 100% private?
+            - img [ref=e175]
+          - button "How is it free?" [ref=e178]:
+            - generic [ref=e179]: How is it free?
+            - img [ref=e180]
+          - button "What are the system requirements?" [ref=e183]:
+            - generic [ref=e184]: What are the system requirements?
+            - img [ref=e185]
+          - button "Does it work in other languages?" [ref=e188]:
+            - generic [ref=e189]: Does it work in other languages?
+            - img [ref=e190]
+          - button "What is Smart Cleanup?" [ref=e193]:
+            - generic [ref=e194]: What is Smart Cleanup?
+            - img [ref=e195]
+          - button "How accurate is it?" [ref=e198]:
+            - generic [ref=e199]: How accurate is it?
+            - img [ref=e200]
+          - button "Does it work offline?" [ref=e203]:
+            - generic [ref=e204]: Does it work offline?
+            - img [ref=e205]
+          - button "Is it open source?" [ref=e208]:
+            - generic [ref=e209]: Is it open source?
+            - img [ref=e210]
+      - generic [ref=e213]:
+        - img [ref=e215]
+        - heading "Try chirp." [level=2] [ref=e217]
+        - paragraph [ref=e218]: Free. Private. Yours.
+        - link "Download for Free" [ref=e220] [cursor=pointer]:
+          - /url: /download
+        - paragraph [ref=e221]: v1.3.4 · Free forever
+  - alert [ref=e222]

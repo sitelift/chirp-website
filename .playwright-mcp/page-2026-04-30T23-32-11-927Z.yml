@@ -1,0 +1,38 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - generic [ref=e3]:
+      - link "chirp" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - img [ref=e5]
+        - generic [ref=e7]: chirp
+      - link "Download" [ref=e9] [cursor=pointer]:
+        - /url: /download
+  - main [ref=e10]:
+    - generic [ref=e12]:
+      - heading "404" [level=1] [ref=e13]
+      - heading "This page could not be found." [level=2] [ref=e15]
+  - contentinfo [ref=e16]:
+    - generic [ref=e17]:
+      - generic [ref=e18]:
+        - generic [ref=e19]:
+          - generic [ref=e20]:
+            - img [ref=e21]
+            - generic [ref=e23]: chirp
+          - paragraph [ref=e24]: Local voice-to-text.
+        - generic [ref=e25]:
+          - generic [ref=e26]:
+            - heading "Product" [level=3] [ref=e27]
+            - navigation [ref=e28]:
+              - link "Download" [ref=e29] [cursor=pointer]:
+                - /url: /download
+          - generic [ref=e30]:
+            - heading "Resources" [level=3] [ref=e31]
+            - navigation [ref=e32]:
+              - link "Privacy" [ref=e33] [cursor=pointer]:
+                - /url: /privacy
+              - link "GitHub" [ref=e34] [cursor=pointer]:
+                - /url: https://github.com/sitelift/Chirp
+      - generic [ref=e35]:
+        - paragraph [ref=e36]: Free Forever · No Subscription
+        - paragraph [ref=e37]: © 2026 Chirp. All rights reserved.
+  - alert [ref=e38]

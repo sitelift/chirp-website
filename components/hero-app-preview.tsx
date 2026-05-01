@@ -10,6 +10,7 @@
 
 import { Sparkline } from "./sparkline";
 import { BirdMark } from "./bird-mark";
+import { CountUp } from "./count-up";
 
 // 30 days of realistic-feeling daily word counts.
 const SPARK_DATA = [
@@ -97,16 +98,16 @@ export function HeroAppPreview() {
                 </div>
               </div>
               <div className="mt-2 flex items-end gap-5">
-                <span
+                <CountUp
+                  to={23194}
+                  durationMs={1400}
                   className="block font-display font-semibold leading-none text-white"
                   style={{
                     fontFeatureSettings: '"tnum"',
                     letterSpacing: "-0.04em",
                     fontSize: "clamp(56px, 7vw, 96px)",
                   }}
-                >
-                  23,194
-                </span>
+                />
                 <span className="mb-3 block font-display text-[11px] font-medium uppercase tracking-[0.18em] text-white/45">
                   Words this month
                 </span>
