@@ -7,7 +7,9 @@ import { useEffect, useRef, useState } from "react";
 // tabular-numeral CSS in the consumer so the digit width doesn't
 // jiggle while counting.
 //
-// Honors prefers-reduced-motion: snaps straight to the final value.
+// Mirrors the Chirp app's `useAnimatedNumber` hook in HeroMetric.tsx
+// exactly — no reduced-motion override, since the app doesn't have
+// one and we want byte-identical animation behavior.
 
 interface CountUpProps {
   to: number;
@@ -33,15 +35,6 @@ export function CountUp({
   useEffect(() => {
     if (startedRef.current) return;
     startedRef.current = true;
-
-    if (
-      typeof window !== "undefined" &&
-      window.matchMedia &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
-      setValue(to);
-      return;
-    }
 
     let frameId = 0;
     let startTime: number | null = null;

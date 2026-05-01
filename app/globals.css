@@ -314,12 +314,10 @@ body {
   display: none;
 }
 
-/* ── Reduced motion ───────────────────────────────────────
-   Honor prefers-reduced-motion across all animations. */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
+/* No global prefers-reduced-motion override — the Chirp app doesn't
+   have one, and a blanket `animation-duration: 0.01ms !important`
+   collapses every entrance animation to a one-frame flash on systems
+   that report reduced-motion (Windows battery-saver, OS accessibility
+   setting, certain headless / CI environments). If we want reduced-
+   motion handling later, do it per-component the way the app would,
+   not site-wide. */
