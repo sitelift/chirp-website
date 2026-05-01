@@ -7,11 +7,13 @@
 // time as the redesign progresses.
 
 import { WhatItDoesScene } from "./what-it-does-scene";
+import { PrivacyScene } from "./privacy-scene";
 
 export function HomeSections() {
   return (
     <main className="relative z-10">
       <WhatItDoesScene />
+      <PrivacyScene />
     </main>
   );
 }
