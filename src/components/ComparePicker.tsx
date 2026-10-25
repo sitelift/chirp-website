@@ -31,18 +31,29 @@ export default function ComparePicker({ products, rows }: { products: Product[];
         })}
       </div>
       <div className="mt-5 overflow-hidden rounded-[20px] bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.06)]">
-        <div className="grid grid-cols-[1.2fr_1fr_1fr] border-b border-line text-[15px]">
-          <span />
-          <span className="bg-[#fbf0d2] px-3 py-3 font-serif text-[18px]">Chirp</span>
-          <span className="px-3 py-3 font-serif text-[18px]">{products[pick].name.replace(" voice typing", "")}</span>
-        </div>
-        {rows.map((r) => (
-          <div key={r.label} className="grid grid-cols-[1.2fr_1fr_1fr] border-b border-line text-[15px] last:border-b-0">
-            <span className="px-4 py-3 text-muted">{r.label}</span>
-            <span className="bg-[#fbf0d2] px-3 py-3 font-medium">{show(r.cells[0])}</span>
-            <span className="px-3 py-3">{show(r.cells[pick])}</span>
-          </div>
-        ))}
+        <table className="w-full table-fixed border-collapse text-left text-[15px]">
+          <colgroup>
+            <col className="w-[40%]" />
+            <col className="w-[30%]" />
+            <col className="w-[30%]" />
+          </colgroup>
+          <thead>
+            <tr className="border-b border-line">
+              <th />
+              <th className="bg-[#fbf0d2] px-3 py-3 font-serif text-[17px] font-normal">Chirp</th>
+              <th className="px-3 py-3 font-serif text-[17px] font-normal leading-tight">{products[pick].name.replace(" voice typing", "")}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr key={r.label} className="border-b border-line last:border-b-0">
+                <td className="px-4 py-3 align-top text-muted">{r.label}</td>
+                <td className="bg-[#fbf0d2] px-3 py-3 align-top font-medium">{show(r.cells[0])}</td>
+                <td className="px-3 py-3 align-top">{show(r.cells[pick])}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

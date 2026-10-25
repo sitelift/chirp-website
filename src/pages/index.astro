@@ -1,12 +1,10 @@
 ---
 import Base from "../layouts/Base.astro";
-import Said from "../components/Said.astro";
 import SaidHover from "../components/SaidHover.astro";
 import Bird from "../components/Bird";
 import Murmuration from "../components/Murmuration";
 import HeroDemo from "../components/HeroDemo";
-import HoldDemo from "../components/HoldDemo";
-import { TalkDemo, LetGoDemo } from "../components/StepDemos";
+import StepsDemo from "../components/StepDemos";
 import ComparePicker from "../components/ComparePicker";
 import Examples from "../components/Examples";
 import { WordsPanel, AiPanel } from "../components/AppPanels";
@@ -28,7 +26,7 @@ const products = [
 ];
 type Cell = boolean | string;
 const rows: { label: string; cells: Cell[] }[] = [
-  { label: "Price", cells: ["Free", "$15/mo", "$8.49/mo", "Free"] },
+  { label: "Price", cells: ["Free", "$15/mo for Pro", "$8.49/mo for Pro", "Free"] },
   { label: "Open source", cells: [true, false, false, false] },
   { label: "Speech recognition on your PC", cells: [true, false, "Optional", false] },
   { label: "Bring your own AI key", cells: [true, false, true, false] },
@@ -107,17 +105,17 @@ const faqs = [
 
   <main>
     <!-- Hero -->
-    <section class="mx-auto max-w-[1280px] px-5 pb-12 pt-28 md:px-8 md:pb-20 md:pt-32">
+    <section class="mx-auto max-w-[1280px] px-5 pb-12 pt-24 md:px-8 md:pb-20 md:pt-32">
       <div class="flex flex-col items-center text-center">
-        <Said said="~so ~like talk ~all messy, ~and ~then type ~it clean" class="max-w-[38rem] text-left" />
-        <h1 class="t-hero mt-6">Talk messy. Type clean.</h1>
-        <p class="t-lead mt-6 max-w-[32rem]">Hold a key, ramble, let go. Chirp types what you meant, wherever your cursor is.</p>
-        <a href={SITE.download} class="btn btn-primary mt-9">
+        <h1 class="t-hero cursor-default" data-said="~so ~like talk ~all messy, ~and ~then type ~it clean">Talk messy. Type clean.</h1>
+        <p class="t-lead mt-5 max-w-[32rem] md:mt-6">Hold a key, ramble, let go. Chirp types what you meant<span class="hidden sm:inline">, wherever your cursor is</span>.</p>
+        <a href={SITE.download} class="btn btn-primary mt-7 md:mt-9">
           <svg viewBox="0 0 16 16" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d={winPath}></path></svg>
           Download for Windows
         </a>
+        <p class="mt-3 text-[14px] text-muted">Free · Open source · Windows</p>
       </div>
-      <div class="mx-auto mt-12 max-w-[1040px]">
+      <div class="mx-auto mt-8 max-w-[1040px] md:mt-12">
         <HeroDemo client:load />
         <p class="mx-auto mt-5 max-w-[40rem] text-center text-[15px] leading-relaxed text-muted">
           Free and <a href={SITE.github} class="link">open source</a>. Speech recognition runs on your PC; AI cleanup is optional, on your own key.
@@ -129,8 +127,7 @@ const faqs = [
     <section class="mx-auto max-w-[1280px] px-5 py-12 md:px-8 md:py-20">
       <div class="grid [&>*]:min-w-0 items-center gap-12 lg:grid-cols-2 lg:gap-20">
         <div>
-          <Said said="~so, ~um, typing is the slow part." />
-          <h2 class="t-h2 mt-6">Typing is the slow&nbsp;part.</h2>
+          <h2 class="t-h2 w-fit cursor-default" data-said="~so, ~um, typing is the slow part.">Typing is the slow&nbsp;part.</h2>
           <p class="t-lead mt-6 max-w-[28rem]">Most people talk about 150 words a minute and type about 52. Chirp lets you use the fast one.</p>
         </div>
         <div class="rounded-[28px] bg-white p-8 shadow-[0_0_0_1px_rgba(0,0,0,0.07)] md:p-12">
@@ -151,34 +148,9 @@ const faqs = [
 
     <!-- How it works: one story, start to finish -->
     <section id="how" class="mx-auto max-w-[1280px] scroll-mt-24 px-5 py-12 md:px-8 md:py-20">
-      <Said said="~okay ~so ~you, ~um, hold, ~then talk, ~and ~then let go." />
-      <h2 class="t-h2 mt-6">Hold. Talk. Let go.</h2>
+      <h2 class="t-h2 w-fit cursor-default" data-said="~okay ~so ~you, ~um, hold, ~then talk, ~and ~then let go.">Hold. Talk. Let go.</h2>
 
-      <div class="mt-14 space-y-20 md:mt-20 md:space-y-28">
-        <div class="grid [&>*]:min-w-0 items-center gap-8 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
-          <div>
-            <p class="font-serif text-[24px] w-fit cursor-default" data-said="~um, ~you ~just hold ~the ~key" data-said-pos="right"><span class="text-[#8f6400]">1</span> · Hold</p>
-            <p class="t-lead mt-3 max-w-[24rem]">Hold Right Ctrl in any app.</p>
-          </div>
-          <div class="h-[240px] rounded-[28px] bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.07)]"><HoldDemo client:visible /></div>
-        </div>
-
-        <div class="grid [&>*]:min-w-0 items-center gap-8 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
-          <div>
-            <p class="font-serif text-[24px] w-fit cursor-default" data-said="~just, ~like, ~you ~know, talk" data-said-pos="right"><span class="text-[#8f6400]">2</span> · Talk</p>
-            <p class="t-lead mt-3 max-w-[24rem]">Ramble, pause, change your mind twice. Chirp keeps the last version.</p>
-          </div>
-          <TalkDemo client:visible />
-        </div>
-
-        <div class="grid [&>*]:min-w-0 items-center gap-8 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
-          <div>
-            <p class="font-serif text-[24px] w-fit cursor-default" data-said="~and ~then ~you ~just let ~it go" data-said-pos="right"><span class="text-[#8f6400]">3</span> · Let go</p>
-            <p class="t-lead mt-3 max-w-[24rem]">The clean version lands at your cursor, in whatever app you were typing in.</p>
-          </div>
-          <LetGoDemo client:visible />
-        </div>
-      </div>
+      <div class="mt-10 md:mt-12"><StepsDemo client:visible /></div>
 
       <div class="mt-24 md:mt-32">
         <h3 class="t-h3">It formats for the app you're in.</h3>
@@ -191,8 +163,7 @@ const faqs = [
     <section class="mx-auto max-w-[1280px] px-5 py-12 md:px-8 md:py-20">
       <div class="grid [&>*]:min-w-0 items-center gap-12 lg:grid-cols-2 lg:gap-20">
         <div class="lg:order-2">
-          <Said said="~so, ~like, your names, ~um, spelled right." />
-          <h2 class="t-h2 mt-6">Your names, spelled right.</h2>
+          <h2 class="t-h2 w-fit cursor-default" data-said="~so, ~like, your names, ~um, spelled right.">Your names, spelled right.</h2>
           <p class="t-lead mt-6 max-w-[28rem]">Add a client, a colleague or a gloriously weird product name once, and Chirp uses that spelling every time.</p>
         </div>
         <div class="flex justify-center lg:order-1 lg:justify-start"><WordsPanel client:visible /></div>
@@ -201,9 +172,8 @@ const faqs = [
 
     <!-- Pricing: full width, centred -->
     <section id="pricing" class="mx-auto max-w-[1280px] scroll-mt-24 px-5 py-12 md:px-8 md:py-20">
-      <div class="flex flex-col items-center text-center">
-        <Said said="~wait, ~so ~it's, ~like, pennies, not a ~um subscription?" class="text-left" />
-        <h2 class="t-h2 mt-6">Pennies,<br />not a subscription.</h2>
+      <div class="flex flex-col md:items-center md:text-center">
+        <h2 class="t-h2 cursor-default" data-said="~wait, ~so ~it's, ~like, pennies, not a ~um subscription?">Pennies,<br />not a subscription.</h2>
         <p class="t-lead mt-6 max-w-[34rem]">The app is free, because it hears you on your own PC. Want AI cleanup? Bring your own key and pay cents, not a monthly fee.</p>
       </div>
       <div class="mx-auto mt-14 max-w-[760px]"><CostDemo client:visible /></div>
@@ -254,8 +224,7 @@ const faqs = [
     <section class="mx-auto max-w-[1280px] px-5 py-12 md:px-8 md:py-20">
       <div class="grid [&>*]:min-w-0 items-center gap-12 lg:grid-cols-2 lg:gap-20">
         <div>
-          <Said said="~hang ~on, ~it's yours, not ~like rented?" />
-          <h2 class="t-h2 mt-6">Yours.<br />Not rented.</h2>
+          <h2 class="t-h2 w-fit cursor-default" data-said="~hang ~on, ~it's yours, not ~like rented?">Yours.<br />Not rented.</h2>
           <p class="t-lead mt-6 max-w-[28rem]">
             Chirp is open source under the MIT license. Use Anthropic, OpenAI or no AI at all, and switch whenever you like. No Chirp account, no lock-in.
           </p>
@@ -270,8 +239,8 @@ const faqs = [
       <h2 class="t-h3 lg:sticky lg:top-28">Questions, answered.</h2>
       <div class="border-t border-line">
         {
-          faqs.map((f) => (
-            <details class="group border-b border-line">
+          faqs.map((f, i) => (
+            <details class="group border-b border-line" open={i === 0}>
               <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-6 font-serif text-[22px] leading-snug [&::-webkit-details-marker]:hidden">
                 {f.q}
                 <span class="shrink-0 text-[24px] text-muted transition-transform duration-200 ease-out group-open:rotate-45">+</span>
@@ -283,13 +252,13 @@ const faqs = [
       </div>
     </section>
 
-    <!-- Final call: the sky, with the flock below the words -->
-    <section class="relative mt-12 overflow-hidden md:mt-20" style="background:linear-gradient(180deg,#fbf8f1 0%,#edf0ef 18%,#f4ecda 55%,#f6d78f 86%,#fbf8f1 100%)">
-      <div class="absolute inset-x-0 bottom-0 h-[44%]">
-        <Murmuration client:visible count={600} centerY={0.45} spread={0.85} size={1.4} wander={0.25} />
+    <!-- Final call: the sky, with the flock circling the words -->
+    <section class="relative overflow-hidden md:mt-20" style="background:linear-gradient(180deg,#fbf8f1 0%,#f7f0de 22%,#f4e6c6 58%,#f6d78f 88%,#fbf8f1 100%)">
+      <div class="absolute inset-0">
+        <Murmuration client:visible count={420} centerY={0.5} spread={0.5} size={1.5} wander={0} thickness={3} orbit={1} avoid="#final-words" />
       </div>
-      <div class="relative mx-auto flex max-w-[880px] flex-col items-center px-5 pb-[260px] pt-28 text-center md:pb-[300px] md:pt-36">
-        <h2 class="t-h2 cursor-default max-md:!text-[32px]" data-said="~wait, unlimited dictation, ~for, ~um, zero dollars?">Unlimited dictation.<br />Zero dollars.</h2>
+      <div id="final-words" class="relative mx-auto flex max-w-[880px] flex-col items-center px-5 py-36 text-center md:py-52">
+        <h2 class="t-h2 cursor-default max-md:!text-[34px] max-md:!leading-[1.04]" data-said="~wait, unlimited dictation, ~for, ~um, zero dollars?">Unlimited dictation.<br />Zero dollars.</h2>
         <p class="t-lead mt-7 max-w-[30rem]">Download it, let it fetch its speech model once, then hold Right Ctrl and say something.</p>
         <a href={SITE.download} class="btn btn-primary mt-9">
           <svg viewBox="0 0 16 16" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d={winPath}></path></svg>

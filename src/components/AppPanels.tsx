@@ -4,25 +4,6 @@ import { IconAdd, IconBack } from "./app/icons";
 // The app's own panels in its light theme (sitelift/Chirp docs/v2/design/SPEC.md):
 // card radius 18 with 6 px padding, rows 12, 13 px Segoe UI.
 
-function usePlaying(ref: React.RefObject<HTMLElement | null>, play: () => () => void) {
-  useEffect(() => {
-    let stop: (() => void) | null = null;
-    const io = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting && !stop) stop = play();
-      else if (!e.isIntersecting && stop) {
-        stop();
-        stop = null;
-      }
-    });
-    io.observe(ref.current!);
-    return () => {
-      io.disconnect();
-      stop?.();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-}
-
 function Panel({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
     <div
@@ -65,7 +46,7 @@ export function WordsPanel() {
   }, []);
 
   return (
-    <div ref={ref} className="flex w-full max-w-[420px] flex-col gap-4">
+    <div ref={ref} className="flex w-full max-w-[500px] flex-col gap-4">
       <Panel className="w-full">
         <Head title="Words" />
         <div className="mb-1.5 mt-0.5 flex h-10 items-center justify-between rounded-[12px] px-3 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.12)]">
@@ -109,36 +90,36 @@ const PROVIDERS = [
 ];
 
 export function AiPanel() {
-  const ref = useRef<HTMLDivElement>(null);
   const [i, setI] = useState(1);
-
-  usePlaying(ref, () => {
-    const id = window.setInterval(() => setI((v) => (v + 1) % PROVIDERS.length), 2600);
-    return () => clearInterval(id);
-  });
-
   const p = PROVIDERS[i];
   return (
-    <div ref={ref}>
-      <Panel className="w-full max-w-[360px] p-5">
-        <p className="font-[family-name:var(--font-ui-display)] text-[15px] font-semibold">AI cleanup</p>
-        <p className="mt-1 text-[#6b6b6b]">Removes filler words, fixes punctuation and formats text for the app you're in.</p>
-        <div className="mt-4 flex items-center justify-between">
-          <span>Provider</span>
-          <span className="relative flex rounded-[8px] bg-[#efefef] p-[2px]">
-            <span
-              className="absolute bottom-[2px] top-[2px] w-[78px] rounded-[6px] bg-white shadow-[0_1px_2px_#0000001f,0_0_0_1px_#00000010] transition-transform duration-[240ms]"
-              style={{ transform: `translateX(${i * 78}px)`, transitionTimingFunction: "var(--ease)" }}
-            />
-            {PROVIDERS.map((x) => (
-              <span key={x.id} className="relative z-10 flex h-7 w-[78px] items-center justify-center text-[12px]">
-                {x.id}
-              </span>
-            ))}
-          </span>
-        </div>
-        <p className="mt-1.5 text-right text-[12px] text-[#8a8a8a]">{p.model}</p>
-        <div className="mt-3 h-10 transition-opacity duration-[260ms]" style={{ opacity: i ? 1 : 0 }}>
+    <Panel className="w-full p-6 !text-[14px] !leading-[20px]">
+      <p className="font-[family-name:var(--font-ui-display)] text-[17px] font-semibold">AI cleanup</p>
+      <p className="mt-1 text-[#6b6b6b]">Removes filler words, fixes punctuation and formats text for the app you're in.</p>
+      <div className="mt-4 flex items-center justify-between gap-3">
+        <span>Provider</span>
+        <span className="relative flex rounded-[8px] bg-[#efefef] p-[2px]" role="radiogroup" aria-label="Provider">
+          <span
+            className="absolute bottom-[2px] top-[2px] w-[86px] rounded-[6px] bg-white shadow-[0_1px_2px_#0000001f,0_0_0_1px_#00000010] transition-transform duration-[240ms]"
+            style={{ transform: `translateX(${i * 86}px)`, transitionTimingFunction: "var(--ease)" }}
+          />
+          {PROVIDERS.map((x, k) => (
+            <button
+              key={x.id}
+              type="button"
+              role="radio"
+              aria-checked={i === k}
+              onClick={() => setI(k)}
+              className="relative z-10 flex h-8 w-[86px] cursor-pointer items-center justify-center text-[13px]"
+            >
+              {x.id}
+            </button>
+          ))}
+        </span>
+      </div>
+      <p className="mt-1.5 text-right text-[13px] text-[#8a8a8a]">{p.model}</p>
+      <div className="mt-3 h-10">
+        {i ? (
           <div className="flex gap-2">
             <span className="flex h-10 min-w-0 flex-1 items-center justify-between gap-2 rounded-[12px] px-3 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.12)]">
               <span className="truncate font-mono text-[12px]">{i === 2 ? "sk-••••••••••7f2c" : "sk-ant-••••••••••abcd"}</span>
@@ -146,9 +127,13 @@ export function AiPanel() {
             </span>
             <span className="flex h-10 items-center rounded-[12px] px-3 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.12)]">Remove</span>
           </div>
-        </div>
-        <p className="mt-3 text-[12px] text-[#8a8a8a]">{p.note}</p>
-      </Panel>
-    </div>
+        ) : (
+          <p className="flex h-10 items-center rounded-[12px] bg-[#f5f5f5] px-3 text-[13px] leading-4 text-[#6b6b6b]">
+            Pastes your words as spoken, punctuated. Free, and works offline.
+          </p>
+        )}
+      </div>
+      <p className="mt-3 text-[13px] text-[#8a8a8a]">{p.note}</p>
+    </Panel>
   );
 }

@@ -23,6 +23,17 @@
       opacity 160ms linear,
       transform 220ms var(--ease);
   }
+  [data-said] {
+    text-decoration-line: underline;
+    text-decoration-style: dotted;
+    text-decoration-color: transparent;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.18em;
+    transition: text-decoration-color 200ms ease-out;
+  }
+  [data-said]:hover {
+    text-decoration-color: #e3a50f;
+  }
   #said-chip[data-on] {
     opacity: 1;
     transform: none;

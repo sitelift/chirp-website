@@ -67,6 +67,13 @@ export class Flock {
   centerY = 0.5;
   spread = 1;
   wander = 1;
+  /** How wide the band of the loop is; above 1 reads as a fuller flock. */
+  thickness = 1;
+  /** Above 0, the loop circles the middle of the sky instead of hovering in it,
+   *  lingering on the sides so it flies around whatever sits in the centre. */
+  orbit = 0;
+  /** A rounded box (centre and half-size, px) the loop bends around, so text stays clear. */
+  avoid: { x: number; y: number; rx: number; ry: number } | null = null;
   /** Which side birds re-enter from after pouring into the cursor. */
   entrySide = -1;
 
@@ -150,8 +157,10 @@ export class Flock {
     const cy1 = Math.cos(yaw), sy1 = Math.sin(yaw);
     const cp = Math.cos(pitch), sp = Math.sin(pitch);
     const cr = Math.cos(roll), sr = Math.sin(roll);
-    const cx = w * (0.5 + this.wander * (0.15 * Math.sin(T * 0.13) + 0.05 * Math.sin(T * 0.31)));
-    const cy = h * (this.centerY + 0.05 * Math.sin(T * 0.17 + 1.1));
+    const oa = T * 0.11;
+    const ox = Math.sign(Math.cos(oa)) * Math.abs(Math.cos(oa)) ** 0.55;
+    const cx = w * (0.5 + this.orbit * 0.31 * ox + this.wander * (0.15 * Math.sin(T * 0.13) + 0.05 * Math.sin(T * 0.31)));
+    const cy = h * (this.centerY + this.orbit * 0.27 * Math.sin(oa) + 0.05 * Math.sin(T * 0.17 + 1.1));
     const focal = 2.6;
 
     const hawk = this.hawk;
@@ -177,10 +186,10 @@ export class Flock {
       // This bird's point on the loop, always computed so its velocity is known.
       let th = this.theta[i] + T * 0.24 * this.pace[i];
       th += 0.12 * Math.sin(2 * th - T * 1.2);
-      const scale = 1 + this.band[i] * 0.17 + 0.12 * Math.sin(2 * th - T * 0.5);
+      const scale = 1 + this.band[i] * 0.17 * this.thickness + 0.12 * Math.sin(2 * th - T * 0.5);
       const x = Math.cos(th) * 1.3 * scale;
       const y = Math.sin(th) * 0.5 * scale + 0.15 * Math.sin(3 * th - T * 0.4);
-      const z = 0.5 * Math.sin(2 * th + T * 0.35) + this.thick[i] * 0.045 + this.band[i] * 0.08;
+      const z = 0.5 * Math.sin(2 * th + T * 0.35) + this.thick[i] * 0.045 * this.thickness + this.band[i] * 0.08 * this.thickness;
       let x1 = x * cy1 + z * sy1;
       let z1 = -x * sy1 + z * cy1;
       let y1 = y * cp - z1 * sp;
@@ -189,8 +198,20 @@ export class Flock {
       y1 = x1 * sr + y1 * cr;
       x1 = x2;
       const persp = focal / (focal + z1);
-      const ftx = cx + x1 * R * persp;
-      const fty = cy + y1 * R * persp;
+      let ftx = cx + x1 * R * persp;
+      let fty = cy + y1 * R * persp;
+      const av = this.avoid;
+      if (av) {
+        // Squash anything inside the box into a thin ring just outside it.
+        const ux = (ftx - av.x) / av.rx;
+        const uy = (fty - av.y) / av.ry;
+        const r = Math.sqrt(Math.sqrt(ux ** 4 + uy ** 4));
+        if (r < 1.3 && r > 1e-4) {
+          const k = (1 + r * 0.23) / r;
+          ftx = av.x + ux * k * av.rx;
+          fty = av.y + uy * k * av.ry;
+        }
+      }
       const tvx = fresh ? 0 : (ftx - this.fx[i]) / Math.max(dt, 0.001);
       const tvy = fresh ? 0 : (fty - this.fy[i]) / Math.max(dt, 0.001);
       this.fx[i] = ftx;

@@ -7,22 +7,22 @@ import Spoken from "./Spoken";
 const CASES = [
   {
     label: "Emails",
-    app: "Re: Freelance front-end developer · Gmail",
-    said: "hey Daan, ~um, thanks for sending your portfolio, I really liked the Bloem and Co project, ~uh, would you be up for a call next week, ~like Tuesday or Wednesday afternoon, cheers Pieter",
-    meant:
-      "Hey Daan,\n\nThanks for sending your portfolio, I really liked the Bloem & Co project.\n\nWould you be up for a call next week, Tuesday or Wednesday afternoon?\n\nCheers,\nPieter",
+    app: "Re: Freelance developer · Gmail",
+    said: "hey Daan, ~um, thanks for the portfolio, I loved the Bloem and Co project, ~uh, free for a call tuesday afternoon? cheers Pieter",
+    meant: "Hey Daan,\n\nThanks for the portfolio, I loved the Bloem & Co project. Free for a call Tuesday afternoon?\n\nCheers,\nPieter",
   },
   {
     label: "Lists",
-    app: "Chirp v2 roadmap · Notion",
-    said: "things to do this week, number one, finish the bench harness, number two, ~uh, port the hotkey hook, number three, ~um, write the system prompt",
-    meant: "Things to do this week:\n\n1. Finish the bench harness\n2. Port the hotkey hook\n3. Write the system prompt",
+    app: "This week · Notion",
+    said: "this week, number one, finish the bench harness, number two, ~uh, port the hotkey hook, number three, ~um, write the prompt",
+    meant: "This week:\n\n1. Finish the bench harness\n2. Port the hotkey hook\n3. Write the prompt",
   },
   {
     label: "Terminal",
     app: "PowerShell · Windows Terminal",
-    said: "~uh, ~okay, git commit dash M quote fix hotkey resync after unlock end quote",
-    meant: '`git commit -m "fix hotkey resync after unlock"`',
+    said: "~uh, ~okay, git commit dash M quote fix hotkey resync end quote",
+    meant: 'git commit -m "fix hotkey resync"',
+    terminal: true,
   },
 ];
 
@@ -46,8 +46,8 @@ export default function Examples() {
   const ref = useRef<HTMLDivElement>(null);
   const timers = useRef<number[]>([]);
   const [index, setIndex] = useState(0);
-  // Finished by default: phase 2 shows the struck input and the pasted result.
-  const [phase, setPhase] = useState(2);
+  // The result window always shows the finished text; only the strikes replay.
+  const [phase, setPhase] = useState(1);
 
   const clear = () => {
     timers.current.forEach(clearTimeout);
@@ -57,8 +57,7 @@ export default function Examples() {
     clear();
     setIndex(i);
     setPhase(0);
-    timers.current.push(window.setTimeout(() => setPhase(1), 700));
-    timers.current.push(window.setTimeout(() => setPhase(2), 2100));
+    timers.current.push(window.setTimeout(() => setPhase(1), 450));
   };
 
   useEffect(() => {
@@ -66,7 +65,7 @@ export default function Examples() {
     const io = new IntersectionObserver(([e]) => {
       if (!e.isIntersecting) {
         clear();
-        setPhase(2);
+        setPhase(1);
       }
     });
     io.observe(ref.current!);
@@ -94,25 +93,38 @@ export default function Examples() {
             {x.label}
           </button>
         ))}
-        <button type="button" onClick={() => play(index)} className="ml-auto h-10 px-2 text-[15px] text-muted underline decoration-black/25 underline-offset-4 hover:text-ink">
+        <button type="button" onClick={() => play(index)} className="h-10 px-2 text-[15px] text-muted underline decoration-black/25 underline-offset-4 hover:text-ink">
           Replay
         </button>
       </div>
+      <p className="mt-4 flex items-center gap-1.5 font-[family-name:var(--font-ui)] text-[14px] text-ink/75">
+        <span className="h-2 w-2 rounded-full bg-amber" />
+        AI cleanup on · your own key. Without a key, Chirp pastes your words as spoken, punctuated.
+      </p>
 
       <div className="mt-5 grid gap-4 md:grid-cols-2 [&>*]:min-w-0" role="tabpanel">
-        <div className="rounded-[20px] bg-[#1a1917] p-6 md:p-7">
+        <div className="min-h-[210px] rounded-[20px] bg-[#1a1917] p-6 md:min-h-[260px] md:p-7">
           <p className="font-[family-name:var(--font-ui)] text-[13px] text-[#a3a29e]">What you said</p>
-          <Spoken key={index} said={c.said} phase={phase > 0 ? 1 : 0} className="mt-3 font-serif text-[19px] leading-[1.45] text-white md:text-[21px]" />
+          <Spoken key={index} said={c.said} phase={phase ? 1 : 0} className="mt-3 font-serif text-[21px] leading-[1.4] text-white md:text-[24px]" />
         </div>
         <Window title={c.app}>
-          <div className="min-h-[220px] px-6 pb-6 pt-1">
-            <p
-              className="whitespace-pre-line font-[family-name:var(--font-ui)] [overflow-wrap:anywhere] text-[16px] leading-[1.55] text-ink transition-opacity duration-300"
-              style={{ opacity: phase > 1 ? 1 : 0 }}
-            >
-              <Rich text={c.meant} />
-            </p>
-          </div>
+          {"terminal" in c ? (
+            <div className="mx-3 mb-3 h-[199px] rounded-[10px] bg-[#0c0c0c] px-4 py-3 font-mono text-[14px] leading-[1.6] text-[#e8e6e1]">
+              <p className="text-[#9a9890]">PS C:\code\chirp&gt;</p>
+              <p className="[overflow-wrap:anywhere] ">
+                {c.meant}
+                <span className="caret ml-0.5 inline-block h-[1em] w-[8px] translate-y-[2px] bg-[#e8e6e1]" />
+              </p>
+            </div>
+          ) : (
+            <div className="h-[202px] px-6 pb-6 pt-1">
+              <p
+                className="whitespace-pre-line font-[family-name:var(--font-ui)] [overflow-wrap:anywhere] text-[16px] leading-[1.55] text-ink"
+              >
+                <Rich text={c.meant} />
+              </p>
+            </div>
+          )}
         </Window>
       </div>
     </div>

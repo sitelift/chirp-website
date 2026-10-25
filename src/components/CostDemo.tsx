@@ -69,7 +69,7 @@ function Row({ label, value, width, accent }: { label: string; value: string; wi
           <span className="ml-1 font-sans text-[15px] text-muted">/mo</span>
         </span>
       </div>
-      <div className="mt-3 h-2.5 rounded-full bg-[#efebe2]">
+      <div className="mt-3 h-2.5 rounded-full bg-[#efebe2]" style={{ visibility: width === 0 ? "hidden" : undefined }}>
         <div
           className="h-full rounded-full transition-[width] duration-300"
           style={{ width: `${width === 0 ? 0 : Math.max(1.2, width)}%`, background: accent ? "#f0b723" : "#8a8985", transitionTimingFunction: "var(--ease)" }}

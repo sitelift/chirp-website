@@ -11,6 +11,9 @@ export default function Murmuration({
   spread = 1,
   size = 1,
   wander = 1,
+  thickness = 1,
+  orbit = 0,
+  avoid,
 }: {
   count?: number;
   color?: [number, number, number];
@@ -18,6 +21,10 @@ export default function Murmuration({
   spread?: number;
   size?: number;
   wander?: number;
+  thickness?: number;
+  orbit?: number;
+  /** Selector for an element whose children the flock flies around. */
+  avoid?: string;
 }) {
   const ref = useRef<HTMLCanvasElement>(null);
 
@@ -37,6 +44,8 @@ export default function Murmuration({
     flock.spread = spread;
     gl.scale = size;
     flock.wander = wander;
+    flock.thickness = thickness;
+    flock.orbit = orbit;
 
     let w = 1;
     let h = 1;
@@ -49,11 +58,26 @@ export default function Murmuration({
       canvas.width = Math.round(w * dpr);
       canvas.height = Math.round(h * dpr);
       flock.resize(w, h);
+      const box = avoid ? document.querySelector(avoid) : null;
+      if (box) {
+        const rs = [...box.children].map((c) => c.getBoundingClientRect());
+        const l = Math.min(...rs.map((q) => q.left)) - r.left;
+        const t = Math.min(...rs.map((q) => q.top)) - r.top;
+        const rt = Math.max(...rs.map((q) => q.right)) - r.left;
+        const b = Math.max(...rs.map((q) => q.bottom)) - r.top;
+        const pad = Math.min(36, w * 0.05);
+        flock.avoid = { x: (l + rt) / 2, y: (t + b) / 2, rx: (rt - l) / 2 + pad, ry: (b - t) / 2 + pad };
+      }
     };
     resize();
     flock.enter(-1);
 
+    // Start mid-flight: fly the entrance off-screen so the first frame is already a flock.
     let clock = 0;
+    for (let k = 0; k < 900; k++) {
+      clock += 1 / 60;
+      flock.step(clock, 1);
+    }
     let last = performance.now();
     let visible = false;
     let raf = 0;

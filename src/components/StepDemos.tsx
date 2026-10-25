@@ -3,123 +3,132 @@ import { Ink, type InkKind } from "./app/Ink";
 import Window from "./app/Window";
 import Spoken from "./Spoken";
 
-// Steps 2 and 3 tell one story: a ramble to Joris, then that same message
-// landing in his DM. Both render finished, replay when scrolled into view and
-// finish instantly when scrolled away, so nothing is ever left blank.
-const SAID =
-  "~so I was thinking we ship on ~Monday, ~no ~wait, ~Tuesday, ~actually ~let's ~say Wednesday, to be safe, because the certificate thing isn't sorted yet";
+// Hold → Talk → Let go as one connected demo: one stage, the three steps
+// lighting up beside it. It plays once as it scrolls in, then rests finished
+// (Replay plays it again), so nothing finished ever gets wiped by itself.
+const SAID = "~so ~um, we ship on ~tuesday, ~no ~wait, wednesday, because the certificate isn't sorted yet";
 const WORDS = SAID.split(" ").length;
-export const MEANT = "I was thinking we ship on Wednesday to be safe, because the certificate thing isn't sorted yet.";
+const MEANT = "We ship on Wednesday, because the certificate isn't sorted yet.";
 
-function useReplay(play: () => () => void, finish: () => void) {
+const STEPS = [
+  { n: 1, title: "Hold", body: "Right Ctrl, in any app. Or pick your own key.", said: "~um, ~you ~just hold ~the ~key" },
+  { n: 2, title: "Talk", body: "Ramble, pause, change your mind. Chirp keeps the last version.", said: "~just, ~like, ~you ~know, talk" },
+  { n: 3, title: "Let go", body: "The clean version lands at your cursor, in whatever app you were typing in.", said: "~and ~then ~you ~just let ~it go" },
+];
+
+type State = { step: number; key: boolean; ink: InkKind; shown: number; phase: 0 | 1; typed: number };
+const FINISHED: State = { step: 0, key: false, ink: "message", shown: WORDS, phase: 1, typed: MEANT.length };
+const START: State = { step: 0, key: false, ink: "tick", shown: 0, phase: 0, typed: 0 };
+
+export default function StepsDemo() {
   const ref = useRef<HTMLDivElement>(null);
+  const timers = useRef<number[]>([]);
+  const [s, setS] = useState<State>(FINISHED);
+
+  const play = () => {
+    timers.current.forEach(clearTimeout);
+    timers.current = [];
+    const at = (ms: number, patch: Partial<State>) => timers.current.push(window.setTimeout(() => setS((p) => ({ ...p, ...patch })), ms));
+    setS(START);
+    at(500, { step: 1, key: true, ink: "listening" });
+    at(1500, { step: 2 });
+    for (let i = 1; i <= WORDS; i++) at(1500 + i * 150, { shown: i });
+    const release = 1500 + WORDS * 150 + 400;
+    at(release, { step: 3, key: false, ink: "working", phase: 1 });
+    const paste = release + 1300;
+    at(paste, { ink: "message" });
+    for (let c = 1; c <= MEANT.length; c += 2) at(paste + c * 8, { typed: Math.min(MEANT.length, c + 1) });
+    at(paste + MEANT.length * 8 + 1200, { step: 0 });
+  };
+
   useEffect(() => {
-    let stop: (() => void) | null = null;
-    let start = 0;
-    const io = new IntersectionObserver(
+    let played = false;
+    // Reset just before it scrolls into view, play once it's well in.
+    const before = new IntersectionObserver(([e]) => !played && e.isIntersecting && setS(START), { rootMargin: "0px 0px 25% 0px" });
+    const inView = new IntersectionObserver(
       ([e]) => {
-        if (e.isIntersecting && !stop && !start) {
-          start = window.setTimeout(() => {
-            start = 0;
-            stop = play();
-          }, 700);
-        } else if (!e.isIntersecting) {
-          clearTimeout(start);
-          start = 0;
-          stop?.();
-          stop = null;
-          finish();
+        if (e.isIntersecting && !played) {
+          played = true;
+          play();
+        } else if (!e.isIntersecting && played) {
+          timers.current.forEach(clearTimeout);
+          setS(FINISHED);
         }
       },
-      { threshold: 0.4 },
+      { threshold: 0.45 },
     );
-    io.observe(ref.current!);
+    before.observe(ref.current!);
+    inView.observe(ref.current!);
     return () => {
-      io.disconnect();
-      clearTimeout(start);
-      stop?.();
+      before.disconnect();
+      inView.disconnect();
+      timers.current.forEach(clearTimeout);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  return ref;
-}
-
-export function TalkDemo() {
-  const [shown, setShown] = useState(WORDS);
-  const [phase, setPhase] = useState<0 | 1>(1);
-  const [ink, setInk] = useState<InkKind>("tick");
-  const ref = useReplay(
-    () => {
-      const timers: number[] = [];
-      const run = () => {
-        timers.forEach(clearTimeout);
-        setShown(0);
-        setPhase(0);
-        setInk("listening");
-        for (let i = 1; i <= WORDS; i++) timers.push(window.setTimeout(() => setShown(i), i * 150));
-        const end = WORDS * 150 + 400;
-        timers.push(window.setTimeout(() => (setPhase(1), setInk("working")), end));
-        timers.push(window.setTimeout(() => setInk("tick"), end + 1400));
-        timers.push(window.setTimeout(run, end + 7000));
-      };
-      run();
-      return () => timers.forEach(clearTimeout);
-    },
-    () => (setShown(WORDS), setPhase(1), setInk("tick")),
-  );
 
   return (
-    <div ref={ref} className="rounded-[20px] bg-[#1a1917] p-7 md:p-9" aria-hidden>
-      <div className="flex h-9 items-center justify-between gap-3">
-        <p className="font-[family-name:var(--font-ui)] text-[13px] text-[#a3a29e]">What you said, to Joris</p>
-        <Ink kind={ink} speaking={shown < WORDS} />
-      </div>
-      <Spoken said={SAID} shown={shown} phase={phase} className="mt-5 font-serif text-[21px] leading-[1.45] text-white md:text-[25px]" />
-    </div>
-  );
-}
+    <div ref={ref} className="grid items-center gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:gap-16 [&>*]:min-w-0">
+      <ol className="space-y-7">
+        {STEPS.map((x) => (
+          <li key={x.n} className="transition-opacity duration-300" style={{ opacity: s.step === 0 || s.step === x.n ? 1 : 0.35 }}>
+            <p className="w-fit cursor-default font-serif text-[26px]" data-said={x.said} data-said-pos="right">
+              <span className="text-[#8f6400]">{x.n}</span> · {x.title}
+            </p>
+            <p className="t-lead mt-2 max-w-[26rem]">{x.body}</p>
+          </li>
+        ))}
+        <li>
+          <button type="button" onClick={play} className="text-[15px] text-muted underline decoration-black/25 underline-offset-4 hover:text-ink">
+            Replay
+          </button>
+        </li>
+      </ol>
 
-export function LetGoDemo() {
-  const [typed, setTyped] = useState(MEANT.length);
-  const ref = useReplay(
-    () => {
-      const timers: number[] = [];
-      const run = () => {
-        timers.forEach(clearTimeout);
-        setTyped(0);
-        for (let c = 1; c <= MEANT.length; c++) timers.push(window.setTimeout(() => setTyped(c), 300 + c * 14));
-        timers.push(window.setTimeout(run, 300 + MEANT.length * 14 + 6000));
-      };
-      run();
-      return () => timers.forEach(clearTimeout);
-    },
-    () => setTyped(MEANT.length),
-  );
-
-  return (
-    <div ref={ref} aria-hidden>
-      <Window title="Joris Bakker · Slack">
-        <div className="flex flex-col gap-4 px-6 pb-6 pt-1 md:px-7">
-          <div className="flex gap-3">
-            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[9px] bg-[#b8cdd1] text-[11px] font-semibold text-ink/80">JB</span>
-            <div className="min-w-0 font-[family-name:var(--font-ui)] text-[15px] leading-[1.45]">
-              <p className="font-semibold text-ink">Joris Bakker</p>
-              <p className="text-[#3d3c39]">so when are we shipping?</p>
+      <div className="flex flex-col gap-3 rounded-[28px] bg-white p-3 shadow-[0_0_0_1px_rgba(0,0,0,0.07)] md:gap-4 md:p-6" aria-hidden>
+        <Window title="Joris Bakker · Slack" className="!shadow-[0_0_0_1px_rgba(0,0,0,0.08)]">
+          <div className="flex flex-col gap-3 px-5 pb-5 pt-1">
+            <div className="flex gap-3">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[9px] bg-[#b8cdd1] text-[11px] font-semibold text-ink/80">JB</span>
+              <div className="min-w-0 font-[family-name:var(--font-ui)] text-[15px] leading-[1.45]">
+                <p className="font-semibold text-ink">Joris Bakker</p>
+                <p className="text-[#3d3c39]">so when are we shipping?</p>
+              </div>
+            </div>
+            <div className="rounded-[12px] bg-[#f6f5f1] px-4 py-3 font-[family-name:var(--font-ui)] text-[15px] leading-[1.5] shadow-[0_0_0_1px_rgba(0,0,0,0.08)]">
+              <span className="text-ink">
+                {MEANT.slice(0, s.typed)}
+                <span className="caret ml-px inline-block h-[1.1em] w-[1.5px] translate-y-[3px] bg-ink" />
+                <span className="invisible">{MEANT.slice(s.typed)}</span>
+              </span>
             </div>
           </div>
-          <div className="rounded-[12px] bg-[#f6f5f1] px-4 py-3 font-[family-name:var(--font-ui)] text-[16px] leading-[1.5] shadow-[0_0_0_1px_rgba(0,0,0,0.08)]">
-            <span className="text-ink">
-              {MEANT.slice(0, typed)}
-              <span className="caret ml-px inline-block h-[1.1em] w-[1.5px] translate-y-[3px] bg-ink" />
-              <span className="invisible">{MEANT.slice(typed)}</span>
-            </span>
+        </Window>
+
+        <div className="rounded-[20px] bg-[#1a1917] p-5 md:p-6">
+          <div className="flex h-9 items-center justify-between gap-3">
+            <p className="font-[family-name:var(--font-ui)] text-[13px] text-[#a3a29e]">What you said</p>
+            <Ink kind={s.ink} speaking={s.shown < WORDS} text="Pasted" check />
           </div>
-          <p className="font-[family-name:var(--font-ui)] text-[12px] text-muted">
-            <span className="mr-1.5 inline-block h-2 w-2 rounded-full bg-amber align-middle" />
-            AI cleanup on, with your own key. Without a key, Chirp pastes your words as spoken, punctuated.
+          <Spoken said={SAID} shown={s.shown} phase={s.phase} className="mt-3 font-serif text-[20px] leading-[1.4] text-white md:text-[23px]" />
+        </div>
+
+        <div className="flex flex-wrap items-center justify-between gap-3 px-1">
+          <span
+            className="inline-flex h-11 items-center rounded-[10px] bg-white px-4 font-[family-name:var(--font-ui)] text-[16px] text-ink transition-[transform,box-shadow] duration-150 ease-out"
+            style={{
+              transform: s.key ? "translateY(3px)" : "none",
+              boxShadow: s.key ? "0 0 0 1px rgba(0,0,0,.14), 0 1px 0 rgba(0,0,0,.12)" : "0 0 0 1px rgba(0,0,0,.14), 0 4px 0 rgba(0,0,0,.14)",
+              color: s.key ? "#8f6400" : undefined,
+            }}
+          >
+            Right Ctrl
+          </span>
+          <p className="flex items-center gap-1.5 font-[family-name:var(--font-ui)] text-[13px] text-ink/70">
+            <span className="h-2 w-2 rounded-full bg-amber" />
+            AI cleanup on · your own key
           </p>
         </div>
-      </Window>
+      </div>
     </div>
   );
 }
