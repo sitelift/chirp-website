@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { Ink, type InkKind } from "./app/Ink";
 
 const STEPS = [
-  { title: "Hold Right Ctrl", body: "In any app, wherever your cursor is. Prefer not to hold? Tap Left Ctrl + Win to go hands-free." },
-  { title: "Talk", body: "Ramble, pause, change your mind. The pill listens, and your audio stays on your PC." },
-  { title: "Let go", body: "Your words land at the cursor, cleaned up and formatted, usually within a second." },
+  { title: "Hold Right Ctrl", body: "In any app, wherever your cursor is. Rather not hold a key? Tap Left Ctrl + Win to go hands-free." },
+  { title: "Talk", body: "Ramble, pause, change your mind halfway through. Talk the way you'd talk to a person." },
+  { title: "Let go", body: "Your words land at the cursor, cleaned up and formatted. Usually within a second." },
 ];
 
 const SAID = "um so can we move the review to thursday afternoon".split(" ");

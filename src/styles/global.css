@@ -45,6 +45,12 @@ html {
   color: #fff;
 }
 
+.range {
+  accent-color: #f0b723;
+  height: 24px;
+  cursor: pointer;
+}
+
 .caret {
   animation: blink 1s steps(1) infinite;
 }
