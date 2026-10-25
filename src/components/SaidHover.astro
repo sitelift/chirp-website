@@ -1,0 +1,130 @@
+---
+// Hover anything with data-said and the messy way you'd have said it types out
+// above it, then the filler gets struck. The words left standing are the label.
+---
+
+<div id="said-chip" aria-hidden="true"></div>
+
+<style is:global>
+  #said-chip {
+    position: fixed;
+    z-index: 60;
+    max-width: min(520px, calc(100vw - 24px));
+    padding: 12px 18px 13px;
+    border-radius: 14px;
+    background: #1a1917;
+    color: #fff;
+    font: 400 19px/1.4 var(--font-serif);
+    box-shadow: 0 14px 34px -14px rgba(0, 0, 0, 0.55);
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+      opacity 160ms linear,
+      transform 220ms var(--ease);
+  }
+  [data-said] {
+    text-decoration-line: underline;
+    text-decoration-style: dotted;
+    text-decoration-color: transparent;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.18em;
+    transition: text-decoration-color 200ms ease-out;
+  }
+  [data-said]:hover {
+    text-decoration-color: #e3a50f;
+  }
+  #said-chip[data-on] {
+    opacity: 1;
+    transform: none;
+  }
+  #said-chip .w {
+    position: relative;
+    display: inline-block;
+    white-space: pre;
+    opacity: 0;
+    transition: opacity 120ms linear;
+  }
+  #said-chip .w[data-in] {
+    opacity: 1;
+  }
+  #said-chip .w.drop::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0.28em;
+    top: 54%;
+    height: 3px;
+    border-radius: 3px;
+    background: #f0b723;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 240ms var(--ease);
+  }
+  #said-chip .w.drop[data-struck] {
+    color: #8a8985;
+  }
+  #said-chip .w.drop[data-struck]::after {
+    transform: scaleX(1);
+  }
+</style>
+
+<script>
+  const chip = document.getElementById("said-chip")!;
+  let timers: number[] = [];
+  let current: HTMLElement | null = null;
+
+  const clear = () => {
+    timers.forEach(clearTimeout);
+    timers = [];
+  };
+
+  const show = (el: HTMLElement) => {
+    clear();
+    current = el;
+    const said = el.dataset.said ?? "";
+    chip.innerHTML = "";
+    const words = said.split(" ").map((t, i, all) => {
+      const span = document.createElement("span");
+      span.className = t.startsWith("~") ? "w drop" : "w";
+      span.textContent = t.replace(/^~/, "") + (i < all.length - 1 ? " " : "");
+      chip.appendChild(span);
+      return span;
+    });
+    const r = el.getBoundingClientRect();
+    const cr = chip.getBoundingClientRect();
+    const left = Math.max(12, Math.min(innerWidth - cr.width - 12, r.left + r.width / 2 - cr.width / 2));
+    const above = r.top - cr.height - 10;
+    if (el.dataset.saidPos === "right" && r.right + 16 + cr.width < innerWidth - 12) {
+      chip.style.left = `${r.right + 16}px`;
+      chip.style.top = `${r.top + r.height / 2 - cr.height / 2}px`;
+    } else {
+      chip.style.left = `${left}px`;
+      chip.style.top = `${above > 8 ? above : r.bottom + 10}px`;
+    }
+    chip.dataset.on = "";
+    words.forEach((w, i) => timers.push(window.setTimeout(() => (w.dataset.in = ""), 40 + i * 70)));
+    let k = 0;
+    const end = 40 + words.length * 70 + 350;
+    words.forEach((w) => {
+      if (w.classList.contains("drop")) timers.push(window.setTimeout(() => (w.dataset.struck = ""), end + k++ * 180));
+    });
+  };
+
+  const hide = (el: HTMLElement) => {
+    if (current !== el) return;
+    clear();
+    current = null;
+    delete chip.dataset.on;
+  };
+
+  if (matchMedia("(hover: hover)").matches) {
+    document.querySelectorAll<HTMLElement>("[data-said]").forEach((el) => {
+      el.addEventListener("pointerenter", () => show(el));
+      el.addEventListener("pointerleave", () => hide(el));
+      el.addEventListener("focus", () => show(el));
+      el.addEventListener("blur", () => hide(el));
+    });
+    addEventListener("scroll", () => current && hide(current), { passive: true });
+  }
+</script>

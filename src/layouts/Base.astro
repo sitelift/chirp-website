@@ -1,0 +1,31 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Chirp · Talk messy. Type clean.",
+  description = "Free, open-source dictation for Windows. Hold a key, ramble, let go: clean text lands wherever you were typing. Bring your own AI key, or none.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta name="theme-color" content="#ffffff" />
+  </head>
+  <body class="min-h-svh bg-paper font-sans text-ink">
+    <slot />
+  </body>
+</html>

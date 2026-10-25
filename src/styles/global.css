@@ -1,0 +1,314 @@
+@import "tailwindcss";
+@import "@fontsource/ibm-plex-serif/400.css";
+@import "@fontsource/ibm-plex-serif/400-italic.css";
+@import "@fontsource-variable/inter";
+@import "@fontsource/ibm-plex-mono/400.css";
+
+/* Warm paper, one serif at regular weight for every heading, a quiet sans
+   for reading, the app shown where it lives: above a Windows taskbar. */
+@theme {
+  --font-serif: "IBM Plex Serif", Georgia, serif;
+  --font-sans: "Inter Variable", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  /* The app's own stack, for UI shown inside windows. */
+  --font-ui: "Segoe UI Variable Text", "Segoe UI Variable", "Segoe UI", "Inter Variable", system-ui, sans-serif;
+  --font-ui-display: "Segoe UI Variable Display", "Segoe UI Variable", "Segoe UI", "Inter Variable", system-ui, sans-serif;
+
+  --color-paper: #fbf8f1;
+  --color-ink: #292929;
+  --color-ink-deep: #0e0f0c;
+  --color-muted: #6b6a66;
+  --color-faint: #9b9a95;
+  --color-line: #e7e1d4;
+  --color-cream: #ffffff;
+  --color-night: #262624;
+  --color-amber: #f0b723;
+  --color-honey: #c9900a;
+  --color-honey-deep: #6f5100;
+}
+
+:root {
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-close: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background: rgb(240 183 35 / 0.4);
+}
+
+@layer components {
+  /* Type scale. Headings never go bold; size and tracking carry the weight. */
+  .t-mega {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(64px, 12vw, 160px);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+  .t-hero {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(56px, 7.2vw, 100px);
+    line-height: 0.94;
+    letter-spacing: -0.025em;
+  }
+  .t-h2 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(36px, 5vw, 70px);
+    line-height: 0.97;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+  .t-h3 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(32px, 3.6vw, 52px);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+  }
+  .t-h4 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(22px, 2vw, 28px);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+  .t-lead {
+    font-size: clamp(18px, 1.5vw, 20px);
+    line-height: 1.4;
+    color: var(--color-ink-deep);
+    text-wrap: pretty;
+  }
+  .t-body {
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--color-muted);
+    text-wrap: pretty;
+  }
+
+  /* Buttons: pills, like the nav. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 52px;
+    padding: 0 24px;
+    border-radius: 999px;
+    font-size: 17px;
+    font-weight: 500;
+    transition:
+      background-color 200ms ease-out,
+      box-shadow 200ms ease-out,
+      transform 200ms ease-out;
+  }
+  .btn-primary {
+    background: var(--color-ink);
+    color: #fff;
+  }
+  .btn-primary:hover {
+    background: #000;
+  }
+  .btn-ghost {
+    box-shadow: inset 0 0 0 1px #8f8e89;
+    color: var(--color-ink);
+  }
+  .btn-ghost:hover {
+    box-shadow: inset 0 0 0 1px var(--color-ink);
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 32px;
+    padding: 0 12px 0 4px;
+    border-radius: 999px;
+    background: var(--color-cream);
+    font-size: 14px;
+    color: var(--color-ink);
+  }
+  .tag > b {
+    border-radius: 999px;
+    background: var(--color-amber);
+    padding: 3px 9px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  /* A desktop window: cream paper, Windows caption buttons. */
+  .window {
+    position: relative;
+    border-radius: 18px;
+    background: var(--color-cream);
+    box-shadow:
+      0 0 0 1px rgb(0 0 0 / 0.06),
+      0 24px 60px -24px rgb(0 0 0 / 0.35);
+    overflow: hidden;
+  }
+
+  .link {
+    text-decoration: underline;
+    text-decoration-color: rgb(41 41 41 / 0.35);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 200ms ease-out;
+  }
+  .link:hover {
+    text-decoration-color: currentColor;
+  }
+
+  /* ── The app's ink pill (sitelift/Chirp src/styles/globals.css) ── */
+  .ink {
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1a1917;
+    transition-property: width, height, border-radius, box-shadow, opacity, transform;
+    transition-duration: 180ms;
+    transition-timing-function: var(--ease);
+  }
+  .ink[data-kind="tick"] {
+    width: 28px;
+    height: 5px;
+    border-radius: 3px;
+    opacity: 0.55;
+    box-shadow: 0 0 0 1px #ffffff24;
+  }
+  .ink[data-kind="hover"] {
+    width: 56px;
+    height: 36px;
+    border-radius: 18px;
+    box-shadow: 0 6px 20px #00000040, 0 0 0 1px #ffffff1f;
+  }
+  .ink[data-kind="tick"],
+  .ink[data-kind="hover"] {
+    transition:
+      width 160ms var(--ease),
+      height 160ms var(--ease),
+      border-radius 160ms var(--ease),
+      box-shadow 160ms var(--ease),
+      opacity 120ms linear;
+  }
+  .ink[data-kind="pill"] {
+    height: 36px;
+    border-radius: 18px;
+    box-shadow: 0 6px 20px #00000040, 0 0 0 1px #ffffff1f;
+  }
+  .ink-content {
+    animation: ink-content 120ms linear 60ms both;
+  }
+  .bird {
+    opacity: 0;
+    transform: scale(0.4) rotate(-12deg);
+    transition:
+      opacity 120ms linear,
+      transform 220ms var(--ease);
+  }
+  .bird[data-on] {
+    opacity: 1;
+    transform: none;
+    transition-delay: 40ms;
+  }
+}
+
+@keyframes ink-content {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Working: the bright dot sweeps every 900 ms (the app's keyframes). */
+@keyframes sweep {
+  0% {
+    opacity: 1;
+  }
+  14% {
+    opacity: 0.7;
+  }
+  28% {
+    opacity: 0.45;
+  }
+  42%,
+  100% {
+    opacity: 0.25;
+  }
+}
+.sweep {
+  animation: sweep 900ms ease-in-out infinite;
+}
+
+/* A slider with a thumb you can actually grab. */
+.range-lg {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 28px;
+  background: transparent;
+  cursor: pointer;
+}
+.range-lg::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 3px;
+  background: #e7e1d4;
+}
+.range-lg::-moz-range-track {
+  height: 6px;
+  border-radius: 3px;
+  background: #e7e1d4;
+}
+.range-lg::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 28px;
+  height: 28px;
+  margin-top: -11px;
+  border-radius: 50%;
+  background: #292929;
+  box-shadow: 0 0 0 5px #f0b723;
+}
+.range-lg::-moz-range-thumb {
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 50%;
+  background: #292929;
+  box-shadow: 0 0 0 5px #f0b723;
+}
+
+html,
+body {
+  overflow-x: clip;
+}
+
+.caret {
+  animation: blink 1.06s steps(1) infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .ink,
+  .ink[data-kind] {
+    transition-property: opacity;
+    transition-duration: 120ms;
+  }
+  .bird,
+  .bird[data-on] {
+    transform: none;
+  }
+}
