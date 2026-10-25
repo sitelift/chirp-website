@@ -281,9 +281,9 @@ export default function Hero() {
       } catch {}
       resize();
       ro.observe(wrap);
-      flock.scatter();
-      birdMark(0.1, 3.2);
-      runScript(0, 3.6);
+      flock.enter(-1);
+      birdMark(0.1, 4.4);
+      runScript(0, 4.6);
       raf = requestAnimationFrame(frame);
     })();
 
