@@ -1,81 +1,135 @@
-// Minimal WebGL2 renderer: one additive point sprite per particle.
+// WebGL2 renderer: each particle is a point sprite drawn as a flapping
+// chevron (a bird) in flight, or a soft dot once it settles into a letter.
 
 const VERT = `#version 300 es
 in vec2 aPos;
 in float aDepth;
 in float aAlpha;
 in float aSeed;
+in float aAngle;
+in float aBird;
+in float aTone;
 uniform vec2 uRes;
 uniform float uDpr;
 out float vAlpha;
 out float vSeed;
+out float vAngle;
+out float vBird;
+out float vTone;
 void main() {
   vec2 clip = (aPos / uRes) * 2.0 - 1.0;
   gl_Position = vec4(clip.x, -clip.y, 0.0, 1.0);
-  gl_PointSize = (1.1 + aDepth * 1.9 + aSeed * 0.8) * uDpr;
+  float dotSize = 1.3 + aDepth * 1.8 + aSeed * 0.7;
+  float birdSize = 5.0 + aDepth * 4.5 + aSeed * 1.5;
+  gl_PointSize = mix(dotSize, birdSize, aBird) * uDpr;
   vAlpha = aAlpha;
   vSeed = aSeed;
+  vAngle = aAngle;
+  vBird = aBird;
+  vTone = aTone;
 }`;
 
 const FRAG = `#version 300 es
 precision mediump float;
 in float vAlpha;
 in float vSeed;
+in float vAngle;
+in float vBird;
+in float vTone;
+uniform float uTime;
 out vec4 outColor;
+
+float seg(vec2 p, vec2 a, vec2 b) {
+  vec2 pa = p - a, ba = b - a;
+  float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
+  return length(pa - ba * h);
+}
+
 void main() {
-  vec2 c = gl_PointCoord - 0.5;
-  float d = length(c);
-  float disc = smoothstep(0.5, 0.18, d);
+  vec2 p = gl_PointCoord - 0.5;
+  float c = cos(vAngle), s = sin(vAngle);
+  vec2 q = vec2(c * p.x + s * p.y, -s * p.x + c * p.y);
+  // Seen from below: a short body and two swept wings that beat.
+  float flap = sin(uTime * 15.0 + vSeed * 60.0);
+  float tipX = -0.06 - 0.1 * flap;
+  float span = 0.36 + 0.06 * flap;
+  float d = seg(q, vec2(0.16, 0.0), vec2(-0.16, 0.0));
+  d = min(d, seg(q, vec2(0.04, 0.0), vec2(tipX, span)));
+  d = min(d, seg(q, vec2(0.04, 0.0), vec2(tipX, -span)));
+  float birdA = smoothstep(0.075, 0.03, d);
+  float dotA = smoothstep(0.5, 0.18, length(p));
+  float a = mix(dotA, birdA, vBird) * vAlpha;
   vec3 amber = vec3(0.941, 0.718, 0.137);
   vec3 warm = vec3(1.0, 0.93, 0.78);
-  vec3 col = mix(amber, warm, step(0.82, vSeed) * 0.85);
-  outColor = vec4(col * disc * vAlpha, disc * vAlpha);
+  vec3 grey = vec3(0.36, 0.34, 0.32);
+  vec3 col = mix(amber, warm, step(0.85, vSeed) * 0.8);
+  col = mix(col, grey, vTone);
+  outColor = vec4(col * a, a);
 }`;
+
+type Attr = { buf: WebGLBuffer; data: Float32Array };
 
 export class PointsGL {
   gl: WebGL2RenderingContext;
-  prog: WebGLProgram;
-  bufPos: WebGLBuffer;
-  bufDepth: WebGLBuffer;
-  bufAlpha: WebGLBuffer;
-  bufSeed: WebGLBuffer;
+  n: number;
   pos: Float32Array;
+  attrs: Record<string, Attr> = {};
   uRes: WebGLUniformLocation;
   uDpr: WebGLUniformLocation;
-  n: number;
+  uTime: WebGLUniformLocation;
 
   constructor(canvas: HTMLCanvasElement, n: number, seed: Float32Array) {
     const gl = canvas.getContext("webgl2", { premultipliedAlpha: true, antialias: false, alpha: true });
     if (!gl) throw new Error("webgl2 unavailable");
     this.gl = gl;
     this.n = n;
-    this.prog = link(gl, VERT, FRAG);
-    gl.useProgram(this.prog);
-    this.uRes = gl.getUniformLocation(this.prog, "uRes")!;
-    this.uDpr = gl.getUniformLocation(this.prog, "uDpr")!;
+    const prog = link(gl, VERT, FRAG);
+    gl.useProgram(prog);
+    this.uRes = gl.getUniformLocation(prog, "uRes")!;
+    this.uDpr = gl.getUniformLocation(prog, "uDpr")!;
+    this.uTime = gl.getUniformLocation(prog, "uTime")!;
     this.pos = new Float32Array(n * 2);
-    this.bufPos = attr(gl, this.prog, "aPos", 2, this.pos);
-    this.bufDepth = attr(gl, this.prog, "aDepth", 1, new Float32Array(n));
-    this.bufAlpha = attr(gl, this.prog, "aAlpha", 1, new Float32Array(n));
-    this.bufSeed = attr(gl, this.prog, "aSeed", 1, seed);
+    this.attrs.aPos = attr(gl, prog, "aPos", 2, this.pos);
+    for (const name of ["aDepth", "aAlpha", "aAngle", "aBird", "aTone"]) {
+      this.attrs[name] = attr(gl, prog, name, 1, new Float32Array(n));
+    }
+    attr(gl, prog, "aSeed", 1, seed);
     gl.enable(gl.BLEND);
-    gl.blendFunc(gl.ONE, gl.ONE);
+    gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
   }
 
-  draw(px: Float32Array, py: Float32Array, depth: Float32Array, alpha: Float32Array, w: number, h: number, dpr: number) {
+  draw(
+    f: {
+      px: Float32Array;
+      py: Float32Array;
+      depth: Float32Array;
+      alpha: Float32Array;
+      angle: Float32Array;
+      bird: Float32Array;
+      tone: Float32Array;
+    },
+    w: number,
+    h: number,
+    dpr: number,
+    t: number,
+  ) {
     const { gl, pos, n } = this;
     for (let i = 0; i < n; i++) {
-      pos[i * 2] = px[i];
-      pos[i * 2 + 1] = py[i];
+      pos[i * 2] = f.px[i];
+      pos[i * 2 + 1] = f.py[i];
     }
     gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
     gl.clearColor(0, 0, 0, 0);
     gl.clear(gl.COLOR_BUFFER_BIT);
     gl.uniform2f(this.uRes, w, h);
     gl.uniform1f(this.uDpr, dpr);
-    upload(gl, this.bufPos, pos);
-    upload(gl, this.bufDepth, depth);
-    upload(gl, this.bufAlpha, alpha);
+    gl.uniform1f(this.uTime, t);
+    upload(gl, this.attrs.aPos.buf, pos);
+    upload(gl, this.attrs.aDepth.buf, f.depth);
+    upload(gl, this.attrs.aAlpha.buf, f.alpha);
+    upload(gl, this.attrs.aAngle.buf, f.angle);
+    upload(gl, this.attrs.aBird.buf, f.bird);
+    upload(gl, this.attrs.aTone.buf, f.tone);
     gl.drawArrays(gl.POINTS, 0, n);
   }
 }
@@ -85,14 +139,14 @@ function upload(gl: WebGL2RenderingContext, buf: WebGLBuffer, data: Float32Array
   gl.bufferSubData(gl.ARRAY_BUFFER, 0, data);
 }
 
-function attr(gl: WebGL2RenderingContext, prog: WebGLProgram, name: string, size: number, data: Float32Array) {
+function attr(gl: WebGL2RenderingContext, prog: WebGLProgram, name: string, size: number, data: Float32Array): Attr {
   const buf = gl.createBuffer()!;
   gl.bindBuffer(gl.ARRAY_BUFFER, buf);
   gl.bufferData(gl.ARRAY_BUFFER, data, gl.DYNAMIC_DRAW);
   const loc = gl.getAttribLocation(prog, name);
   gl.enableVertexAttribArray(loc);
   gl.vertexAttribPointer(loc, size, gl.FLOAT, false, 0, 0);
-  return buf;
+  return { buf, data };
 }
 
 function link(gl: WebGL2RenderingContext, vs: string, fs: string) {

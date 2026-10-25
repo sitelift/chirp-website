@@ -1,31 +1,26 @@
-// Dictations the hero plays. A leading "~" marks a word Chirp drops
-// (filler, a self-correction, or a spoken command that becomes formatting).
+// Dictations the hero plays on a loop. A leading "~" marks a word Chirp
+// drops (filler, a self-correction, or a spoken command).
 
 export type Script = {
   said: string;
   meant: string;
-  headline: string[];
+  placeholder: string;
 };
 
 export const SCRIPTS: Script[] = [
   {
-    said: "~um ~so tell sam the launch is ~tuesday ~no ~wait wednesday at three",
-    meant: "Tell Sam the launch is Wednesday at 3.",
-    headline: ["say it messy."],
+    said: "~um ~so tell sam the launch is ~tuesday ~no ~wait wednesday",
+    meant: "Tell Sam the launch is Wednesday.",
+    placeholder: "Message #launch",
   },
   {
-    said: "~uh make the auth hook retry twice ~like before it gives up ~new ~line and add a test",
-    meant: "Make the auth hook retry twice before it gives up.\nAdd a test.",
-    headline: ["in any app."],
+    said: "hi priya ~uh thanks for the quick turnaround ~new ~line cheers pieter",
+    meant: "Hi Priya, thanks for the quick turnaround.\nCheers, Pieter",
+    placeholder: "Reply to Priya",
   },
   {
-    said: "hi priya ~new ~line thanks for the quick turnaround ~um i'll send the invoice friday ~new ~line cheers pieter",
-    meant: "Hi Priya,\nThanks for the quick turnaround. I'll send the invoice Friday.\nCheers, Pieter",
-    headline: ["what you", "meant."],
-  },
-  {
-    said: "~so my audio ~like never leaves this pc ~right",
-    meant: "My audio never leaves this PC.",
-    headline: ["never", "uploaded."],
+    said: "~so ~like summarize this thread in ~three ~actually two bullets",
+    meant: "Summarize this thread in two bullets.",
+    placeholder: "Ask anything",
   },
 ];
