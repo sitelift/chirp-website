@@ -7,8 +7,8 @@ interface Props {
 }
 
 const {
-  title = "Chirp · Hold a key. Talk. Let go.",
-  description = "Free, open-source voice to text for Windows. Speech is recognized on your PC; what you meant appears at your cursor in any app.",
+  title = "Chirp · Talk messy. Type clean.",
+  description = "Free, open-source dictation for Windows. Hold a key, ramble, let go: clean text lands wherever you were typing. Bring your own AI key, or none.",
 } = Astro.props;
 ---
 
@@ -23,9 +23,9 @@ const {
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta name="theme-color" content="#0a0908" />
+    <meta name="theme-color" content="#ffffff" />
   </head>
-  <body class="min-h-svh bg-ink font-sans">
+  <body class="min-h-svh bg-paper font-sans text-ink">
     <slot />
   </body>
 </html>

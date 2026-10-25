@@ -37,6 +37,7 @@ in float vAngle;
 in float vBird;
 in float vTone;
 uniform float uTime;
+uniform vec3 uColor;
 out vec4 outColor;
 
 float seg(vec2 p, vec2 a, vec2 b) {
@@ -59,11 +60,7 @@ void main() {
   float birdA = smoothstep(0.075, 0.03, d);
   float dotA = smoothstep(0.5, 0.18, length(p));
   float a = mix(dotA, birdA, vBird) * vAlpha;
-  vec3 amber = vec3(0.941, 0.718, 0.137);
-  vec3 warm = vec3(1.0, 0.93, 0.78);
-  vec3 grey = vec3(0.36, 0.34, 0.32);
-  vec3 col = mix(amber, warm, step(0.85, vSeed) * 0.8);
-  col = mix(col, grey, vTone);
+  vec3 col = mix(uColor, vec3(0.6, 0.58, 0.55), vTone);
   outColor = vec4(col * a, a);
 }`;
 
@@ -77,6 +74,8 @@ export class PointsGL {
   uRes: WebGLUniformLocation;
   uDpr: WebGLUniformLocation;
   uTime: WebGLUniformLocation;
+  uColor: WebGLUniformLocation;
+  color: [number, number, number] = [0.16, 0.16, 0.16];
 
   constructor(canvas: HTMLCanvasElement, n: number, seed: Float32Array) {
     const gl = canvas.getContext("webgl2", { premultipliedAlpha: true, antialias: false, alpha: true });
@@ -88,6 +87,7 @@ export class PointsGL {
     this.uRes = gl.getUniformLocation(prog, "uRes")!;
     this.uDpr = gl.getUniformLocation(prog, "uDpr")!;
     this.uTime = gl.getUniformLocation(prog, "uTime")!;
+    this.uColor = gl.getUniformLocation(prog, "uColor")!;
     this.pos = new Float32Array(n * 2);
     this.attrs.aPos = attr(gl, prog, "aPos", 2, this.pos);
     for (const name of ["aDepth", "aAlpha", "aAngle", "aBird", "aTone"]) {
@@ -124,6 +124,7 @@ export class PointsGL {
     gl.uniform2f(this.uRes, w, h);
     gl.uniform1f(this.uDpr, dpr);
     gl.uniform1f(this.uTime, t);
+    gl.uniform3f(this.uColor, ...this.color);
     upload(gl, this.attrs.aPos.buf, pos);
     upload(gl, this.attrs.aDepth.buf, f.depth);
     upload(gl, this.attrs.aAlpha.buf, f.alpha);

@@ -5,7 +5,7 @@ import { IconCheck } from "./icons";
 // The app's ink pill (sitelift/Chirp src/surface/Pill.tsx): the resting tick,
 // the hover pill with the bird, and the dictation pills, as one object.
 
-export type InkKind = "tick" | "hover" | "listening" | "working" | "message";
+export type InkKind = "tick" | "hover" | "listening" | "handsfree" | "working" | "message";
 
 const WORKING_OPACITY = [0.25, 0.25, 0.25, 0.45, 0.7, 1, 0.7, 0.45, 0.25, 0.25, 0.25];
 
@@ -78,11 +78,18 @@ export function Ink({
   check?: boolean;
   scale?: number;
 }) {
-  const dataKind = kind === "listening" || kind === "working" || kind === "message" ? "pill" : kind;
+  const dataKind = kind === "tick" || kind === "hover" ? kind : "pill";
   const width = kind === "listening" || kind === "working" ? 132 : undefined;
   return (
     <div style={{ transform: scale !== 1 ? `scale(${scale})` : undefined, transformOrigin: "50% 100%" }}>
-      <div className="ink" data-kind={dataKind} style={{ width }}>
+      <div
+        className="ink"
+        data-kind={dataKind}
+        style={{
+          width,
+          boxShadow: kind === "handsfree" ? "0 6px 20px #00000059, 0 0 0 2px #f0b723, 0 0 0 6px #f0b72338" : undefined,
+        }}
+      >
         <Bird
           className="bird absolute left-1/2 top-1/2 -ml-2.5 -mt-2.5 h-5 w-5 text-amber"
           data-on={kind === "hover" ? "" : undefined}
@@ -90,6 +97,14 @@ export function Ink({
         {kind === "listening" && (
           <div className="ink-content flex h-[36px] w-[132px] items-center justify-center">
             <Bars speaking={speaking} />
+          </div>
+        )}
+        {kind === "handsfree" && (
+          <div className="ink-content flex h-[36px] items-center gap-[12px] pl-[18px] pr-[6px]">
+            <Bars speaking={speaking} />
+            <span className="flex h-[24px] w-[24px] shrink-0 items-center justify-center rounded-[12px] bg-[#FFFFFF1F]">
+              <span className="h-[8px] w-[8px] rounded-[2px] bg-white" />
+            </span>
           </div>
         )}
         {kind === "working" && (

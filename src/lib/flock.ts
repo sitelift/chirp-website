@@ -63,6 +63,9 @@ export class Flock {
   hawk = { x: -1e4, y: -1e4, on: false };
   dim = 1;
   dimTarget = 1;
+  /** Where the flock circles, as fractions of the canvas; and its size. */
+  centerY = 0.5;
+  spread = 1;
   /** Which side birds re-enter from after pouring into the cursor. */
   entrySide = -1;
 
@@ -137,7 +140,7 @@ export class Flock {
   step(t: number, dt: number) {
     const { n, w, h } = this;
     const T = t * 0.7;
-    const R = Math.min(w * 0.27, h * 0.36);
+    const R = Math.min(w * 0.27, h * 0.36) * this.spread;
 
     // The loop tumbles slowly in 3D and drifts around the sky.
     const yaw = T * 0.09 + Math.sin(T * 0.05) * 1.4;
@@ -147,7 +150,7 @@ export class Flock {
     const cp = Math.cos(pitch), sp = Math.sin(pitch);
     const cr = Math.cos(roll), sr = Math.sin(roll);
     const cx = w * (0.5 + 0.15 * Math.sin(T * 0.13) + 0.05 * Math.sin(T * 0.31));
-    const cy = h * (0.5 + 0.05 * Math.sin(T * 0.17 + 1.1));
+    const cy = h * (this.centerY + 0.05 * Math.sin(T * 0.17 + 1.1));
     const focal = 2.6;
 
     const hawk = this.hawk;

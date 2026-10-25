@@ -1,0 +1,31 @@
+---
+// The page's signature: what you'd actually say, with the filler struck in
+// amber, sitting above the headline Chirp would have typed.
+interface Props {
+  said: string;
+  class?: string;
+  dark?: boolean;
+}
+const { said, class: cls = "", dark = false } = Astro.props;
+const tokens = said.split(" ").map((t) => ({ text: t.replace(/^~/, ""), drop: t.startsWith("~") }));
+---
+
+<p class={`flex items-start gap-2.5 text-[16px] leading-[1.45] ${dark ? "text-white/60" : "text-muted"} ${cls}`}>
+  <span class="mt-[5px] flex h-3.5 shrink-0 items-center gap-[2px]" aria-hidden="true">
+    {[0.45, 0.8, 1, 0.65].map((h) => <span class="w-[2px] rounded-full bg-amber" style={`height:${h * 100}%`} />)}
+  </span>
+  <span>
+    <span class="sr-only">Said: </span>“{
+      tokens.map((t, i) => (
+        <>
+          {t.drop ? (
+            <s class="decoration-amber decoration-2" style="text-decoration-thickness:2px">{t.text}</s>
+          ) : (
+            t.text
+          )}
+          {i < tokens.length - 1 ? " " : ""}
+        </>
+      ))
+    }”
+  </span>
+</p>

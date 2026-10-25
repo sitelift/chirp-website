@@ -1,62 +1,228 @@
 @import "tailwindcss";
-@import "@fontsource-variable/inter-tight";
-@import "@fontsource-variable/jetbrains-mono";
+@import "@fontsource/ibm-plex-serif/400.css";
+@import "@fontsource/ibm-plex-serif/400-italic.css";
+@import "@fontsource-variable/inter";
+@import "@fontsource/ibm-plex-mono/400.css";
 
+/* Warm paper, one serif at regular weight for every heading, a quiet sans
+   for reading, the app shown where it lives: above a Windows taskbar. */
 @theme {
-  --font-display: "Inter Tight Variable", system-ui, sans-serif;
-  --font-sans: "Inter Tight Variable", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
-  /* The app's own stack; Inter Tight stands in off Windows. */
-  --font-ui: "Segoe UI Variable Text", "Segoe UI Variable", "Segoe UI", "Inter Tight Variable", system-ui, sans-serif;
-  --font-ui-display: "Segoe UI Variable Display", "Segoe UI Variable", "Segoe UI", "Inter Tight Variable", system-ui, sans-serif;
-  --color-ink: #0a0908;
+  --font-serif: "IBM Plex Serif", Georgia, serif;
+  --font-sans: "Inter Variable", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  /* The app's own stack, for UI shown inside windows. */
+  --font-ui: "Segoe UI Variable Text", "Segoe UI Variable", "Segoe UI", "Inter Variable", system-ui, sans-serif;
+  --font-ui-display: "Segoe UI Variable Display", "Segoe UI Variable", "Segoe UI", "Inter Variable", system-ui, sans-serif;
+
+  --color-paper: #fbf8f1;
+  --color-ink: #292929;
+  --color-ink-deep: #0e0f0c;
+  --color-muted: #6b6a66;
+  --color-faint: #9b9a95;
+  --color-line: #e7e1d4;
+  --color-cream: #ffffff;
+  --color-night: #262624;
   --color-amber: #f0b723;
+  --color-honey: #c9900a;
+  --color-honey-deep: #6f5100;
 }
 
-/* Motion and colour tokens from the app (sitelift/Chirp src/styles/globals.css, dark theme). */
 :root {
   --ease: cubic-bezier(0.32, 0.72, 0, 1);
   --ease-close: cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-in: cubic-bezier(0.4, 0, 1, 1);
-  --surface: #1a1917;
-  --t1: #ffffff;
-  --t2: #a3a29e;
-  --t3: #8f8e8a;
-  --chev: #7d7c78;
-  --divider: #ffffff14;
-  --hover: #ffffff0f;
-  --ring: #ffffff1a;
-  --field: #232220;
-  --field-ring: #ffffff1f;
-  --key-bg: #2a2926;
-  --key-border: #ffffff1a;
-  --accent: #f0b723;
 }
 
 html {
-  background: var(--color-ink);
-  color: #e7e5e4;
-  color-scheme: dark;
+  background: var(--color-paper);
+  color: var(--color-ink);
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
 }
 
 ::selection {
-  background: rgb(240 183 35 / 0.35);
-  color: #fff;
+  background: rgb(240 183 35 / 0.4);
 }
 
-.range {
-  accent-color: #f0b723;
-  height: 24px;
-  cursor: pointer;
+@layer components {
+  /* Type scale. Headings never go bold; size and tracking carry the weight. */
+  .t-mega {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(64px, 12vw, 160px);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+  .t-hero {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(56px, 7.2vw, 100px);
+    line-height: 0.94;
+    letter-spacing: -0.025em;
+  }
+  .t-h2 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(40px, 6.4vw, 96px);
+    line-height: 0.97;
+    letter-spacing: -0.03em;
+  }
+  .t-h3 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(32px, 3.6vw, 52px);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+  }
+  .t-h4 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(22px, 2vw, 28px);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+  .t-lead {
+    font-size: clamp(18px, 1.5vw, 20px);
+    line-height: 1.4;
+    color: var(--color-ink-deep);
+    text-wrap: pretty;
+  }
+  .t-body {
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--color-muted);
+    text-wrap: pretty;
+  }
+
+  /* Buttons: pills, like the nav. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 52px;
+    padding: 0 24px;
+    border-radius: 999px;
+    font-size: 17px;
+    font-weight: 500;
+    transition:
+      background-color 200ms ease-out,
+      box-shadow 200ms ease-out,
+      transform 200ms ease-out;
+  }
+  .btn-primary {
+    background: var(--color-ink);
+    color: #fff;
+  }
+  .btn-primary:hover {
+    background: #000;
+  }
+  .btn-ghost {
+    box-shadow: inset 0 0 0 1px #8f8e89;
+    color: var(--color-ink);
+  }
+  .btn-ghost:hover {
+    box-shadow: inset 0 0 0 1px var(--color-ink);
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 32px;
+    padding: 0 12px 0 4px;
+    border-radius: 999px;
+    background: var(--color-cream);
+    font-size: 14px;
+    color: var(--color-ink);
+  }
+  .tag > b {
+    border-radius: 999px;
+    background: var(--color-amber);
+    padding: 3px 9px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  /* A desktop window: cream paper, Windows caption buttons. */
+  .window {
+    position: relative;
+    border-radius: 18px;
+    background: var(--color-cream);
+    box-shadow:
+      0 0 0 1px rgb(0 0 0 / 0.06),
+      0 24px 60px -24px rgb(0 0 0 / 0.35);
+    overflow: hidden;
+  }
+
+  .link {
+    text-decoration: underline;
+    text-decoration-color: rgb(41 41 41 / 0.35);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 200ms ease-out;
+  }
+  .link:hover {
+    text-decoration-color: currentColor;
+  }
+
+  /* ── The app's ink pill (sitelift/Chirp src/styles/globals.css) ── */
+  .ink {
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1a1917;
+    transition-property: width, height, border-radius, box-shadow, opacity, transform;
+    transition-duration: 180ms;
+    transition-timing-function: var(--ease);
+  }
+  .ink[data-kind="tick"] {
+    width: 28px;
+    height: 5px;
+    border-radius: 3px;
+    opacity: 0.55;
+    box-shadow: 0 0 0 1px #ffffff24;
+  }
+  .ink[data-kind="hover"] {
+    width: 56px;
+    height: 36px;
+    border-radius: 18px;
+    box-shadow: 0 6px 20px #00000040, 0 0 0 1px #ffffff1f;
+  }
+  .ink[data-kind="tick"],
+  .ink[data-kind="hover"] {
+    transition:
+      width 160ms var(--ease),
+      height 160ms var(--ease),
+      border-radius 160ms var(--ease),
+      box-shadow 160ms var(--ease),
+      opacity 120ms linear;
+  }
+  .ink[data-kind="pill"] {
+    height: 36px;
+    border-radius: 18px;
+    box-shadow: 0 6px 20px #00000040, 0 0 0 1px #ffffff1f;
+  }
+  .ink-content {
+    animation: ink-content 120ms linear 60ms both;
+  }
+  .bird {
+    opacity: 0;
+    transform: scale(0.4) rotate(-12deg);
+    transition:
+      opacity 120ms linear,
+      transform 220ms var(--ease);
+  }
+  .bird[data-on] {
+    opacity: 1;
+    transform: none;
+    transition-delay: 40ms;
+  }
 }
 
-.caret {
-  animation: blink 1s steps(1) infinite;
-}
-
-@keyframes blink {
-  50% {
+@keyframes ink-content {
+  from {
     opacity: 0;
   }
 }
@@ -81,205 +247,19 @@ html {
   animation: sweep 900ms ease-in-out infinite;
 }
 
-@layer components {
-  .headline {
-    font-family: var(--font-display);
-    font-size: clamp(44px, 6.4vw, 96px);
-    font-weight: 600;
-    line-height: 0.96;
-    letter-spacing: -0.05em;
-    color: #fafaf9;
-    text-wrap: balance;
-  }
-  .lede {
-    margin-top: 1.5rem;
-    max-width: 36rem;
-    font-size: clamp(18px, 1.5vw, 21px);
-    line-height: 1.5;
-    color: #a8a29e;
-    text-wrap: pretty;
-  }
-
-  /* ── The ink: tick, hover pill and dictation pills are one object ── */
-  .ink {
-    position: relative;
-    overflow: hidden;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #1a1917;
-    transition-property: width, height, border-radius, box-shadow, opacity, transform;
-    transition-duration: 180ms;
-    transition-timing-function: var(--ease);
-  }
-  .ink[data-kind="tick"] {
-    width: 28px;
-    height: 5px;
-    border-radius: 3px;
-    opacity: 0.7;
-    box-shadow: 0 0 0 1px #ffffff24;
-  }
-  .ink[data-kind="hover"] {
-    width: 56px;
-    height: 36px;
-    border-radius: 18px;
-    box-shadow: 0 6px 20px #00000073, 0 0 0 1px #ffffff1f;
-  }
-  .ink[data-kind="tick"],
-  .ink[data-kind="hover"] {
-    transition:
-      width 160ms var(--ease),
-      height 160ms var(--ease),
-      border-radius 160ms var(--ease),
-      box-shadow 160ms var(--ease),
-      opacity 120ms linear;
-  }
-  .ink[data-kind="pill"] {
-    height: 36px;
-    border-radius: 18px;
-    box-shadow: 0 6px 20px #00000073, 0 0 0 1px #ffffff1f;
-  }
-  .ink-content {
-    animation: ink-content 120ms linear 60ms both;
-  }
-  .bird {
-    opacity: 0;
-    transform: scale(0.4) rotate(-12deg);
-    transition:
-      opacity 120ms linear,
-      transform 220ms var(--ease);
-  }
-  .bird[data-on] {
-    opacity: 1;
-    transform: none;
-    transition-delay: 40ms;
-  }
-
-  /* ── The panel (dark theme), corner rule: card 18, rows 12 at 6 inset ── */
-  .panel {
-    width: 320px;
-    padding: 6px;
-    border-radius: 18px;
-    background: var(--surface);
-    color: var(--t1);
-    font-family: var(--font-ui);
-    box-shadow: inset 0 0 0 1px var(--ring), 0 12px 32px #00000080;
-  }
-  .panel .row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 40px;
-    padding: 0 8px 0 12px;
-    border-radius: 12px;
-    font-size: 13px;
-    line-height: 18px;
-  }
-  .panel .row.hl {
-    background: var(--hover);
-  }
-  .panel .lead {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    min-width: 0;
-  }
-  .panel .lead > svg,
-  .panel .val {
-    color: var(--t2);
-  }
-  .panel .val {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-  .panel .head {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    height: 40px;
-  }
-  .panel .back {
-    margin-left: 4px;
-    display: flex;
-    width: 32px;
-    height: 32px;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-  }
-  .panel .title {
-    font-family: var(--font-ui-display);
-    font-size: 15px;
-    font-weight: 600;
-  }
-  .panel .field {
-    display: flex;
-    align-items: center;
-    height: 40px;
-    margin: 2px 0 6px;
-    padding: 0 12px;
-    border-radius: 12px;
-    background: var(--field);
-    box-shadow: inset 0 0 0 1px var(--field-ring);
-    font-size: 13px;
-    color: var(--t3);
-  }
-  .panel .divider {
-    padding: 6px 12px;
-  }
-  .panel .divider > i {
-    display: block;
-    height: 1px;
-    background: var(--divider);
-  }
-  .panel .hint {
-    padding: 8px 12px 6px;
-    font-size: 12px;
-    line-height: 16px;
-    color: var(--t3);
-  }
-  .panel .last {
-    padding: 10px 12px;
-    border-radius: 12px;
-  }
-  .panel .last b {
-    display: block;
-    font-family: var(--font-ui-display);
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 22px;
-  }
-  .panel .last > span {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 2px;
-    font-size: 12px;
-    line-height: 16px;
-    color: var(--t3);
-  }
-  .cap {
-    display: inline-flex;
-    align-items: center;
-    height: 24px;
-    padding: 0 8px;
-    border-radius: 6px;
-    background: var(--key-bg);
-    box-shadow: inset 0 0 0 1px var(--key-border);
-    font-family: var(--font-ui);
-    font-size: 12px;
-    color: var(--t1);
-  }
+.caret {
+  animation: blink 1.06s steps(1) infinite;
 }
-
-@keyframes ink-content {
-  from {
+@keyframes blink {
+  50% {
     opacity: 0;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   .ink,
   .ink[data-kind] {
     transition-property: opacity;
