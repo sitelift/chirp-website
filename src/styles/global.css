@@ -60,12 +60,23 @@ html {
   20% { background: #f0b723; transform: scale(1.5); }
 }
 
-.grid-bg {
-  background-image:
-    linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: radial-gradient(ellipse at 50% 40%, black 20%, transparent 75%);
+@layer components {
+  .headline {
+    font-family: var(--font-display);
+    font-size: clamp(48px, 7.4vw, 112px);
+    font-weight: 600;
+    line-height: 0.95;
+    letter-spacing: -0.05em;
+    color: #fafaf9;
+  }
+  .lede {
+    margin-top: 1.75rem;
+    max-width: 38rem;
+    font-size: clamp(18px, 1.6vw, 22px);
+    line-height: 1.45;
+    color: #a8a29e;
+    text-wrap: pretty;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

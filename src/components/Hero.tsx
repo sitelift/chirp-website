@@ -25,7 +25,7 @@ type Word = {
   state: "hidden" | "fly" | "fall" | "suck" | "gone";
 };
 
-type Card = { app: string; text: string; key: number };
+type Card = { text: string; key: number };
 
 const DISPLAY = '"Inter Tight Variable", system-ui, sans-serif';
 const MONO = '"JetBrains Mono Variable", ui-monospace, monospace';
@@ -37,21 +37,14 @@ export default function Hero() {
   const pillRef = useRef<HTMLButtonElement>(null);
   const barsRef = useRef<(HTMLSpanElement | null)[]>([]);
   const api = useRef<{ press: () => void; release: () => void } | null>(null);
-  const soundRef = useRef(true);
 
   const [pill, setPill] = useState<PillState>("idle");
   const [touch, setTouch] = useState(false);
-  const [sound, setSound] = useState(true);
   const [card, setCard] = useState<Card | null>(null);
-  const [count, setCount] = useState(0);
 
   useEffect(() => {
     setTouch(matchMedia("(hover: none)").matches);
   }, []);
-
-  useEffect(() => {
-    soundRef.current = sound;
-  }, [sound]);
 
   useEffect(() => {
     const wrap = wrapRef.current!;
@@ -72,17 +65,6 @@ export default function Hero() {
     } catch {
       gl = null;
     }
-
-    const sounds = {
-      start: new Audio("/sounds/start.wav"),
-      done: new Audio("/sounds/done.wav"),
-    };
-    const play = (a: HTMLAudioElement) => {
-      if (!soundRef.current) return;
-      a.currentTime = 0;
-      a.volume = 0.6;
-      a.play().catch(() => {});
-    };
 
     let shape: "bird" | "headline" | null = "bird";
     let script: Script = SCRIPTS[0];
@@ -218,7 +200,6 @@ export default function Hero() {
       flock.setMode("inhale", t);
       setCard(null);
       setPill("listening");
-      play(sounds.start);
     };
 
     const release = () => {
@@ -324,10 +305,8 @@ export default function Hero() {
         shape = "headline";
         applyShape();
         flock.setMode("burst", t);
-        play(sounds.done);
         setPill("idle");
-        setCard({ app: script.app, text: script.meant, key: t });
-        setCount((c) => c + 1);
+        setCard({ text: script.meant, key: t });
         scriptIndex++;
       }
       if (phase === "shown" && t - phaseAt > 7.5) {
@@ -460,21 +439,13 @@ export default function Hero() {
       <canvas ref={glRef} className="absolute inset-0 h-full w-full" aria-hidden />
       <canvas ref={wordsRef} className="pointer-events-none absolute inset-0 h-full w-full" aria-hidden />
 
-      <div className="pointer-events-none absolute inset-x-0 top-[13%] px-6 text-center">
-        <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-stone-500">
-          Chirp 2 · voice to text for Windows · free &amp; open source
-        </p>
-        <h1 className="mx-auto mt-4 max-w-4xl font-display text-[clamp(34px,5.2vw,68px)] font-semibold leading-[0.98] tracking-[-0.045em] text-stone-50">
-          Hold a key. Talk. Let go.
-        </h1>
-        <p className="mx-auto mt-4 max-w-xl text-balance text-[15px] leading-relaxed text-stone-400 md:text-base">
-          What you meant appears at your cursor, in any app. Speech is recognized on your PC.
-        </p>
-      </div>
+      <h1 className="pointer-events-none absolute inset-x-0 top-[15%] px-6 text-center font-display text-[clamp(40px,6.4vw,92px)] font-semibold leading-[0.95] tracking-[-0.05em] text-stone-50">
+        Hold a key. Talk. Let go.
+      </h1>
 
-      {card && <PastedCard key={card.key} app={card.app} text={card.text} />}
+      {card && <PastedCard key={card.key} text={card.text} />}
 
-      <div className="absolute inset-x-0 bottom-[7%] flex flex-col items-center gap-3">
+      <div className="absolute inset-x-0 bottom-[7%] flex justify-center">
         <Pill
           ref={pillRef}
           state={pill}
@@ -483,32 +454,13 @@ export default function Hero() {
           onPress={() => api.current?.press()}
           onRelease={() => api.current?.release()}
         />
-        <p className="pointer-events-none h-4 font-mono text-[11px] tracking-wide text-stone-500">
-          {pill === "listening"
-            ? "listening… let go when you're done"
-            : count === 0
-              ? touch
-                ? "try it: press and hold the pill"
-                : "try it · or hold space · move the mouse to scare the flock"
-              : count < SCRIPTS.length
-                ? `${count}/${SCRIPTS.length} · again`
-                : "that's the demo. the real thing is faster."}
-        </p>
       </div>
 
-      <button
-        type="button"
-        onClick={() => setSound((s) => !s)}
-        className="absolute bottom-5 right-5 rounded-full px-3 py-1.5 font-mono text-[11px] text-stone-500 transition-colors duration-200 ease-out hover:text-stone-200"
-        aria-pressed={sound}
-      >
-        sound {sound ? "on" : "off"}
-      </button>
     </div>
   );
 }
 
-function PastedCard({ app, text }: { app: string; text: string }) {
+function PastedCard({ text }: { text: string }) {
   const [n, setN] = useState(0);
   useEffect(() => {
     const id = setInterval(() => setN((v) => (v >= text.length ? v : v + 2)), 14);
@@ -517,11 +469,7 @@ function PastedCard({ app, text }: { app: string; text: string }) {
   return (
     <div className="card-in pointer-events-none absolute inset-x-0 top-[64%] flex justify-center px-6">
       <div className="w-full max-w-[540px] rounded-[18px] border border-white/[0.08] bg-[#141311]/85 p-1.5 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)] backdrop-blur-md">
-        <div className="flex items-center justify-between px-3 pt-1.5 pb-2 font-mono text-[11px] text-stone-500">
-          <span>{app}</span>
-          <span className="text-amber-300/80">pasted</span>
-        </div>
-        <div className="whitespace-pre-line rounded-[12px] bg-white/[0.03] px-4 py-3.5 text-[15px] leading-relaxed text-stone-100 md:text-[17px]">
+        <div className="whitespace-pre-line rounded-[12px] bg-white/[0.03] px-5 py-4 text-[17px] leading-relaxed text-stone-100 md:text-[19px]">
           {text.slice(0, n)}
           <span className="caret ml-px inline-block h-[1.1em] w-[2px] translate-y-[3px] bg-amber-300" />
         </div>
