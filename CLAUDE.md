@@ -4,52 +4,36 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-Marketing/landing site for **Chirp**, a local voice-to-text desktop app (Windows & macOS). This is the website only — not the app itself. Domain: trychirp.app.
+Marketing site for **Chirp 2**, a free, open-source (MIT) voice-to-text app for **Windows only**. Domain: **chirptype.com**. The app lives in `sitelift/Chirp` (branch `v2`); its `docs/v2/DIRECTION.md` and `docs/v2/design/SPEC.md` are the source of truth for product facts. Copy on this site must match them (Windows only, speech recognized locally with Parakeet, optional AI cleanup with the user's own Anthropic or OpenAI key, no telemetry).
 
 ## Commands
 
-- `npm run dev` — start dev server
-- `npm run build` — static export build (outputs to `out/`)
-- `npm run lint` — ESLint
+- `npm run dev`: Astro dev server. On this machine use `tailnet-dev npm run dev -- --background --host @TAILNET_IP@ --port 4321`; manage it with `npx astro dev stop|status|logs`.
+- `npm run build`: static build to `dist/`
+- `npm run check`: type check
+- `npm run preview`: serve `dist/` through Wrangler locally
 - No test suite exists
 
 ## Architecture
 
-- **Next.js 16** with App Router, static export (`output: "export"`, no server features)
-- **Tailwind CSS v4** via PostCSS
-- **Framer Motion** for scroll-reveal animations
-- **Radix UI** for accordion (FAQ page)
-- **Lucide React** for icons
+- **Astro 7**, fully static, with **React islands** only where something is interactive (`client:load`).
+- **Tailwind CSS v4** via `@tailwindcss/vite`; theme tokens in `src/styles/global.css`.
+- Fonts self-hosted through Fontsource: Inter Tight (display/body), Instrument Serif italic (accents), JetBrains Mono (spoken text, labels).
+- Hosting: **Cloudflare Workers static assets** (`wrangler.jsonc`, assets dir `dist`), deployed by Workers Builds from GitHub.
 
-### Key directories
+### Key files
 
-- `app/` — pages: home (`page.tsx`), `/download`, `/changelog`, `/faq`, `/privacy`
-- `components/` — shared UI components (no barrel file; import directly)
-- `lib/constants.ts` — product info, FAQ content, changelog data (single source of truth for copy)
-- `lib/motion.ts` — shared Framer Motion animation presets (`reveal`, `staggerContainer`, `staggerChild`)
-- `lib/utils.ts` — `cn()` helper (clsx + tailwind-merge)
+- `src/pages/index.astro`: homepage
+- `src/components/Hero.tsx`: the murmuration hero island (hold Right Ctrl / Space / the pill to run a scripted dictation)
+- `src/lib/flock.ts`: particle engine (3D ribbon flock, inhale vortex, shape forming, cursor "hawk")
+- `src/lib/points-gl.ts`: WebGL2 point renderer
+- `src/lib/scripts.ts`: the dictations the hero plays
+- `public/sounds/`: the app's real earcons, copied from `src-tauri/sounds`
 
-### Fonts
+## Design
 
-Three fonts loaded via `next/font/google` in `app/layout.tsx`, exposed as CSS variables:
-- `--font-nunito` — headings/display
-- `--font-inter` — body text
-- `--font-jetbrains` — monospace/code
-
-## Design Rules
-
-**STYLE.md is the authoritative design spec.** Follow it exactly for colors, typography, spacing, radii, shadows, and component specs. Key constraints:
-- No dark mode (light-only, `dark:` variants prohibited)
-- No gradients — flat colors only
-- No sharp corners — minimum 4px radius on everything
-- Yellow (`amber-400`) is for accents/CTAs only, never large backgrounds or body text
-- Cards use border OR shadow, never both
-- Animations ≤ 300ms, always `ease-out` (never `ease-in` for UI)
+Dark base (`#0a0908`), amber `#F0B723` only for meaning (the flock, level bars, focus, accents). Bird mark from `assets/brand/` in the app repo; brand artwork is reserved (not MIT). `STYLE.md` and `SPEC.md` describe the v1 light site and are outdated.
 
 ## Deployment
 
-This site is deployed on **Vercel** via the `master` branch on GitHub. After making changes, always commit and `git push` to `origin/master` so the user can see the result on Vercel. Do not leave changes uncommitted unless the user asks you to.
-
-## Content
-
-**SPEC.md** contains the full product specification. Refer to it for feature descriptions, technical details, and product positioning. All user-facing copy in `lib/constants.ts` should align with SPEC.md.
+The v2 site is built on the `v2` branch and ships with the Chirp 2 release. Until cutover, `master` still deploys the old Next.js site to Vercel, so do not merge to `master` without the user's go-ahead. Commit and push work on `v2`.

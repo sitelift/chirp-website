@@ -1,0 +1,76 @@
+@import "tailwindcss";
+@import "@fontsource-variable/inter-tight";
+@import "@fontsource/instrument-serif/400-italic.css";
+@import "@fontsource-variable/jetbrains-mono";
+
+@theme {
+  --font-display: "Inter Tight Variable", system-ui, sans-serif;
+  --font-sans: "Inter Tight Variable", system-ui, sans-serif;
+  --font-serif: "Instrument Serif", Georgia, serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+  --color-ink: #0a0908;
+  --color-amber: #f0b723;
+}
+
+html {
+  background: var(--color-ink);
+  color: #e7e5e4;
+  color-scheme: dark;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgb(240 183 35 / 0.35);
+  color: #fff;
+}
+
+.pill {
+  transition:
+    width 240ms cubic-bezier(0.2, 0, 0, 1),
+    box-shadow 240ms ease-out;
+}
+
+.fade-in {
+  animation: fade-in 180ms ease-out 80ms both;
+}
+
+.card-in {
+  animation: card-in 300ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+.caret {
+  animation: blink 1s steps(1) infinite;
+}
+
+.sweep > span {
+  animation: sweep 900ms ease-out infinite;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+}
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+}
+@keyframes blink {
+  50% { opacity: 0; }
+}
+@keyframes sweep {
+  0%, 100% { background: #78716c; transform: scale(1); }
+  20% { background: #f0b723; transform: scale(1.5); }
+}
+
+.grid-bg {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse at 50% 40%, black 20%, transparent 75%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    transition-duration: 1ms !important;
+  }
+}
