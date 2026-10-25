@@ -19,8 +19,8 @@ out float vTone;
 void main() {
   vec2 clip = (aPos / uRes) * 2.0 - 1.0;
   gl_Position = vec4(clip.x, -clip.y, 0.0, 1.0);
-  float dotSize = 1.3 + aDepth * 1.8 + aSeed * 0.7;
-  float birdSize = 5.0 + aDepth * 4.5 + aSeed * 1.5;
+  float dotSize = 1.6 + aDepth * 1.4 + aSeed * 0.6;
+  float birdSize = 3.5 + aDepth * 3.0 + aSeed * 1.0;
   gl_PointSize = mix(dotSize, birdSize, aBird) * uDpr;
   vAlpha = aAlpha;
   vSeed = aSeed;
@@ -50,7 +50,7 @@ void main() {
   float c = cos(vAngle), s = sin(vAngle);
   vec2 q = vec2(c * p.x + s * p.y, -s * p.x + c * p.y);
   // Seen from below: a short body and two swept wings that beat.
-  float flap = sin(uTime * 15.0 + vSeed * 60.0);
+  float flap = sin(uTime * 11.0 + vSeed * 60.0);
   float tipX = -0.06 - 0.1 * flap;
   float span = 0.36 + 0.06 * flap;
   float d = seg(q, vec2(0.16, 0.0), vec2(-0.16, 0.0));

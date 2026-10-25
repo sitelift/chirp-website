@@ -34,6 +34,8 @@ export class Flock {
   kick: Uint8Array;
   tone: Float32Array;
   toneTarget: Float32Array;
+  /** Opacity of a bird once it sits in a shape; dimmed when crisp type takes over. */
+  shapeA: Float32Array;
 
   // Render outputs.
   depth: Float32Array;
@@ -66,6 +68,7 @@ export class Flock {
     this.kick = new Uint8Array(n);
     this.tone = f();
     this.toneTarget = f();
+    this.shapeA = new Float32Array(n).fill(0.95);
     this.depth = f();
     this.alpha = f();
     this.angle = f();
@@ -106,17 +109,18 @@ export class Flock {
 
   step(t: number, dt: number) {
     const { n, w, h } = this;
-    const R = Math.min(w * 0.3, h * 0.42);
+    const R = Math.min(w * 0.26, h * 0.3);
 
     // Murmuration frame: the ribbon tumbles in 3D and wanders the sky.
-    const yaw = t * 0.11 + Math.sin(t * 0.053) * 1.6;
-    const pitch = Math.sin(t * 0.087) * 0.95;
-    const roll = Math.sin(t * 0.041) * 0.35;
+    const T = t * 0.7;
+    const yaw = T * 0.11 + Math.sin(T * 0.053) * 1.6;
+    const pitch = Math.sin(T * 0.087) * 0.8;
+    const roll = Math.sin(T * 0.041) * 0.3;
     const cy1 = Math.cos(yaw), sy1 = Math.sin(yaw);
     const cp = Math.cos(pitch), sp = Math.sin(pitch);
     const cr = Math.cos(roll), sr = Math.sin(roll);
-    const cx = w * (0.5 + 0.2 * Math.sin(t * 0.13) + 0.06 * Math.sin(t * 0.31));
-    const cyc = h * (0.34 + 0.08 * Math.sin(t * 0.17 + 1.1));
+    const cx = w * (0.5 + 0.16 * Math.sin(T * 0.13) + 0.05 * Math.sin(T * 0.31));
+    const cyc = h * (0.5 + 0.06 * Math.sin(T * 0.17 + 1.1));
     const focal = 2.4;
 
     const hawk = this.hawk;
@@ -134,18 +138,19 @@ export class Flock {
           this.vy[i] = 2 + Math.random() * 3;
         }
         if (this.kick[i]) {
-          this.vx[i] += (Math.random() - 0.5) * 14;
-          this.vy[i] -= 6 + Math.random() * 8;
+          this.vx[i] += (Math.random() - 0.5) * 7;
+          this.vy[i] -= 3 + Math.random() * 4;
         }
         if (s === FLOCK) this.toneTarget[i] = 0;
+        if (s === SHAPE) this.shapeA[i] = 0.95;
         this.state[i] = s;
       }
 
       const st = this.state[i];
       let x = this.hx[i], y = this.hy[i], z = this.hz[i];
-      z += 0.55 * Math.sin(x * 1.7 + t * 0.55) + 0.22 * Math.sin(y * 4.0 + t * 0.9);
-      y += 0.28 * Math.sin(x * 2.1 - t * 0.47) + 0.05 * Math.sin(x * 9 + t * 2.1);
-      x += 0.09 * Math.sin(x * 3.2 - t * 1.6);
+      z += 0.55 * Math.sin(x * 1.7 + T * 0.55) + 0.22 * Math.sin(y * 4.0 + T * 0.9);
+      y += 0.28 * Math.sin(x * 2.1 - T * 0.47) + 0.05 * Math.sin(x * 9 + T * 2.1);
+      x += 0.09 * Math.sin(x * 3.2 - T * 1.6);
       let x1 = x * cy1 + z * sy1;
       let z1 = -x * sy1 + z * cy1;
       let y1 = y * cp - z1 * sp;
@@ -160,14 +165,13 @@ export class Flock {
       let k = this.k[i];
       let damp = 0.86;
       let d = persp;
-      let a = (0.4 + 0.6 * Math.min(1, Math.max(0, (persp - 0.7) * 1.6))) * this.dim;
+      let a = (0.3 + 0.4 * Math.min(1, Math.max(0, (persp - 0.7) * 1.6))) * this.dim;
 
       if (st === SHAPE) {
-        tx = this.sx[i] + Math.sin(t * 1.3 + this.seed[i] * 40) * 0.5;
-        ty = this.sy[i] + Math.cos(t * 1.1 + this.seed[i] * 40) * 0.5;
-        k = 0.045 + this.k[i] * 0.8;
+        tx = this.sx[i];
+        ty = this.sy[i];
         d = 1;
-        a = 0.95;
+        a = this.shapeA[i];
       } else if (st === SINK) {
         // A ribbon of birds pouring into the cursor.
         const dx = this.sink.x - this.px[i];
@@ -206,11 +210,30 @@ export class Flock {
         }
       }
 
-      const dmp = Math.pow(damp, dt);
-      this.vx[i] = (this.vx[i] + ax * dt) * dmp;
-      this.vy[i] = (this.vy[i] + ay * dt) * dmp;
-      this.px[i] += this.vx[i] * dt;
-      this.py[i] += this.vy[i] * dt;
+      if (st === SHAPE) {
+        // Arrive: fly straight in, slow down on approach, never overshoot.
+        const dx = tx - this.px[i];
+        const dy = ty - this.py[i];
+        const dist = Math.hypot(dx, dy);
+        const want = Math.min(9 + this.seed[i] * 5, dist * 0.09);
+        const dvx = dist > 0.01 ? (dx / dist) * want : 0;
+        const dvy = dist > 0.01 ? (dy / dist) * want : 0;
+        const steer = Math.min(1, (0.08 + this.k[i]) * dt);
+        this.vx[i] += (dvx - this.vx[i]) * steer + (ax - (tx - this.px[i]) * k) * dt;
+        this.vy[i] += (dvy - this.vy[i]) * steer + (ay - (ty - this.py[i]) * k) * dt;
+        this.px[i] += this.vx[i] * dt;
+        this.py[i] += this.vy[i] * dt;
+        if (dist < 1.5 && !hawk.on) {
+          this.px[i] = tx;
+          this.py[i] = ty;
+        }
+      } else {
+        const dmp = Math.pow(damp, dt);
+        this.vx[i] = (this.vx[i] + ax * dt) * dmp;
+        this.vy[i] = (this.vy[i] + ay * dt) * dmp;
+        this.px[i] += this.vx[i] * dt;
+        this.py[i] += this.vy[i] * dt;
+      }
 
       const speed = Math.hypot(this.vx[i], this.vy[i]);
       if (speed > 0.15) {
@@ -220,7 +243,7 @@ export class Flock {
         this.angle[i] += diff * Math.min(1, 0.25 * dt);
       }
       // Birds in flight, dots when they settle into letters.
-      const birdTarget = st === SHAPE ? Math.min(1, Math.max(0, (speed - 0.6) / 2.5)) : 1;
+      const birdTarget = st === SHAPE ? Math.min(1, Math.max(0, (speed - 1) / 4)) : 1;
       this.bird[i] += (birdTarget - this.bird[i]) * Math.min(1, 0.15 * dt);
       this.tone[i] += (this.toneTarget[i] - this.tone[i]) * Math.min(1, 0.1 * dt);
       this.depth[i] = d;

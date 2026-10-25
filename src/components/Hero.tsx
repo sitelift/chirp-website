@@ -3,9 +3,12 @@ import { FLOCK, SHAPE, SINK, Flock, samplePoints, shuffled } from "../lib/flock"
 import { PointsGL } from "../lib/points-gl";
 import { SCRIPTS } from "../lib/scripts";
 import { BIRD_PATH, BIRD_VIEWBOX } from "../lib/bird";
-import Bird from "./Bird";
+import { Ink } from "./app/Ink";
+import { SITE } from "../lib/site";
 
-type PillState = "idle" | "listening" | "working";
+type PillState = "tick" | "listening" | "working";
+type SkyWord = { text: string; x: number; y: number; keep: boolean; state: "hidden" | "shown" | "struck" | "gone" };
+type Sky = { words: SkyWord[]; fs: number; key: number };
 
 const DISPLAY = '"Inter Tight Variable", system-ui, sans-serif';
 
@@ -15,19 +18,18 @@ export default function Hero() {
   const wrapRef = useRef<HTMLDivElement>(null);
   const glRef = useRef<HTMLCanvasElement>(null);
   const caretRef = useRef<HTMLSpanElement>(null);
-  const barsRef = useRef<(HTMLSpanElement | null)[]>([]);
 
-  const [pill, setPill] = useState<PillState>("idle");
-  const [keyDown, setKeyDown] = useState(false);
+  const [pill, setPill] = useState<PillState>("tick");
   const [placeholder, setPlaceholder] = useState("");
   const [typed, setTyped] = useState<{ text: string; key: number } | null>(null);
   const [sent, setSent] = useState(false);
+  const [sky, setSky] = useState<Sky | null>(null);
 
   useEffect(() => {
     const wrap = wrapRef.current!;
     const canvas = glRef.current!;
     const small = innerWidth < 720;
-    const N = small ? 1800 : 3600;
+    const N = small ? 1000 : 2000;
     const flock = new Flock(N);
     let gl: PointsGL | null = null;
     try {
@@ -65,7 +67,7 @@ export default function Hero() {
       const ctx = document.createElement("canvas").getContext("2d")!;
       const maxLines = small ? 4 : 3;
       const font = (size: number) => `700 ${size}px ${DISPLAY}`;
-      let fs = Math.min(112, h * 0.11, w * 0.11);
+      let fs = Math.min(58, h * 0.066, w * 0.075);
       let lines: { text: string; keep: boolean; width: number }[][] = [];
       for (; fs > 24; fs *= 0.92) {
         ctx.font = font(fs);
@@ -82,13 +84,13 @@ export default function Hero() {
           lines[lines.length - 1].push({ ...tok, width: tw });
           lw += (lw > 0 ? space : 0) + tw;
         }
-        if (lines.length <= maxLines) break;
+        if (lines.length <= maxLines && lines.length * fs * 1.02 <= h * 0.17) break;
       }
       ctx.font = font(fs);
       ctx.letterSpacing = `${-fs * 0.03}px`;
       const space = ctx.measureText(" ").width;
       const lh = fs * 1.02;
-      const top = h * 0.3 - ((lines.length - 1) * lh) / 2;
+      const top = h * 0.535 - ((lines.length - 1) * lh) / 2;
       const words: { text: string; keep: boolean; x: number; y: number; width: number }[] = [];
       lines.forEach((line, li) => {
         const total = line.reduce((acc, t) => acc + t.width, 0) + space * (line.length - 1);
@@ -119,10 +121,10 @@ export default function Hero() {
     };
 
     const birdMark = (t0: number, hold: number) => {
-      const size = Math.min(w * 0.5, h * 0.42);
+      const size = Math.min(w * 0.26, h * 0.2);
       const s = size / BIRD_VIEWBOX;
-      const pts = samplePoints(w, h, Math.floor(N * 0.75), (ctx) => {
-        ctx.translate(w / 2 - (BIRD_VIEWBOX * s) / 2, h * 0.3 - (BIRD_VIEWBOX * s) / 2);
+      const pts = samplePoints(w, h, Math.floor(N * 0.7), (ctx) => {
+        ctx.translate(w / 2 - (BIRD_VIEWBOX * s) / 2, h * 0.53 - (BIRD_VIEWBOX * s) / 2);
         ctx.scale(s, s);
         ctx.fill(new Path2D(BIRD_PATH));
       });
@@ -149,56 +151,75 @@ export default function Hero() {
       });
 
       at(t0 + 0.8, () => {
-        setKeyDown(true);
         setPill("listening");
         speaking = true;
         flock.dimTarget = 0.25;
 
         const { words, fs, font } = layoutWords(sc.said);
         const pool = freeBirds();
-        const budget = Math.min(pool.length, Math.floor(N * 0.8));
+        const budget = Math.min(pool.length, Math.floor(N * 0.85));
         const totalW = words.reduce((acc, wd) => acc + wd.width, 0);
         let cursor = 0;
         const groups: { keep: boolean; ids: number[] }[] = [];
+        const setWord = (k: number, state: SkyWord["state"]) =>
+          setSky((p) => (p ? { ...p, words: p.words.map((wd, j) => (j === k ? { ...wd, state } : wd)) } : p));
+        setSky({ words: words.map((wd) => ({ text: wd.text, x: wd.x, y: wd.y, keep: wd.keep, state: "hidden" })), fs, key: clock });
         words.forEach((wd, k) => {
           const count = Math.floor((budget * wd.width) / totalW);
           const pts = sampleWord(wd.text, wd.x, wd.y, fs, font, count);
           const ids: number[] = [];
+          const start = clock + 0.15 + k * 0.3;
           for (let j = 0; j < pts.length / 2 && cursor < pool.length; j++) {
             const i = pool[cursor++];
             flock.sx[i] = pts[j * 2];
             flock.sy[i] = pts[j * 2 + 1];
-            flock.schedule(i, SHAPE, clock + 0.15 + k * 0.3 + Math.random() * 0.3);
+            flock.schedule(i, SHAPE, start + Math.random() * 0.3);
             ids.push(i);
           }
           groups.push({ keep: wd.keep, ids });
+          // Once the birds have landed, the crisp word takes over and they dim behind it.
+          at(start + 1.4, () => {
+            setWord(k, "shown");
+            for (const i of ids) flock.shapeA[i] = 0.22;
+          });
         });
 
-        const rel = clock + 0.15 + words.length * 0.3 + 0.7;
+        const rel = clock + 0.15 + words.length * 0.3 + 1.7;
         at(rel, () => {
-          setKeyDown(false);
           setPill("working");
           speaking = false;
         });
         at(rel + 0.4, () => {
-          for (const g of groups) if (!g.keep) for (const i of g.ids) flock.toneTarget[i] = 1;
+          groups.forEach((g, k) => {
+            if (g.keep) return;
+            setWord(k, "struck");
+            for (const i of g.ids) flock.toneTarget[i] = 1;
+          });
         });
         at(rel + 1.1, () => {
-          for (const g of groups)
-            if (!g.keep) for (const i of g.ids) flock.schedule(i, FLOCK, clock + Math.random() * 0.35, true);
+          groups.forEach((g, k) => {
+            if (g.keep) return;
+            setWord(k, "gone");
+            for (const i of g.ids) flock.schedule(i, FLOCK, clock + Math.random() * 0.35, true);
+          });
         });
         at(rel + 1.6, () => {
           updateSink();
           let k = 0;
-          for (const g of groups) {
-            if (!g.keep) continue;
-            for (const i of g.ids) flock.schedule(i, SINK, clock + k * 0.08 + Math.random() * 0.35);
+          groups.forEach((g, gi) => {
+            if (!g.keep) return;
+            setWord(gi, "gone");
+            for (const i of g.ids) {
+              flock.shapeA[i] = 0.95;
+              flock.schedule(i, SINK, clock + k * 0.08 + Math.random() * 0.35);
+            }
             k++;
-          }
+          });
         });
         at(rel + 2.5, () => {
           setTyped({ text: sc.meant, key: clock });
-          setPill("idle");
+          setSky(null);
+          setPill("tick");
           flock.dimTarget = 1;
         });
         at(rel + 6.2, () => setSent(true));
@@ -226,16 +247,6 @@ export default function Hero() {
       updateSink();
     };
 
-    const level = (t: number) => {
-      const base = speaking ? 0.3 + 0.7 * Math.abs(Math.sin(t * 8.7)) * (0.55 + 0.45 * Math.sin(t * 2.3)) : 0;
-      barsRef.current.forEach((b, i) => {
-        if (!b) return;
-        const center = 1 - Math.abs(i - 5) / 7;
-        const v = Math.max(0.15, base * center * (0.6 + 0.4 * Math.sin(t * 19 + i * 1.9)));
-        b.style.transform = `scaleY(${v.toFixed(3)})`;
-      });
-    };
-
     let raf = 0;
     let last = performance.now();
     let visible = true;
@@ -249,7 +260,6 @@ export default function Hero() {
       while (events.length && events[0].at <= clock) events.shift()!.fn();
       flock.step(clock, dt);
       gl?.draw(flock, w, h, dpr, clock);
-      level(clock);
     };
 
     const io = new IntersectionObserver(([e]) => (visible = e.isIntersecting));
@@ -289,41 +299,82 @@ export default function Hero() {
   }, []);
 
   return (
-    <div ref={wrapRef} className="relative h-svh min-h-[640px] w-full overflow-hidden">
-      <h1 className="sr-only">Chirp: hold a key, talk, and what you meant is typed at your cursor, in any app.</h1>
+    <div ref={wrapRef} className="relative h-svh min-h-[680px] w-full overflow-hidden">
       <canvas ref={glRef} className="absolute inset-0 h-full w-full" aria-hidden />
 
-      <div className="absolute inset-x-0 top-[60%] flex justify-center px-5" aria-hidden>
-        <div className="w-full max-w-[620px] rounded-[24px] border border-white/[0.08] bg-[#131210]/80 p-2 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.9)] backdrop-blur-md">
+      {sky && (
+        <div key={sky.key} className="pointer-events-none absolute inset-0" aria-hidden>
+          {sky.words.map((wd, i) => (
+            <span
+              key={i}
+              className="absolute whitespace-pre font-display font-bold leading-none"
+              style={{
+                left: wd.x,
+                top: wd.y,
+                fontSize: sky.fs,
+                letterSpacing: `${-sky.fs * 0.03}px`,
+                color: wd.state === "struck" || (wd.state === "gone" && !wd.keep) ? "#57534e" : "#d6d3d1",
+                textDecoration: wd.state === "struck" || (wd.state === "gone" && !wd.keep) ? "line-through" : "none",
+                textDecorationThickness: Math.max(2, sky.fs * 0.06),
+                opacity: wd.state === "shown" || wd.state === "struck" ? 1 : 0,
+                transform: `translateY(-50%) translateY(${wd.state === "gone" ? (wd.keep ? 10 : -10) : 0}px)`,
+                transition: "opacity 320ms linear, color 240ms linear, transform 330ms var(--ease)",
+              }}
+            >
+              {wd.text}
+            </span>
+          ))}
+        </div>
+      )}
+
+      <div className="pointer-events-none absolute inset-x-0 top-[10%] px-6 text-center">
+        <h1 className="font-display text-[clamp(40px,5.6vw,80px)] font-semibold leading-[0.98] tracking-[-0.05em] text-stone-50">
+          Talk instead of typing.
+        </h1>
+        <p className="mx-auto mt-4 max-w-[34rem] text-balance text-[17px] leading-relaxed text-stone-400 md:text-[19px]">
+          Hold a key, say it, let go. Chirp types what you meant, in any app on your PC.
+        </p>
+        <div className="pointer-events-auto mt-7 flex items-center justify-center gap-5">
+          <a
+            href={SITE.download}
+            className="flex items-center gap-2.5 rounded-full bg-stone-50 px-5 py-2.5 text-[15px] font-medium text-stone-950 transition-colors duration-200 ease-out hover:bg-white"
+          >
+            <WindowsLogo />
+            Download for Windows
+          </a>
+          <a href={SITE.github} className="text-[15px] text-stone-400 transition-colors duration-200 ease-out hover:text-stone-100">
+            Free and open source
+          </a>
+        </div>
+      </div>
+
+      <div className="absolute inset-x-0 top-[67%] flex justify-center px-5" aria-hidden>
+        <div className="w-full max-w-[560px] rounded-[22px] border border-white/[0.08] bg-[#131210]/80 p-1.5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.9)] backdrop-blur-md">
           <div
-            className="flex min-h-[68px] items-center rounded-[16px] bg-white/[0.035] px-5 py-4 text-[18px] leading-snug transition-[opacity,transform] duration-300 ease-out md:text-[20px]"
+            className="flex min-h-[60px] items-center rounded-[16px] bg-white/[0.035] px-5 py-3.5 text-[17px] leading-snug transition-[opacity,transform] duration-300 ease-out md:text-[18px]"
             style={{ opacity: sent ? 0 : 1, transform: sent ? "translateY(-8px)" : "none" }}
           >
             <span className="whitespace-pre-line text-stone-50">
               {typed && <Typed key={typed.key} text={typed.text} />}
-              <span ref={caretRef} className="caret ml-px inline-block h-[1.15em] w-[2px] translate-y-[4px] bg-[#F0B723]" />
+              <span ref={caretRef} className="caret ml-px inline-block h-[1.15em] w-[2px] translate-y-[4px] bg-amber" />
               {!typed && <span className="text-stone-500">{placeholder}</span>}
             </span>
           </div>
         </div>
       </div>
 
-      <div className="absolute inset-x-0 bottom-[7%] flex items-center justify-center gap-4" aria-hidden>
-        <kbd
-          className="rounded-[10px] border px-3 py-2 font-mono text-[13px] transition-all duration-150 ease-out"
-          style={{
-            borderColor: keyDown ? "rgba(240,183,35,0.7)" : "rgba(255,255,255,0.14)",
-            color: keyDown ? "#F0B723" : "#d6d3d1",
-            background: keyDown ? "rgba(240,183,35,0.08)" : "rgba(255,255,255,0.04)",
-            transform: keyDown ? "translateY(2px)" : "none",
-            boxShadow: keyDown ? "inset 0 1px 0 rgba(0,0,0,0.4)" : "inset 0 -3px 0 rgba(255,255,255,0.07)",
-          }}
-        >
-          Right Ctrl
-        </kbd>
-        <Pill state={pill} barsRef={barsRef} />
+      <div className="absolute inset-x-0 bottom-[6%] flex h-10 items-end justify-center" aria-hidden>
+        <Ink kind={pill} />
       </div>
     </div>
+  );
+}
+
+function WindowsLogo() {
+  return (
+    <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="currentColor" aria-hidden="true">
+      <path d="M0 2.2 6.5 1.3v6.2H0zM7.3 1.2 16 0v7.5H7.3zM0 8.3h6.5v6.3L0 13.7zM7.3 8.3H16V16l-8.7-1.2z" />
+    </svg>
   );
 }
 
@@ -334,39 +385,4 @@ function Typed({ text }: { text: string }) {
     return () => clearInterval(id);
   }, [text]);
   return <>{text.slice(0, n)}</>;
-}
-
-function Pill({ state, barsRef }: { state: PillState; barsRef: React.MutableRefObject<(HTMLSpanElement | null)[]> }) {
-  return (
-    <div
-      className="pill flex h-[46px] items-center justify-center rounded-full bg-[#1A1917] ring-1 ring-white/10"
-      style={{
-        width: state === "listening" ? 132 : state === "working" ? 96 : 64,
-        boxShadow:
-          state === "listening" ? "0 0 0 2px rgba(240,183,35,0.55), 0 20px 60px -10px rgba(240,183,35,0.35)" : undefined,
-      }}
-    >
-      {state === "idle" && <Bird className="fade-in h-[18px] w-[18px] text-[#F0B723]" />}
-      {state === "listening" && (
-        <span className="flex h-6 items-center gap-[3px]">
-          {Array.from({ length: 11 }).map((_, i) => (
-            <span
-              key={i}
-              ref={(el) => {
-                barsRef.current[i] = el;
-              }}
-              className="h-6 w-[3px] origin-center rounded-full bg-[#F0B723]"
-            />
-          ))}
-        </span>
-      )}
-      {state === "working" && (
-        <span className="sweep flex items-center gap-[5px]">
-          {Array.from({ length: 7 }).map((_, i) => (
-            <span key={i} className="h-[4px] w-[4px] rounded-full bg-stone-500" style={{ animationDelay: `${i * 70}ms` }} />
-          ))}
-        </span>
-      )}
-    </div>
-  );
 }
