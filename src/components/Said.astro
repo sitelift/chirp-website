@@ -1,25 +1,27 @@
 ---
-// The page's signature: what you'd actually say, with the filler struck in
-// amber, sitting above the headline Chirp would have typed.
+// The page's signature: what you'd actually say, filler struck through in
+// amber as it scrolls into view, sitting above the headline Chirp would type.
 interface Props {
   said: string;
   class?: string;
-  dark?: boolean;
 }
-const { said, class: cls = "", dark = false } = Astro.props;
+const { said, class: cls = "" } = Astro.props;
 const tokens = said.split(" ").map((t) => ({ text: t.replace(/^~/, ""), drop: t.startsWith("~") }));
+let k = 0;
 ---
 
-<p class={`flex items-start gap-2.5 text-[16px] leading-[1.45] ${dark ? "text-white/60" : "text-muted"} ${cls}`}>
-  <span class="mt-[5px] flex h-3.5 shrink-0 items-center gap-[2px]" aria-hidden="true">
-    {[0.45, 0.8, 1, 0.65].map((h) => <span class="w-[2px] rounded-full bg-amber" style={`height:${h * 100}%`} />)}
+<p class={`said flex items-start gap-3 text-[18px] leading-[1.45] text-ink/70 md:text-[20px] ${cls}`} data-said-line>
+  <span class="mt-[0.32em] flex h-[0.8em] shrink-0 items-center gap-[3px]" aria-hidden="true">
+    {[0.45, 0.8, 1, 0.65].map((h) => <span class="w-[3px] rounded-full bg-amber" style={`height:${h * 100}%`} />)}
   </span>
   <span>
     <span class="sr-only">Said: </span>“{
       tokens.map((t, i) => (
         <>
           {t.drop ? (
-            <s class="decoration-amber decoration-2" style="text-decoration-thickness:2px">{t.text}</s>
+            <span class="said-drop relative inline-block" style={`--d:${k++ * 200}ms`}>
+              {t.text}
+            </span>
           ) : (
             t.text
           )}
@@ -29,3 +31,48 @@ const tokens = said.split(" ").map((t) => ({ text: t.replace(/^~/, ""), drop: t.
     }”
   </span>
 </p>
+
+<style is:global>
+  .said-drop {
+    transition: color 300ms linear var(--d);
+  }
+  .said-drop::after {
+    content: "";
+    position: absolute;
+    left: -0.05em;
+    right: -0.05em;
+    top: 55%;
+    height: 3px;
+    border-radius: 3px;
+    background: #f0b723;
+    transform: translateY(-50%) scaleX(0);
+    transform-origin: left;
+    transition: transform 380ms var(--ease) calc(var(--d) + 250ms);
+  }
+  [data-said-line].is-in .said-drop {
+    color: rgb(41 41 41 / 0.4);
+  }
+  [data-said-line].is-in .said-drop::after {
+    transform: translateY(-50%) scaleX(1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .said-drop,
+    .said-drop::after {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const io = new IntersectionObserver(
+    (entries) =>
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add("is-in");
+          io.unobserve(e.target);
+        }
+      }),
+    { rootMargin: "0px 0px -20% 0px" },
+  );
+  document.querySelectorAll("[data-said-line]").forEach((el) => io.observe(el));
+</script>

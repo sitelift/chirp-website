@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { Ink } from "./app/Ink";
 import Spoken from "./Spoken";
 
-// Chapter 2: a real ramble from Chirp's test set, three changes of mind long.
-const SAID_TEXT =
+// Step 2: a real ramble from Chirp's test set, three changes of mind long.
+const SAID =
   "~so I was thinking we ship on ~Monday, ~no ~wait, ~Tuesday, ~actually ~let's ~say Wednesday, to be safe, because the certificate thing isn't sorted yet. ~I ~mean, there's no rush";
-const SAID = SAID_TEXT.split(" ");
+const WORDS = SAID.split(" ").length;
 const MEANT = "I was thinking we ship on Wednesday to be safe, because the certificate thing isn't sorted yet. There's no rush.";
 
 export default function RambleDemo() {
@@ -21,12 +21,11 @@ export default function RambleDemo() {
       timers = [];
       setShown(0);
       setPhase(0);
-      SAID.forEach((_, i) => timers.push(window.setTimeout(() => setShown(i + 1), 500 + i * 190)));
-      const end = 500 + SAID.length * 190;
-      timers.push(window.setTimeout(() => setPhase(1), end + 400));
-      timers.push(window.setTimeout(() => setPhase(2), end + 2000));
-      timers.push(window.setTimeout(() => setPhase(3), end + 2700));
-      timers.push(window.setTimeout(play, end + 7600));
+      for (let i = 1; i <= WORDS; i++) timers.push(window.setTimeout(() => setShown(i), 600 + i * 200));
+      const end = 600 + WORDS * 200;
+      timers.push(window.setTimeout(() => setPhase(1), end + 600));
+      timers.push(window.setTimeout(() => setPhase(2), end + 3400));
+      timers.push(window.setTimeout(play, end + 9000));
     };
     const io = new IntersectionObserver(([e]) => {
       if (e.isIntersecting && !running) {
@@ -45,25 +44,20 @@ export default function RambleDemo() {
   }, []);
 
   return (
-    <div ref={ref} className="absolute inset-0 flex flex-col justify-center gap-4 p-6 md:p-10" aria-hidden>
-      <div className="rounded-[18px] bg-[#1a1917] p-6 shadow-[0_24px_50px_-20px_rgba(0,0,0,0.5)]">
-        <p className="font-[family-name:var(--font-ui)] text-[13px] text-[#a3a29e]">What you said, to Joris on Slack</p>
-        <Spoken
-          said={SAID_TEXT}
-          shown={shown}
-          phase={phase === 0 ? 0 : phase === 1 ? 1 : 2}
-          className="mt-2 min-h-[7em] font-serif text-[21px] leading-[1.45] text-white md:text-[23px]"
-        />
-        <div className="mt-4 flex justify-center">
-          <Ink kind={phase === 0 ? "listening" : phase < 3 ? "working" : "tick"} speaking={shown < SAID.length} />
+    <div ref={ref} className="flex flex-col gap-5" aria-hidden>
+      <div className="rounded-[20px] bg-[#1a1917] p-7 md:p-9">
+        <div className="flex items-center justify-between">
+          <p className="font-[family-name:var(--font-ui)] text-[13px] text-[#a3a29e]">What you said</p>
+          <Ink kind={phase === 0 ? "listening" : phase === 1 ? "working" : "tick"} speaking={shown < WORDS} />
         </div>
+        <Spoken said={SAID} shown={shown} phase={phase ? 1 : 0} className="mt-4 min-h-[6.2em] font-serif text-[21px] leading-[1.45] text-white md:text-[24px]" />
       </div>
       <div
-        className="window px-6 py-5 transition-[opacity,transform] duration-300"
-        style={{ opacity: phase > 2 ? 1 : 0, transform: phase > 2 ? "none" : "translateY(8px)", transitionTimingFunction: "var(--ease)" }}
+        className="window px-7 py-6 transition-[opacity,transform] duration-300 md:px-9"
+        style={{ opacity: phase > 1 ? 1 : 0, transform: phase > 1 ? "none" : "translateY(8px)", transitionTimingFunction: "var(--ease)" }}
       >
-        <p className="font-[family-name:var(--font-ui)] text-[13px] text-muted">What Joris got</p>
-        <p className="mt-1.5 font-[family-name:var(--font-ui)] text-[16px] leading-[1.5] text-ink">{MEANT}</p>
+        <p className="font-[family-name:var(--font-ui)] text-[13px] text-muted">What Joris got on Slack</p>
+        <p className="mt-2 font-[family-name:var(--font-ui)] text-[17px] leading-[1.55] text-ink">{MEANT}</p>
       </div>
     </div>
   );

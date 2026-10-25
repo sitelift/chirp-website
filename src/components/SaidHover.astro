@@ -9,12 +9,12 @@
   #said-chip {
     position: fixed;
     z-index: 60;
-    max-width: min(420px, calc(100vw - 24px));
-    padding: 9px 14px 10px 12px;
+    max-width: min(520px, calc(100vw - 24px));
+    padding: 12px 18px 13px;
     border-radius: 14px;
     background: #1a1917;
     color: #fff;
-    font: 400 15px/1.4 var(--font-serif);
+    font: 400 19px/1.4 var(--font-serif);
     box-shadow: 0 14px 34px -14px rgba(0, 0, 0, 0.55);
     pointer-events: none;
     opacity: 0;
@@ -43,8 +43,8 @@
     left: 0;
     right: 0.28em;
     top: 54%;
-    height: 2px;
-    border-radius: 2px;
+    height: 3px;
+    border-radius: 3px;
     background: #f0b723;
     transform: scaleX(0);
     transform-origin: left;
@@ -87,11 +87,11 @@
     chip.style.left = `${left}px`;
     chip.style.top = `${above > 8 ? above : r.bottom + 10}px`;
     chip.dataset.on = "";
-    words.forEach((w, i) => timers.push(window.setTimeout(() => (w.dataset.in = ""), 40 + i * 55)));
+    words.forEach((w, i) => timers.push(window.setTimeout(() => (w.dataset.in = ""), 40 + i * 70)));
     let k = 0;
-    const end = 40 + words.length * 55 + 200;
+    const end = 40 + words.length * 70 + 350;
     words.forEach((w) => {
-      if (w.classList.contains("drop")) timers.push(window.setTimeout(() => (w.dataset.struck = ""), end + k++ * 90));
+      if (w.classList.contains("drop")) timers.push(window.setTimeout(() => (w.dataset.struck = ""), end + k++ * 180));
     });
   };
 

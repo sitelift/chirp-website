@@ -1,6 +1,5 @@
 ---
 import Base from "../layouts/Base.astro";
-import Art from "../components/Art.astro";
 import Said from "../components/Said.astro";
 import SaidHover from "../components/SaidHover.astro";
 import Bird from "../components/Bird";
@@ -9,21 +8,29 @@ import HeroDemo from "../components/HeroDemo";
 import HoldDemo from "../components/HoldDemo";
 import RambleDemo from "../components/RambleDemo";
 import Examples from "../components/Examples";
-import { WordsPanel, SnippetsPanel, AiPanel } from "../components/AppPanels";
+import { WordsPanel, AiPanel } from "../components/AppPanels";
 import CostDemo from "../components/CostDemo";
 import { SITE } from "../lib/site";
 
 const winPath = "M0 2.2 6.5 1.3v6.2H0zM7.3 1.2 16 0v7.5H7.3zM0 8.3h6.5v6.3L0 13.7zM7.3 8.3H16V16l-8.7-1.2z";
+const dawn = "background:linear-gradient(180deg,#edf0ef 0%,#f4ecda 60%,#f6d78f 100%)";
 
-// From each vendor's own site, checked 2026-10-25. Monthly list prices.
-const products = ["Chirp", "Wispr Flow", "Aqua Voice", "Willow", "Superwhisper", "Windows voice typing"];
-const rows = [
-  { label: "Price", cells: ["Free", "$15/mo", "$12/mo", "$15/mo", "$8.49/mo", "Free"] },
-  { label: "Open source", cells: ["Yes, MIT", "No", "No", "No", "No", "No"] },
-  { label: "Pick your AI", cells: ["Anthropic, OpenAI or none", "No", "No", "No", "Yes, your keys", "No"] },
-  { label: "Speech recognition", cells: ["On your PC", "Their cloud", "Their cloud", "Their cloud", "Local or cloud", "Microsoft's cloud"] },
-  { label: "Works offline", cells: ["Yes, minus AI", "No", "No", "No, on Windows", "With local models", "No"] },
-  { label: "AI cleanup", cells: ["Yes, on your key", "Yes", "Yes", "Yes", "Yes", "Copilot+ PCs only"] },
+// From each vendor's own site, checked 2026-10-25.
+const products = [
+  { name: "Chirp", href: SITE.github },
+  { name: "Wispr Flow", href: "https://wisprflow.ai/pricing" },
+  { name: "Superwhisper", href: "https://superwhisper.com" },
+  {
+    name: "Windows voice typing",
+    href: "https://support.microsoft.com/en-us/windows/use-voice-typing-to-talk-instead-of-type-on-your-pc-fec94565-c4bd-329d-e59a-af033fa5689f",
+  },
+];
+type Cell = boolean | string;
+const rows: { label: string; cells: Cell[] }[] = [
+  { label: "Price", cells: ["Free", "$15/mo", "$8.49/mo", "Free"] },
+  { label: "Open source", cells: [true, false, false, false] },
+  { label: "Speech recognition on your PC", cells: [true, false, "Optional", false] },
+  { label: "Bring your own AI key", cells: [true, false, true, false] },
 ];
 
 const faqs = [
@@ -36,233 +43,181 @@ const faqs = [
     a: "No. Without one, Chirp pastes what you said, punctuated, with spoken commands like “new line” and “comma” turned into the real thing. Add a key when you want the ums gone and your emails laid out properly.",
   },
   {
-    q: "Do I need a fancy graphics card?",
-    a: "No. Chirp runs on your processor out of the box. Got an NVIDIA GPU? It quietly downloads GPU acceleration in the background and gets about three times faster after a restart. Keep about 10 GB free for that download.",
-  },
-  {
-    q: "Does it work offline?",
-    a: "Speech recognition does, once the model has downloaded on first run. AI cleanup needs the internet, and when it's slow, offline or your key stops working, Chirp pastes your words anyway instead of throwing a tantrum.",
-  },
-  {
-    q: "Which apps does it work in?",
-    a: "Anything with a text cursor: chat, email, docs, your editor, the terminal, that one ancient form at work. Chirp pastes where you're typing and puts your clipboard back afterwards, like it was never there.",
-  },
-  {
-    q: "Can I change the keys?",
-    a: "Every one of them. Hold to talk (Right Ctrl), hands-free (Left Ctrl + Win) and cancel (Esc) can each be any key or combination you like.",
+    q: "What happens the first time I open it?",
+    a: "Chirp downloads its speech model once. After that, hold Right Ctrl in any app and talk. Adding an AI key is optional and takes a paste.",
   },
   {
     q: "What does the AI provider see?",
     a: "Text only: your transcript, your Words list, and the name and title of the app you're in, so it can format for it. Never audio. Never screenshots. Never what's around your cursor.",
   },
   {
+    q: "Does it work offline?",
+    a: "Speech recognition does, once the model is downloaded. AI cleanup needs the internet, and when it's slow, offline or your key stops working, Chirp pastes your words anyway instead of throwing a tantrum.",
+  },
+  {
+    q: "Do I need a fancy graphics card?",
+    a: "No. Chirp runs on your processor out of the box. Got an NVIDIA GPU? It quietly downloads GPU acceleration in the background and gets about three times faster after a restart. Keep about 10 GB free for that download.",
+  },
+  {
+    q: "Can I change the keys?",
+    a: "Every one of them. Hold to talk (Right Ctrl), hands-free (tap Left Ctrl + Win to start and stop) and cancel (Esc) can each be any key or combination you like.",
+  },
+  {
     q: "Mac? Linux?",
     a: "Not anymore. Chirp 2 is Windows only, so every bit of polish goes into one place. Sorry. Truly.",
   },
 ];
-
-const BARS = [0.45, 0.6, 0.8, 1, 0.75, 0.95, 0.7, 0.85, 0.6, 0.5, 0.4];
 ---
 
 <Base>
-  <!-- Nav: shaped like the app's own ink pill -->
-  <header class="fixed inset-x-0 top-0 z-50 flex justify-center px-3 pt-3">
-    <nav
-      class="flex h-12 w-full max-w-[760px] items-center justify-between rounded-full bg-[#1a1917] pl-4 pr-1.5 text-white shadow-[0_10px_30px_-12px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.08)]"
-    >
-      <a href="/" class="flex items-center gap-2" aria-label="Chirp home">
-        <Bird className="h-5 w-5 text-amber" />
-        <span class="text-[19px] font-semibold tracking-[-0.04em]">chirp</span>
-      </a>
-      <div class="hidden items-center gap-6 text-[14px] text-white/70 md:flex">
-        <a href="#how" class="transition-colors duration-200 hover:text-white">How it works</a>
-        <a href="#pricing" class="transition-colors duration-200 hover:text-white">Pricing</a>
-        <a href="#faq" class="transition-colors duration-200 hover:text-white">FAQ</a>
-        <a href={SITE.github} class="transition-colors duration-200 hover:text-white">GitHub</a>
+  <!-- Nav: the app's own ink pill. Hides while you scroll down, comes back when you scroll up. -->
+  <header id="nav" class="fixed inset-x-0 top-0 z-50 flex justify-center px-3 pt-3 transition-transform duration-300" style="transition-timing-function:var(--ease)">
+    <nav class="w-full max-w-[760px] rounded-[26px] bg-[#1a1917] text-white shadow-[0_6px_18px_-10px_rgba(0,0,0,0.45)]">
+      <div class="flex h-12 items-center justify-between pl-4 pr-1.5">
+        <a href="/" class="flex items-center gap-2" aria-label="Chirp home">
+          <Bird className="h-5 w-5 text-amber" />
+          <span class="text-[19px] font-semibold tracking-[-0.04em]">chirp</span>
+        </a>
+        <div class="hidden items-center gap-6 text-[14px] text-white/70 md:flex">
+          <a href="#how" class="transition-colors duration-200 hover:text-white">How it works</a>
+          <a href="#pricing" class="transition-colors duration-200 hover:text-white">Pricing</a>
+          <a href="#faq" class="transition-colors duration-200 hover:text-white">FAQ</a>
+          <a href={SITE.github} class="transition-colors duration-200 hover:text-white">GitHub</a>
+        </div>
+        <div class="flex items-center gap-1">
+          <button id="menu-btn" type="button" class="flex h-9 w-9 items-center justify-center rounded-full text-white/80 md:hidden" aria-label="Menu" aria-expanded="false">
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 8h16M4 16h16"></path></svg>
+          </button>
+          <a href={SITE.download} class="flex h-9 items-center gap-2 rounded-full bg-amber px-4 text-[14px] font-semibold text-ink transition-colors duration-200 hover:bg-[#f5c544]">
+            <svg viewBox="0 0 16 16" class="h-3.5 w-3.5" fill="currentColor" aria-hidden="true"><path d={winPath}></path></svg>
+            <span class="md:hidden">Get for Windows</span><span class="hidden md:inline">Download</span>
+          </a>
+        </div>
       </div>
-      <a
-        href={SITE.download}
-        data-said="~okay ~fine, download"
-        class="flex h-9 items-center gap-2 rounded-full bg-amber px-4 text-[14px] font-semibold text-ink transition-colors duration-200 hover:bg-[#f5c544]"
-      >
-        <svg viewBox="0 0 16 16" class="h-3.5 w-3.5" fill="currentColor" aria-hidden="true"><path d={winPath}></path></svg>
-        Download
-      </a>
+      <div id="menu" class="hidden flex-col gap-1 px-4 pb-4 pt-1 text-[16px] text-white/80 md:hidden">
+        <a href="#how" class="py-2">How it works</a>
+        <a href="#pricing" class="py-2">Pricing</a>
+        <a href="#faq" class="py-2">FAQ</a>
+        <a href={SITE.github} class="py-2">GitHub</a>
+      </div>
     </nav>
   </header>
 
   <main>
     <!-- Hero -->
-    <section class="mx-auto max-w-[1280px] px-5 pb-32 pt-40 md:px-8 md:pb-44 md:pt-52">
-      <div class="text-center">
-        <h1 class="t-hero mx-auto w-fit cursor-default" data-said="~so ~like talk ~all messy, ~and ~then type ~it clean">
-          Talk messy. Type clean.
-        </h1>
-        <p class="t-lead mx-auto mt-6 max-w-[32rem]">Hold a key, ramble, let go. Chirp types what you meant, wherever your cursor is.</p>
-        <a href={SITE.download} class="btn btn-primary mt-9" data-said="~um, download ~it ~for, ~uh, ~like, for free">
+    <section class="mx-auto max-w-[1280px] px-5 pb-12 pt-32 md:px-8 md:pb-20 md:pt-36">
+      <div class="flex flex-col items-center text-center">
+        <Said said="~so ~like talk ~all messy, ~and ~then type ~it clean" class="text-left" />
+        <h1 class="t-hero mt-6">Talk messy. Type clean.</h1>
+        <p class="t-lead mt-6 max-w-[32rem]">Hold a key, ramble, let go. Chirp types what you meant, wherever your cursor is.</p>
+        <a href={SITE.download} class="btn btn-primary mt-9">
           <svg viewBox="0 0 16 16" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d={winPath}></path></svg>
-          Download for free
+          Download for Windows
         </a>
-        <p class="mt-4 text-[14px] text-muted">For Windows. Free and <a href={SITE.github} class="link">open source</a>.</p>
+        <p class="mt-4 max-w-[34rem] text-[15px] leading-relaxed text-muted">
+          Free and <a href={SITE.github} class="link">open source</a>. Speech recognition runs on your PC; AI cleanup is optional, on your own
+          key.
+        </p>
       </div>
-      <div class="mx-auto mt-20 max-w-[1040px] md:mt-24">
+      <div class="mx-auto mt-12 max-w-[1000px] md:mt-14">
         <HeroDemo client:load />
       </div>
     </section>
 
-    <!-- Typing is the slow part -->
-    <section class="mx-auto max-w-[1280px] px-5 py-32 md:px-8 md:py-44">
-      <div class="grid items-center gap-12 lg:grid-cols-2">
+    <!-- Speed -->
+    <section class="mx-auto max-w-[1280px] px-5 py-12 md:px-8 md:py-20">
+      <div class="grid [&>*]:min-w-0 items-center gap-12 lg:grid-cols-2 lg:gap-20">
         <div>
-          <Said said="~so ~um ~basically, typing is the slow part. ~you ~know?" />
-          <h2 class="t-h2 mt-5">Typing is the slow&nbsp;part.</h2>
-          <p class="t-lead mt-6 max-w-[30rem]">Most people talk about 150 words a minute and type about 52. Chirp lets you use the fast one.</p>
-          <p class="t-body mt-6 max-w-[30rem]">
-            And Chirp won't be the slow part either: speech becomes text in about a tenth of a second on an NVIDIA GPU, and a third of one on a
-            regular CPU.
-          </p>
+          <h2 class="t-h2">Typing is the slow&nbsp;part.</h2>
+          <p class="t-lead mt-6 max-w-[28rem]">Most people talk about 150 words a minute and type about 52. Chirp lets you use the fast one.</p>
         </div>
-        <Art variant="sky" class="flex min-h-[460px] items-center justify-center rounded-[24px] p-8">
-          <div class="window relative w-full max-w-[400px] px-8 pb-9 pt-14">
-            <span class="absolute left-6 top-5 font-[family-name:var(--font-ui)] text-[12px] text-muted">Words per minute</span>
-            <div class="space-y-6">
-              <div>
-                <div class="flex items-baseline justify-between font-[family-name:var(--font-ui)] text-[14px]">
-                  <span>Talking</span><span class="font-serif text-[40px] leading-none">150</span>
-                </div>
-                <div class="mt-2 h-2.5 rounded-full bg-amber"></div>
-              </div>
-              <div>
-                <div class="flex items-baseline justify-between font-[family-name:var(--font-ui)] text-[14px]">
-                  <span>Typing</span><span class="font-serif text-[40px] leading-none text-muted">52</span>
-                </div>
-                <div class="mt-2 h-2.5 w-[35%] rounded-full bg-[#d7d3c8]"></div>
-              </div>
+        <div class="rounded-[28px] bg-white p-8 shadow-[0_0_0_1px_rgba(0,0,0,0.06)] md:p-12">
+          <p class="text-[15px] text-muted">Words per minute</p>
+          <div class="mt-6 space-y-7">
+            <div>
+              <div class="flex items-baseline justify-between"><span class="text-[17px]">Talking</span><span class="font-serif text-[44px] leading-none">150</span></div>
+              <div class="mt-3 h-3 rounded-full bg-amber"></div>
+            </div>
+            <div>
+              <div class="flex items-baseline justify-between"><span class="text-[17px]">Typing</span><span class="font-serif text-[44px] leading-none text-muted">52</span></div>
+              <div class="mt-3 h-3 w-[35%] rounded-full bg-[#d7d3c8]"></div>
             </div>
           </div>
-        </Art>
+        </div>
       </div>
-    </section>
-
-    <!-- Chirp's least favourite words -->
-    <section class="overflow-hidden bg-white py-32 md:py-48">
-      <p class="t-mega text-center" aria-label="um, uh, like">
-        {
-          ["um,", "uh,", "like,"].map((w) => (
-            <span class="relative mx-[0.12em] inline-block text-[#b9b4a8]">
-              {w}
-              <span class="absolute inset-x-[-0.04em] top-[55%] h-[0.075em] -rotate-[4deg] rounded-full bg-amber" />
-            </span>
-          ))
-        }
-      </p>
-      <p class="mt-8 text-center font-serif text-[22px] italic text-muted">Chirp's least favourite words.</p>
-      <p class="t-h4 mx-auto mt-10 max-w-[44rem] px-5 text-center">
-        Gone from everything you say into Slack, Gmail, Outlook, Teams, Notion, Word, Cursor, your terminal, and anything else with a
-        cursor.
-      </p>
     </section>
 
     <!-- How it works -->
-    <section id="how" class="mx-auto max-w-[1280px] scroll-mt-24 px-5 py-32 md:px-8 md:py-48">
+    <section id="how" class="mx-auto max-w-[1280px] scroll-mt-24 px-5 py-12 md:px-8 md:py-20">
       <Said said="~okay ~so how does it ~even work?" />
-      <h2 class="t-h2 mt-5">Hold. Talk. Let go.</h2>
+      <h2 class="t-h2 mt-6">Hold. Talk. Let go.</h2>
 
-      <div class="mt-20 space-y-32 md:mt-28 md:space-y-44">
-        <div class="grid items-center gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+      <div class="mt-16 space-y-24 md:mt-20 md:space-y-32">
+        <div class="grid [&>*]:min-w-0 items-center gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:gap-20">
           <div>
-            <span class="flex h-9 items-center" aria-hidden="true"><span class="h-[5px] w-7 rounded-[3px] bg-[#1a1917]/60"></span></span>
-            <h3 class="t-h3 mt-4 w-fit cursor-default" data-said="~um, hold the key ~down, ~right?">Hold the key</h3>
-            <p class="t-lead mt-4 max-w-[28rem]">
-              Chirp lives in a tiny tick above your taskbar. Hold Right Ctrl in any app and talk, or tap Left Ctrl + Win to go hands-free.
-              Hate those keys? Pick your own.
-            </p>
+            <p class="font-serif text-[20px] text-[#8f6400]">1</p>
+            <h3 class="t-h3 mt-2 w-fit cursor-default" data-said="~um, hold the key ~down, ~right?">Hold</h3>
+            <p class="t-lead mt-5 max-w-[24rem]">Hold Right Ctrl in any app.</p>
           </div>
-          <Art variant="sky" class="h-[440px] rounded-[24px]"><HoldDemo client:visible /></Art>
+          <div class="h-[340px] overflow-hidden rounded-[28px]" style={dawn}><HoldDemo client:visible /></div>
         </div>
 
-        <div class="grid items-center gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+        <div class="grid [&>*]:min-w-0 items-center gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:gap-20">
           <div>
-            <span class="flex h-9 w-[132px] items-center justify-center gap-[3px] rounded-full bg-[#1a1917]" aria-hidden="true">
-              {BARS.map((b, i) => <span class="w-[3px] rounded-[2px] bg-amber" style={`height:${3 + b * 15}px;opacity:${i === 0 || i === 10 ? 0.5 : 1}`} />)}
-            </span>
-            <h3 class="t-h3 mt-4 w-fit cursor-default" data-said="~just, ~like, ~you ~know, ramble">Ramble</h3>
-            <p class="t-lead mt-4 max-w-[28rem]">
-              Talk like a person, not a dictation robot. Say um. Change your mind twice. Chirp keeps the last version and quietly bins the
-              rest.
-            </p>
+            <p class="font-serif text-[20px] text-[#8f6400]">2</p>
+            <h3 class="t-h3 mt-2 w-fit cursor-default" data-said="~just, ~like, ~you ~know, talk">Talk</h3>
+            <p class="t-lead mt-5 max-w-[24rem]">Ramble, pause, change your mind. Chirp keeps the last version.</p>
           </div>
-          <Art variant="amber" class="h-[540px] rounded-[24px]"><RambleDemo client:visible /></Art>
+          <div class="rounded-[28px] p-5 md:p-10" style={dawn}><RambleDemo client:visible /></div>
         </div>
 
-        <div>
-          <span class="flex h-9 w-[132px] items-center justify-center gap-[3px] rounded-full bg-[#1a1917]" aria-hidden="true">
-            {BARS.map((_, i) => <span class="sweep h-[3px] w-[3px] rounded-[2px] bg-amber" style={`animation-delay:${(i - 5) * (900 / 11) - 900}ms`} />)}
-          </span>
-          <div class="grid gap-4 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
-            <h3 class="t-h3 mt-4 w-fit cursor-default" data-said="~and ~then ~you ~just let ~it go">Let go</h3>
-            <p class="t-lead mt-4 max-w-[34rem]">
-              The clean version lands at your cursor, dressed for wherever it's going: an email in Gmail, a list in Notion, code in Cursor.
-              Usually in about a second. These are real dictations from Chirp's test set.
-            </p>
+        <div class="grid [&>*]:min-w-0 items-start gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:gap-20">
+          <div class="lg:pt-10">
+            <p class="font-serif text-[20px] text-[#8f6400]">3</p>
+            <h3 class="t-h3 mt-2 w-fit cursor-default" data-said="~and ~then ~you ~just let ~it go">Let go</h3>
+            <p class="t-lead mt-5 max-w-[24rem]">The clean version lands at your cursor, formatted for the app you're in.</p>
           </div>
-          <div class="mt-10"><Examples client:visible /></div>
+          <div class="rounded-[28px] p-5 md:p-10" style={dawn}><Examples client:visible /></div>
         </div>
       </div>
     </section>
 
-    <!-- Words & Snippets -->
-    <section class="bg-amber">
-      <div class="mx-auto grid max-w-[1280px] items-center gap-14 px-5 py-32 md:px-8 md:py-44 lg:grid-cols-2">
+    <!-- Words -->
+    <section class="mx-auto max-w-[1280px] px-5 py-12 md:px-8 md:py-20">
+      <div class="grid [&>*]:min-w-0 items-center gap-12 lg:grid-cols-2 lg:gap-20">
         <div>
-          <Said said="~uh can it ~even spell ~like Keizersgracht?" class="!text-ink/70" />
-          <h2 class="t-h2 mt-5">Your names, spelled right.</h2>
-          <p class="t-lead mt-6 max-w-[30rem]">
-            Teach Chirp your clients, your colleagues and your gloriously weird product names once. It spells them right forever. Snippets turn
-            “my address” into your actual address.
-          </p>
+          <Said said="~so, ~like, your names, ~um, spelled right." />
+          <h2 class="t-h2 mt-6">Your names, spelled right.</h2>
+          <p class="t-lead mt-6 max-w-[28rem]">Add a client, a colleague or a gloriously weird product name once. Chirp spells it right forever.</p>
         </div>
-        <div class="relative flex min-h-[480px] items-center justify-center">
-          <div class="absolute right-0 top-4 hidden rotate-[2deg] sm:block"><SnippetsPanel client:visible /></div>
-          <div class="relative -rotate-[1deg] sm:-translate-x-14"><WordsPanel client:visible /></div>
-        </div>
+        <div class="flex justify-center rounded-[28px] px-5 py-10 md:px-10 md:py-14" style={dawn}><WordsPanel client:visible /></div>
       </div>
     </section>
 
-    <!-- Pricing -->
-    <section id="pricing" class="scroll-mt-20 bg-night text-white">
-      <div class="mx-auto grid max-w-[1280px] items-center gap-14 px-5 py-32 md:px-8 md:py-48 lg:grid-cols-[1fr_1fr] lg:gap-20">
+    <!-- Pricing and the receipts -->
+    <section id="pricing" class="mx-auto max-w-[1280px] scroll-mt-24 px-5 py-12 md:px-8 md:py-20">
+      <div class="grid [&>*]:min-w-0 items-center gap-12 lg:grid-cols-2 lg:gap-20">
         <div>
-          <Said said="~wait, ~so how much does it cost?" dark />
-          <h2 class="t-h2 mt-5">Pennies, not a subscription.</h2>
-          <p class="t-lead mt-6 max-w-[30rem] !text-white/70">
-            Chirp turns speech into text on your own PC, so there's nothing to rent. The only cost is AI cleanup, paid on your own key, if you
-            want it at all.
+          <Said said="~wait, ~so how much does it cost?" />
+          <h2 class="t-h2 mt-6">Pennies, not a subscription.</h2>
+          <p class="t-lead mt-6 max-w-[28rem]">
+            The app is free, because it hears you on your own PC. Want AI cleanup? Bring your own key and pay cents, not a monthly fee.
           </p>
         </div>
         <CostDemo client:visible />
       </div>
-    </section>
 
-    <!-- The receipts -->
-    <section class="mx-auto max-w-[1280px] px-5 py-32 md:px-8 md:py-44">
-      <div class="grid items-end gap-6 lg:grid-cols-2">
-        <h2 class="t-h3 w-fit cursor-default" data-said="~okay ~show ~me the receipts">The receipts</h2>
-        <p class="t-lead max-w-[32rem]">
-          From each company's own website on October 25, 2026. If something's changed, <a href={`${SITE.github}/issues`} class="link"
-            >tell us</a
-          > and we'll fix it.
-        </p>
-      </div>
-      <div class="mt-10 overflow-x-auto">
-        <table class="w-full min-w-[880px] border-collapse text-left text-[15px]">
+      <!-- Compact comparison: a table on desktop, one card per app on mobile -->
+      <div class="mt-24 md:mt-32">
+        <h3 class="t-h3">How it stacks up</h3>
+        <table class="mt-10 hidden w-full border-collapse text-left text-[16px] md:table">
           <thead>
             <tr>
-              <th class="w-[11rem] py-4 pr-4"></th>
+              <th class="w-[30%] py-4 pr-6"></th>
               {
                 products.map((p, i) => (
-                  <th class:list={["px-4 py-4 align-bottom font-serif text-[19px] font-normal", i === 0 && "rounded-t-[14px] bg-amber/30"]}>
-                    {p}
+                  <th class:list={["px-5 py-4 align-bottom font-serif text-[21px] font-normal", i === 0 && "rounded-t-[16px] bg-[#fbf0d2]"]}>
+                    {p.name}
                   </th>
                 ))
               }
@@ -272,16 +227,16 @@ const BARS = [0.45, 0.6, 0.8, 1, 0.75, 0.95, 0.7, 0.85, 0.6, 0.5, 0.4];
             {
               rows.map((r, ri) => (
                 <tr class="border-t border-line">
-                  <td class="py-4 pr-4 text-muted">{r.label}</td>
+                  <td class="py-5 pr-6 text-muted">{r.label}</td>
                   {r.cells.map((c, i) => (
-                    <td
-                      class:list={[
-                        "px-4 py-4",
-                        i === 0 ? "bg-amber/30 font-medium" : "text-[#4a4945]",
-                        i === 0 && ri === rows.length - 1 && "rounded-b-[14px]",
-                      ]}
-                    >
-                      {c}
+                    <td class:list={["px-5 py-5", i === 0 && "bg-[#fbf0d2] font-medium", i === 0 && ri === rows.length - 1 && "rounded-b-[16px]"]}>
+                      {c === true ? (
+                        <span class="text-[20px] text-[#8f6400]" aria-label="Yes">✓</span>
+                      ) : c === false ? (
+                        <span class="text-[20px] text-faint" aria-label="No">✗</span>
+                      ) : (
+                        c
+                      )}
                     </td>
                   ))}
                 </tr>
@@ -289,106 +244,90 @@ const BARS = [0.45, 0.6, 0.8, 1, 0.75, 0.95, 0.7, 0.85, 0.6, 0.5, 0.4];
             }
           </tbody>
         </table>
+        <div class="mt-8 grid gap-4 md:hidden">
+          {
+            products.map((p, i) => (
+              <div class:list={["rounded-[20px] p-6", i === 0 ? "bg-[#fbf0d2]" : "bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.06)]"]}>
+                <p class="font-serif text-[22px]">{p.name}</p>
+                <dl class="mt-3 space-y-2 text-[16px]">
+                  {rows.map((r) => (
+                    <div class="flex justify-between gap-4">
+                      <dt class="text-muted">{r.label}</dt>
+                      <dd class="text-right">{r.cells[i] === true ? "✓" : r.cells[i] === false ? "✗" : r.cells[i]}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            ))
+          }
+        </div>
+        <p class="mt-6 text-[15px] leading-relaxed text-muted">
+          Checked October 25, 2026 on each company's own site:
+          {products.slice(1).map((p, i) => (
+            <>
+              {i > 0 && ", "}<a href={p.href} class="link">{p.name}</a>
+            </>
+          ))}. Something changed? <a href={`${SITE.github}/issues`} class="link">Tell us</a>.
+        </p>
       </div>
     </section>
 
-    <!-- Yours, not rented -->
-    <section class="mx-auto max-w-[1280px] px-5 py-32 md:px-8 md:py-44">
-      <Said said="~wait, ~so it's ~like actually mine?" />
-      <h2 class="t-h2 mt-5">Yours. Not rented.</h2>
-      <p class="t-lead mt-6 max-w-[34rem]">
-        Chirp is MIT licensed and built in public. Read every line, change what bugs you, or fork the whole thing and call it something else.
-      </p>
-      <div class="mt-14 grid gap-5 lg:grid-cols-2">
-        <figure>
-          <Art variant="sky" class="flex h-[420px] items-center justify-center rounded-[24px] p-5">
-            <div class="origin-center scale-[0.86] md:scale-100"><AiPanel client:visible /></div>
-          </Art>
-          <figcaption class="mt-5">
-            <p class="t-h4">Switch AI whenever</p>
-            <p class="t-body mt-2">Anthropic today, OpenAI tomorrow, nothing on Fridays. Your key, your call, no migration.</p>
-          </figcaption>
-        </figure>
-        <figure>
-          <Art variant="night" class="flex h-[420px] items-center justify-center rounded-[24px] p-6">
-            <div class="window w-full max-w-[360px] px-5 pb-6 pt-5">
-              <p class="font-mono text-[13px] leading-[1.8] text-ink">
-                <span class="text-muted">&gt;</span> git clone github.com/sitelift/Chirp<br />
-                <span class="text-muted">&gt;</span> cd Chirp<br />
-                <span class="text-muted">&gt;</span> code .<span class="caret ml-0.5 inline-block h-[1em] w-[7px] translate-y-[2px] bg-ink"></span>
-              </p>
-            </div>
-          </Art>
-          <figcaption class="mt-5">
-            <p class="t-h4">Fork it, fix it</p>
-            <p class="t-body mt-2">Every line is on GitHub. No account to make, no lock-in, and your words and history stay on your PC.</p>
-          </figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <!-- Bugs welcome -->
-    <section class="mx-auto max-w-[1280px] px-5 py-32 md:px-8 md:py-44">
-      <div class="grid gap-8 lg:grid-cols-2">
-        <h2 class="t-h3 max-w-[30rem] cursor-default" data-said="~so ~it's built in public, ~so ~like bring your bugs">Built in public. Bring your bugs.</h2>
+    <!-- Yours -->
+    <section class="mx-auto max-w-[1280px] px-5 py-12 md:px-8 md:py-20">
+      <div class="grid [&>*]:min-w-0 items-center gap-12 lg:grid-cols-2 lg:gap-20">
         <div>
-          <p class="t-lead max-w-[32rem]">
-            Chirp gets better every time someone says “that came out wrong.” Tell us when a dictation is slow or off: what you said, and what
-            you got. Speed and accuracy are the whole job.
+          <Said said="~wait, ~so it's ~like actually mine?" />
+          <h2 class="t-h2 mt-6">Yours. Not rented.</h2>
+          <p class="t-lead mt-6 max-w-[28rem]">
+            Chirp is open source under the MIT license. Use Anthropic, OpenAI or no AI at all, and switch whenever you like. No account, no lock-in.
           </p>
-          <div class="mt-8 flex flex-wrap gap-3">
-            <a href={`${SITE.github}/issues/new`} class="btn btn-primary" data-said="~I ~wanna report ~a, ~um, a dictation">Report a dictation</a>
-            <a href={SITE.github} class="btn btn-ghost" data-said="~okay star ~it on GitHub">Star on GitHub</a>
+          <div class="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3">
+            <a href={SITE.github} class="btn btn-ghost">Read the code on GitHub</a>
+            <a href={`${SITE.github}/issues/new`} class="link text-[16px]">Got a slow or wrong dictation? Tell us.</a>
           </div>
+        </div>
+        <div class="flex justify-center rounded-[28px] px-5 py-12 md:px-10 md:py-16" style={dawn}>
+          <div class="w-full max-w-[400px]"><AiPanel client:visible /></div>
         </div>
       </div>
     </section>
 
     <!-- FAQ -->
-    <section id="faq" class="mx-auto grid max-w-[1280px] scroll-mt-24 gap-10 px-5 py-32 md:px-8 md:py-44 lg:grid-cols-2">
-      <div>
-        <Said said="~okay ~one ~more ~thing, ~um, I have questions" />
-        <h2 class="t-h3 mt-5">Questions, answered</h2>
-      </div>
+    <section id="faq" class="mx-auto grid max-w-[1280px] scroll-mt-24 [&>*]:min-w-0 items-start gap-10 px-5 py-12 md:px-8 md:py-20 lg:grid-cols-2 lg:gap-20">
+      <h2 class="t-h2 lg:sticky lg:top-28">Questions, answered.</h2>
       <div class="border-t border-line">
         {
           faqs.map((f) => (
             <details class="group border-b border-line">
-              <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-5 font-serif text-[22px] [&::-webkit-details-marker]:hidden">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-6 font-serif text-[22px] leading-snug [&::-webkit-details-marker]:hidden">
                 {f.q}
-                <span class="text-[24px] text-muted transition-transform duration-200 ease-out group-open:rotate-45">+</span>
+                <span class="shrink-0 text-[24px] text-muted transition-transform duration-200 ease-out group-open:rotate-45">+</span>
               </summary>
-              <p class="t-body pb-6 pr-10">{f.a}</p>
+              <p class="t-body pb-7 pr-10 !text-[17px]">{f.a}</p>
             </details>
           ))
         }
       </div>
     </section>
 
-    <!-- Final scene: the sky, the taskbar, the pill waiting -->
-    <section class="relative overflow-hidden" style="background:linear-gradient(180deg, #e9eef0 0%, #f3ead6 58%, #f6d58a 100%)">
-      <Murmuration client:visible count={560} centerY={0.42} />
-      <div class="relative mx-auto flex min-h-[640px] max-w-[880px] flex-col items-center justify-center px-5 pb-40 pt-28 text-center">
-        <h2 class="t-h2 cursor-default" data-said="~wait, unlimited dictation, ~for, ~um, zero dollars?">Unlimited dictation. Zero dollars.</h2>
-        <p class="t-lead mt-6 max-w-[30rem]">Download Chirp, hold Right Ctrl, say something. That's the whole onboarding.</p>
-        <div class="mt-9 flex flex-wrap justify-center gap-3">
-          <a href={SITE.download} class="btn btn-primary" data-said="~um, download ~it ~for, ~uh, ~like, for free">
-            <svg viewBox="0 0 16 16" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d={winPath}></path></svg>
-            Download for free
-          </a>
-          <a href={SITE.github} class="btn btn-ghost bg-white/40" data-said="~can ~I ~like view ~the ~code on GitHub">View on GitHub</a>
-        </div>
+    <!-- Final call: the sky, with the flock kept below the words -->
+    <section class="relative mt-12 overflow-hidden md:mt-20" style={dawn}>
+      <div class="absolute inset-x-0 bottom-0 h-[42%]">
+        <Murmuration client:visible count={520} centerY={0.5} spread={0.9} />
       </div>
-      <div class="absolute inset-x-0 bottom-[60px] flex justify-center" aria-hidden="true">
-        <span class="ink" data-kind="hover"><Bird className="bird h-5 w-5 text-amber" data-on="" /></span>
-      </div>
-      <div class="absolute inset-x-0 bottom-0 flex h-12 items-center justify-center gap-2 bg-white/75 backdrop-blur-md" aria-hidden="true">
-        <svg viewBox="0 0 16 16" class="h-[18px] w-[18px] text-[#2a6fdb]" fill="currentColor"><path d={winPath}></path></svg>
-        {["#e9b8a6", "#4a154b", "#c9c3e6", "#f0d78a"].map((c) => <span class="h-6 w-6 rounded-[6px]" style={`background:${c}`} />)}
+      <div class="relative mx-auto flex max-w-[880px] flex-col items-center px-5 pb-[300px] pt-24 text-center md:pb-[360px] md:pt-32">
+        <h2 class="t-h2 cursor-default" data-said="~wait, unlimited dictation, ~for, ~um, zero dollars?">Unlimited dictation.<br />Zero dollars.</h2>
+        <p class="t-lead mt-7 max-w-[30rem]">Download it, let it fetch its speech model once, then hold Right Ctrl and say something.</p>
+        <a href={SITE.download} class="btn btn-primary mt-9">
+          <svg viewBox="0 0 16 16" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d={winPath}></path></svg>
+          Download for Windows
+        </a>
+        <p class="mt-5 text-[15px] text-ink/70">
+          Free forever. AI cleanup is optional, on your own key. <a href={SITE.github} class="link">View on GitHub</a>
+        </p>
       </div>
     </section>
   </main>
-  <SaidHover />
 
   <footer class="mx-auto max-w-[1280px] px-5 py-14 md:px-8">
     <div class="flex flex-col justify-between gap-10 md:flex-row">
@@ -397,16 +336,45 @@ const BARS = [0.45, 0.6, 0.8, 1, 0.75, 0.95, 0.7, 0.85, 0.6, 0.5, 0.4];
           <Bird className="h-6 w-6 text-amber" />
           <span class="text-[22px] font-semibold tracking-[-0.04em]">chirp</span>
         </a>
-        <p class="mt-3 max-w-[18rem] text-[14px] text-muted">Made by Pieter de Bruijn. Open source under the MIT license.</p>
+        <p class="mt-3 max-w-[18rem] text-[15px] text-muted">Made by Pieter de Bruijn. Open source under the MIT license.</p>
       </div>
       <div class="grid grid-cols-2 gap-x-16 gap-y-3 text-[15px]">
         <a href={SITE.download} class="hover:text-black">Download</a>
         <a href={SITE.github} class="hover:text-black">GitHub</a>
         <a href="#how" class="hover:text-black">How it works</a>
-        <a href={`${SITE.github}/issues`} class="hover:text-black">Report an issue</a>
+        <a href={`${SITE.github}/issues/new`} class="hover:text-black">Report a dictation</a>
         <a href="#pricing" class="hover:text-black">Pricing</a>
         <a href={`${SITE.github}/blob/v2/CHANGELOG.md`} class="hover:text-black">Changelog</a>
       </div>
     </div>
   </footer>
+  <SaidHover />
+
+  <script>
+    // Hide the nav while scrolling down, bring it back on the way up.
+    const nav = document.getElementById("nav")!;
+    let lastY = scrollY;
+    addEventListener(
+      "scroll",
+      () => {
+        const y = scrollY;
+        const hide = y > lastY && y > 120 && !nav.dataset.open;
+        nav.style.transform = hide ? "translateY(-120%)" : "";
+        lastY = y;
+      },
+      { passive: true },
+    );
+    // Mobile menu.
+    const btn = document.getElementById("menu-btn")!;
+    const menu = document.getElementById("menu")!;
+    const toggle = (open: boolean) => {
+      menu.classList.toggle("hidden", !open);
+      menu.classList.toggle("flex", open);
+      btn.setAttribute("aria-expanded", String(open));
+      if (open) nav.dataset.open = "";
+      else delete nav.dataset.open;
+    };
+    btn.addEventListener("click", () => toggle(menu.classList.contains("hidden")));
+    menu.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => toggle(false)));
+  </script>
 </Base>

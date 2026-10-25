@@ -247,6 +247,47 @@ html {
   animation: sweep 900ms ease-in-out infinite;
 }
 
+/* A slider with a thumb you can actually grab. */
+.range-lg {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 28px;
+  background: transparent;
+  cursor: pointer;
+}
+.range-lg::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 3px;
+  background: #e7e1d4;
+}
+.range-lg::-moz-range-track {
+  height: 6px;
+  border-radius: 3px;
+  background: #e7e1d4;
+}
+.range-lg::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 28px;
+  height: 28px;
+  margin-top: -11px;
+  border-radius: 50%;
+  background: #292929;
+  box-shadow: 0 0 0 5px #f0b723;
+}
+.range-lg::-moz-range-thumb {
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 50%;
+  background: #292929;
+  box-shadow: 0 0 0 5px #f0b723;
+}
+
+html,
+body {
+  overflow-x: clip;
+}
+
 .caret {
   animation: blink 1.06s steps(1) infinite;
 }
