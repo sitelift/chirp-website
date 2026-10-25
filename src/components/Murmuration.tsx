@@ -9,11 +9,15 @@ export default function Murmuration({
   color = [0.16, 0.16, 0.16],
   centerY = 0.5,
   spread = 1,
+  size = 1,
+  wander = 1,
 }: {
   count?: number;
   color?: [number, number, number];
   centerY?: number;
   spread?: number;
+  size?: number;
+  wander?: number;
 }) {
   const ref = useRef<HTMLCanvasElement>(null);
 
@@ -31,6 +35,8 @@ export default function Murmuration({
     gl.color = color;
     flock.centerY = centerY;
     flock.spread = spread;
+    gl.scale = size;
+    flock.wander = wander;
 
     let w = 1;
     let h = 1;

@@ -6,14 +6,15 @@ import Bird from "../components/Bird";
 import Murmuration from "../components/Murmuration";
 import HeroDemo from "../components/HeroDemo";
 import HoldDemo from "../components/HoldDemo";
-import RambleDemo from "../components/RambleDemo";
+import { TalkDemo, LetGoDemo } from "../components/StepDemos";
+import ComparePicker from "../components/ComparePicker";
 import Examples from "../components/Examples";
 import { WordsPanel, AiPanel } from "../components/AppPanels";
 import CostDemo from "../components/CostDemo";
+import { Tick, Cross } from "../components/Marks";
 import { SITE } from "../lib/site";
 
 const winPath = "M0 2.2 6.5 1.3v6.2H0zM7.3 1.2 16 0v7.5H7.3zM0 8.3h6.5v6.3L0 13.7zM7.3 8.3H16V16l-8.7-1.2z";
-const dawn = "background:linear-gradient(180deg,#edf0ef 0%,#f4ecda 60%,#f6d78f 100%)";
 
 // From each vendor's own site, checked 2026-10-25.
 const products = [
@@ -31,6 +32,7 @@ const rows: { label: string; cells: Cell[] }[] = [
   { label: "Open source", cells: [true, false, false, false] },
   { label: "Speech recognition on your PC", cells: [true, false, "Optional", false] },
   { label: "Bring your own AI key", cells: [true, false, true, false] },
+  { label: "Runs on Mac", cells: [false, true, true, false] },
 ];
 
 const faqs = [
@@ -105,22 +107,21 @@ const faqs = [
 
   <main>
     <!-- Hero -->
-    <section class="mx-auto max-w-[1280px] px-5 pb-12 pt-32 md:px-8 md:pb-20 md:pt-36">
+    <section class="mx-auto max-w-[1280px] px-5 pb-12 pt-28 md:px-8 md:pb-20 md:pt-32">
       <div class="flex flex-col items-center text-center">
-        <Said said="~so ~like talk ~all messy, ~and ~then type ~it clean" class="text-left" />
+        <Said said="~so ~like talk ~all messy, ~and ~then type ~it clean" class="max-w-[38rem] text-left" />
         <h1 class="t-hero mt-6">Talk messy. Type clean.</h1>
         <p class="t-lead mt-6 max-w-[32rem]">Hold a key, ramble, let go. Chirp types what you meant, wherever your cursor is.</p>
         <a href={SITE.download} class="btn btn-primary mt-9">
           <svg viewBox="0 0 16 16" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d={winPath}></path></svg>
           Download for Windows
         </a>
-        <p class="mt-4 max-w-[34rem] text-[15px] leading-relaxed text-muted">
-          Free and <a href={SITE.github} class="link">open source</a>. Speech recognition runs on your PC; AI cleanup is optional, on your own
-          key.
-        </p>
       </div>
-      <div class="mx-auto mt-12 max-w-[1000px] md:mt-14">
+      <div class="mx-auto mt-12 max-w-[1040px]">
         <HeroDemo client:load />
+        <p class="mx-auto mt-5 max-w-[40rem] text-center text-[15px] leading-relaxed text-muted">
+          Free and <a href={SITE.github} class="link">open source</a>. Speech recognition runs on your PC; AI cleanup is optional, on your own key.
+        </p>
       </div>
     </section>
 
@@ -128,10 +129,11 @@ const faqs = [
     <section class="mx-auto max-w-[1280px] px-5 py-12 md:px-8 md:py-20">
       <div class="grid [&>*]:min-w-0 items-center gap-12 lg:grid-cols-2 lg:gap-20">
         <div>
-          <h2 class="t-h2">Typing is the slow&nbsp;part.</h2>
+          <Said said="~so, ~um, typing is the slow part." />
+          <h2 class="t-h2 mt-6">Typing is the slow&nbsp;part.</h2>
           <p class="t-lead mt-6 max-w-[28rem]">Most people talk about 150 words a minute and type about 52. Chirp lets you use the fast one.</p>
         </div>
-        <div class="rounded-[28px] bg-white p-8 shadow-[0_0_0_1px_rgba(0,0,0,0.06)] md:p-12">
+        <div class="rounded-[28px] bg-white p-8 shadow-[0_0_0_1px_rgba(0,0,0,0.07)] md:p-12">
           <p class="text-[15px] text-muted">Words per minute</p>
           <div class="mt-6 space-y-7">
             <div>
@@ -147,76 +149,74 @@ const faqs = [
       </div>
     </section>
 
-    <!-- How it works -->
+    <!-- How it works: one story, start to finish -->
     <section id="how" class="mx-auto max-w-[1280px] scroll-mt-24 px-5 py-12 md:px-8 md:py-20">
-      <Said said="~okay ~so how does it ~even work?" />
+      <Said said="~okay ~so ~you, ~um, hold, ~then talk, ~and ~then let go." />
       <h2 class="t-h2 mt-6">Hold. Talk. Let go.</h2>
 
-      <div class="mt-16 space-y-24 md:mt-20 md:space-y-32">
-        <div class="grid [&>*]:min-w-0 items-center gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:gap-20">
+      <div class="mt-14 space-y-20 md:mt-20 md:space-y-28">
+        <div class="grid [&>*]:min-w-0 items-center gap-8 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
           <div>
-            <p class="font-serif text-[20px] text-[#8f6400]">1</p>
-            <h3 class="t-h3 mt-2 w-fit cursor-default" data-said="~um, hold the key ~down, ~right?">Hold</h3>
-            <p class="t-lead mt-5 max-w-[24rem]">Hold Right Ctrl in any app.</p>
+            <p class="font-serif text-[24px] w-fit cursor-default" data-said="~um, ~you ~just hold ~the ~key" data-said-pos="right"><span class="text-[#8f6400]">1</span> · Hold</p>
+            <p class="t-lead mt-3 max-w-[24rem]">Hold Right Ctrl in any app.</p>
           </div>
-          <div class="h-[340px] overflow-hidden rounded-[28px]" style={dawn}><HoldDemo client:visible /></div>
+          <div class="h-[240px] rounded-[28px] bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.07)]"><HoldDemo client:visible /></div>
         </div>
 
-        <div class="grid [&>*]:min-w-0 items-center gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:gap-20">
+        <div class="grid [&>*]:min-w-0 items-center gap-8 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
           <div>
-            <p class="font-serif text-[20px] text-[#8f6400]">2</p>
-            <h3 class="t-h3 mt-2 w-fit cursor-default" data-said="~just, ~like, ~you ~know, talk">Talk</h3>
-            <p class="t-lead mt-5 max-w-[24rem]">Ramble, pause, change your mind. Chirp keeps the last version.</p>
+            <p class="font-serif text-[24px] w-fit cursor-default" data-said="~just, ~like, ~you ~know, talk" data-said-pos="right"><span class="text-[#8f6400]">2</span> · Talk</p>
+            <p class="t-lead mt-3 max-w-[24rem]">Ramble, pause, change your mind twice. Chirp keeps the last version.</p>
           </div>
-          <div class="rounded-[28px] p-5 md:p-10" style={dawn}><RambleDemo client:visible /></div>
+          <TalkDemo client:visible />
         </div>
 
-        <div class="grid [&>*]:min-w-0 items-start gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:gap-20">
-          <div class="lg:pt-10">
-            <p class="font-serif text-[20px] text-[#8f6400]">3</p>
-            <h3 class="t-h3 mt-2 w-fit cursor-default" data-said="~and ~then ~you ~just let ~it go">Let go</h3>
-            <p class="t-lead mt-5 max-w-[24rem]">The clean version lands at your cursor, formatted for the app you're in.</p>
+        <div class="grid [&>*]:min-w-0 items-center gap-8 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
+          <div>
+            <p class="font-serif text-[24px] w-fit cursor-default" data-said="~and ~then ~you ~just let ~it go" data-said-pos="right"><span class="text-[#8f6400]">3</span> · Let go</p>
+            <p class="t-lead mt-3 max-w-[24rem]">The clean version lands at your cursor, in whatever app you were typing in.</p>
           </div>
-          <div class="rounded-[28px] p-5 md:p-10" style={dawn}><Examples client:visible /></div>
+          <LetGoDemo client:visible />
         </div>
+      </div>
+
+      <div class="mt-24 md:mt-32">
+        <h3 class="t-h3">It formats for the app you're in.</h3>
+        <p class="t-lead mt-4 max-w-[34rem]">Emails get laid out, lists get numbered, code gets backticks. Pick one.</p>
+        <div class="mt-10"><Examples client:visible /></div>
       </div>
     </section>
 
-    <!-- Words -->
+    <!-- Words: visual first, for a change -->
     <section class="mx-auto max-w-[1280px] px-5 py-12 md:px-8 md:py-20">
       <div class="grid [&>*]:min-w-0 items-center gap-12 lg:grid-cols-2 lg:gap-20">
-        <div>
+        <div class="lg:order-2">
           <Said said="~so, ~like, your names, ~um, spelled right." />
           <h2 class="t-h2 mt-6">Your names, spelled right.</h2>
-          <p class="t-lead mt-6 max-w-[28rem]">Add a client, a colleague or a gloriously weird product name once. Chirp spells it right forever.</p>
+          <p class="t-lead mt-6 max-w-[28rem]">Add a client, a colleague or a gloriously weird product name once, and Chirp uses that spelling every time.</p>
         </div>
-        <div class="flex justify-center rounded-[28px] px-5 py-10 md:px-10 md:py-14" style={dawn}><WordsPanel client:visible /></div>
+        <div class="flex justify-center lg:order-1 lg:justify-start"><WordsPanel client:visible /></div>
       </div>
     </section>
 
-    <!-- Pricing and the receipts -->
+    <!-- Pricing: full width, centred -->
     <section id="pricing" class="mx-auto max-w-[1280px] scroll-mt-24 px-5 py-12 md:px-8 md:py-20">
-      <div class="grid [&>*]:min-w-0 items-center gap-12 lg:grid-cols-2 lg:gap-20">
-        <div>
-          <Said said="~wait, ~so how much does it cost?" />
-          <h2 class="t-h2 mt-6">Pennies, not a subscription.</h2>
-          <p class="t-lead mt-6 max-w-[28rem]">
-            The app is free, because it hears you on your own PC. Want AI cleanup? Bring your own key and pay cents, not a monthly fee.
-          </p>
-        </div>
-        <CostDemo client:visible />
+      <div class="flex flex-col items-center text-center">
+        <Said said="~wait, ~so ~it's, ~like, pennies, not a ~um subscription?" class="text-left" />
+        <h2 class="t-h2 mt-6">Pennies,<br />not a subscription.</h2>
+        <p class="t-lead mt-6 max-w-[34rem]">The app is free, because it hears you on your own PC. Want AI cleanup? Bring your own key and pay cents, not a monthly fee.</p>
       </div>
+      <div class="mx-auto mt-14 max-w-[760px]"><CostDemo client:visible /></div>
 
-      <!-- Compact comparison: a table on desktop, one card per app on mobile -->
-      <div class="mt-24 md:mt-32">
-        <h3 class="t-h3">How it stacks up</h3>
-        <table class="mt-10 hidden w-full border-collapse text-left text-[16px] md:table">
+      <div class="mx-auto mt-24 max-w-[1040px] md:mt-32">
+        <h3 class="t-h3 text-center">How it stacks up</h3>
+        <table class="mt-10 hidden w-full table-fixed border-collapse text-left text-[16px] md:table">
           <thead>
             <tr>
-              <th class="w-[30%] py-4 pr-6"></th>
+              <th class="w-[28%] py-4 pr-6"></th>
               {
                 products.map((p, i) => (
-                  <th class:list={["px-5 py-4 align-bottom font-serif text-[21px] font-normal", i === 0 && "rounded-t-[16px] bg-[#fbf0d2]"]}>
+                  <th class:list={["px-5 py-4 align-bottom font-serif text-[20px] font-normal leading-tight", i === 0 && "rounded-t-[16px] bg-[#fbf0d2]"]}>
                     {p.name}
                   </th>
                 ))
@@ -230,13 +230,7 @@ const faqs = [
                   <td class="py-5 pr-6 text-muted">{r.label}</td>
                   {r.cells.map((c, i) => (
                     <td class:list={["px-5 py-5", i === 0 && "bg-[#fbf0d2] font-medium", i === 0 && ri === rows.length - 1 && "rounded-b-[16px]"]}>
-                      {c === true ? (
-                        <span class="text-[20px] text-[#8f6400]" aria-label="Yes">✓</span>
-                      ) : c === false ? (
-                        <span class="text-[20px] text-faint" aria-label="No">✗</span>
-                      ) : (
-                        c
-                      )}
+                      {c === true ? <Tick className="text-[#8f6400]" /> : c === false ? <Cross className="text-[#b0aca2]" /> : c}
                     </td>
                   ))}
                 </tr>
@@ -244,25 +238,9 @@ const faqs = [
             }
           </tbody>
         </table>
-        <div class="mt-8 grid gap-4 md:hidden">
-          {
-            products.map((p, i) => (
-              <div class:list={["rounded-[20px] p-6", i === 0 ? "bg-[#fbf0d2]" : "bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.06)]"]}>
-                <p class="font-serif text-[22px]">{p.name}</p>
-                <dl class="mt-3 space-y-2 text-[16px]">
-                  {rows.map((r) => (
-                    <div class="flex justify-between gap-4">
-                      <dt class="text-muted">{r.label}</dt>
-                      <dd class="text-right">{r.cells[i] === true ? "✓" : r.cells[i] === false ? "✗" : r.cells[i]}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
-            ))
-          }
-        </div>
-        <p class="mt-6 text-[15px] leading-relaxed text-muted">
-          Checked October 25, 2026 on each company's own site:
+        <div class="mt-8 md:hidden"><ComparePicker client:visible products={products} rows={rows} /></div>
+        <p class="mt-6 text-center text-[15px] leading-relaxed text-muted">
+          Checked October 25, 2026 on each company's own site:{" "}
           {products.slice(1).map((p, i) => (
             <>
               {i > 0 && ", "}<a href={p.href} class="link">{p.name}</a>
@@ -276,25 +254,20 @@ const faqs = [
     <section class="mx-auto max-w-[1280px] px-5 py-12 md:px-8 md:py-20">
       <div class="grid [&>*]:min-w-0 items-center gap-12 lg:grid-cols-2 lg:gap-20">
         <div>
-          <Said said="~wait, ~so it's ~like actually mine?" />
-          <h2 class="t-h2 mt-6">Yours. Not rented.</h2>
+          <Said said="~hang ~on, ~it's yours, not ~like rented?" />
+          <h2 class="t-h2 mt-6">Yours.<br />Not rented.</h2>
           <p class="t-lead mt-6 max-w-[28rem]">
-            Chirp is open source under the MIT license. Use Anthropic, OpenAI or no AI at all, and switch whenever you like. No account, no lock-in.
+            Chirp is open source under the MIT license. Use Anthropic, OpenAI or no AI at all, and switch whenever you like. No Chirp account, no lock-in.
           </p>
-          <div class="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3">
-            <a href={SITE.github} class="btn btn-ghost">Read the code on GitHub</a>
-            <a href={`${SITE.github}/issues/new`} class="link text-[16px]">Got a slow or wrong dictation? Tell us.</a>
-          </div>
+          <a href={SITE.github} class="btn btn-ghost mt-9">Read the code on GitHub</a>
         </div>
-        <div class="flex justify-center rounded-[28px] px-5 py-12 md:px-10 md:py-16" style={dawn}>
-          <div class="w-full max-w-[400px]"><AiPanel client:visible /></div>
-        </div>
+        <div class="flex justify-center"><div class="w-full max-w-[400px]"><AiPanel client:visible /></div></div>
       </div>
     </section>
 
     <!-- FAQ -->
     <section id="faq" class="mx-auto grid max-w-[1280px] scroll-mt-24 [&>*]:min-w-0 items-start gap-10 px-5 py-12 md:px-8 md:py-20 lg:grid-cols-2 lg:gap-20">
-      <h2 class="t-h2 lg:sticky lg:top-28">Questions, answered.</h2>
+      <h2 class="t-h3 lg:sticky lg:top-28">Questions, answered.</h2>
       <div class="border-t border-line">
         {
           faqs.map((f) => (
@@ -310,21 +283,19 @@ const faqs = [
       </div>
     </section>
 
-    <!-- Final call: the sky, with the flock kept below the words -->
-    <section class="relative mt-12 overflow-hidden md:mt-20" style={dawn}>
-      <div class="absolute inset-x-0 bottom-0 h-[42%]">
-        <Murmuration client:visible count={520} centerY={0.5} spread={0.9} />
+    <!-- Final call: the sky, with the flock below the words -->
+    <section class="relative mt-12 overflow-hidden md:mt-20" style="background:linear-gradient(180deg,#fbf8f1 0%,#edf0ef 18%,#f4ecda 55%,#f6d78f 86%,#fbf8f1 100%)">
+      <div class="absolute inset-x-0 bottom-0 h-[44%]">
+        <Murmuration client:visible count={600} centerY={0.45} spread={0.85} size={1.4} wander={0.25} />
       </div>
-      <div class="relative mx-auto flex max-w-[880px] flex-col items-center px-5 pb-[300px] pt-24 text-center md:pb-[360px] md:pt-32">
-        <h2 class="t-h2 cursor-default" data-said="~wait, unlimited dictation, ~for, ~um, zero dollars?">Unlimited dictation.<br />Zero dollars.</h2>
+      <div class="relative mx-auto flex max-w-[880px] flex-col items-center px-5 pb-[260px] pt-28 text-center md:pb-[300px] md:pt-36">
+        <h2 class="t-h2 cursor-default max-md:!text-[32px]" data-said="~wait, unlimited dictation, ~for, ~um, zero dollars?">Unlimited dictation.<br />Zero dollars.</h2>
         <p class="t-lead mt-7 max-w-[30rem]">Download it, let it fetch its speech model once, then hold Right Ctrl and say something.</p>
         <a href={SITE.download} class="btn btn-primary mt-9">
           <svg viewBox="0 0 16 16" class="h-4 w-4" fill="currentColor" aria-hidden="true"><path d={winPath}></path></svg>
           Download for Windows
         </a>
-        <p class="mt-5 text-[15px] text-ink/70">
-          Free forever. AI cleanup is optional, on your own key. <a href={SITE.github} class="link">View on GitHub</a>
-        </p>
+        <p class="mt-5 text-[15px] text-ink/70">Free forever. <a href={SITE.github} class="link">View on GitHub</a></p>
       </div>
     </section>
   </main>
@@ -353,14 +324,19 @@ const faqs = [
   <script>
     // Hide the nav while scrolling down, bring it back on the way up.
     const nav = document.getElementById("nav")!;
+    // Only deliberate scrolling counts: 40px down hides it, 60px up shows it.
     let lastY = scrollY;
+    let travel = 0;
     addEventListener(
       "scroll",
       () => {
         const y = scrollY;
-        const hide = y > lastY && y > 120 && !nav.dataset.open;
-        nav.style.transform = hide ? "translateY(-120%)" : "";
+        const d = y - lastY;
         lastY = y;
+        travel = Math.sign(d) === Math.sign(travel) ? travel + d : d;
+        if ("open" in nav.dataset || y < 120) nav.style.transform = "";
+        else if (travel > 40) nav.style.transform = "translateY(-120%)";
+        else if (travel < -60) nav.style.transform = "";
       },
       { passive: true },
     );
@@ -376,5 +352,9 @@ const faqs = [
     };
     btn.addEventListener("click", () => toggle(menu.classList.contains("hidden")));
     menu.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => toggle(false)));
+    addEventListener("keydown", (e) => e.key === "Escape" && toggle(false));
+    addEventListener("pointerdown", (e) => {
+      if ("open" in nav.dataset && !nav.contains(e.target as Node)) toggle(false);
+    });
   </script>
 </Base>

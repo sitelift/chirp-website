@@ -44,77 +44,58 @@ function Head({ title }: { title: string }) {
   );
 }
 
-const WORDS = ["Sitelift", "Pieter de Bruijn", "Parakeet", "Tauri", "sherpa-onnx"];
-const NEW_WORD = "Keizersgracht";
+const WORDS = ["Keizersgracht", "Sitelift", "Pieter de Bruijn"];
 
 export function WordsPanel() {
   const ref = useRef<HTMLDivElement>(null);
-  const [typed, setTyped] = useState(0);
-  const [added, setAdded] = useState(false);
+  const [struck, setStruck] = useState(false);
 
-  usePlaying(ref, () => {
-    let timers: number[] = [];
-    const play = () => {
-      timers.forEach(clearTimeout);
-      timers = [];
-      setTyped(0);
-      setAdded(false);
-      for (let i = 1; i <= NEW_WORD.length; i++) timers.push(window.setTimeout(() => setTyped(i), 900 + i * 90));
-      const done = 900 + NEW_WORD.length * 90 + 500;
-      timers.push(window.setTimeout(() => {
-        setAdded(true);
-        setTyped(0);
-      }, done));
-      timers.push(window.setTimeout(play, done + 4200));
-    };
-    play();
-    return () => timers.forEach(clearTimeout);
-  });
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          window.setTimeout(() => setStruck(true), 500);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.5 },
+    );
+    io.observe(ref.current!);
+    return () => io.disconnect();
+  }, []);
 
   return (
-    <div ref={ref} className="flex w-full max-w-[380px] flex-col gap-5">
+    <div ref={ref} className="flex w-full max-w-[420px] flex-col gap-4">
       <Panel className="w-full">
         <Head title="Words" />
-        <div className="mx-0 mb-1.5 mt-0.5 flex h-10 items-center justify-between rounded-[12px] px-3 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.12)]">
-          {typed > 0 ? (
-            <span>
-              {NEW_WORD.slice(0, typed)}
-              <span className="caret ml-px inline-block h-[1.05em] w-px translate-y-[2px] bg-[#1a1a1a]" />
-            </span>
-          ) : (
-            <span className="text-[#8a8a8a]">Add a name or word</span>
-          )}
+        <div className="mb-1.5 mt-0.5 flex h-10 items-center justify-between rounded-[12px] px-3 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.12)]">
+          <span className="text-[#8a8a8a]">Add a name or word</span>
           <IconAdd size={16} className="text-[#6b6b6b]" />
         </div>
-        <div
-          className="overflow-hidden transition-[height,opacity] duration-[260ms]"
-          style={{ height: added ? 40 : 0, opacity: added ? 1 : 0, transitionTimingFunction: "var(--ease)" }}
-        >
-          <div className="flex h-10 items-center rounded-[12px] bg-[#fbf4e2] px-3 text-[#8f6400]">{NEW_WORD}</div>
-        </div>
-        {WORDS.map((w) => (
-          <div key={w} className="flex h-10 items-center px-3">
+        {WORDS.map((w, i) => (
+          <div key={w} className={`flex h-10 items-center rounded-[12px] px-3 ${i === 0 ? "bg-[#fbf4e2] text-[#8f6400]" : ""}`}>
             {w}
           </div>
         ))}
-        <p className="px-3 pb-1.5 pt-2 text-[12px] leading-4 text-[#8a8a8a]">Chirp spells these exactly as written.</p>
       </Panel>
 
-      {/* The proof: the same sentence, before and after the word was added */}
-      <div className="rounded-[18px] bg-white px-6 py-5 font-[family-name:var(--font-ui)] text-[16px] leading-[1.6] shadow-[0_0_0_1px_rgba(0,0,0,0.1)]">
-        <p className="text-muted">
+      {/* The proof: the same sentence without and with the saved spelling */}
+      <div className="rounded-[20px] bg-white px-6 py-6 font-[family-name:var(--font-ui)] shadow-[0_0_0_1px_rgba(0,0,0,0.08)] md:px-7">
+        <p className="text-[13px] text-muted">Without Words</p>
+        <p className="mt-1 text-[20px] leading-snug text-muted md:text-[21px]">
           Meet me at 12{" "}
           <span className="relative inline-block">
             Kaiser's Gracht
             <span
-              className="absolute -inset-x-0.5 top-[55%] h-[3px] -translate-y-1/2 rounded-full bg-amber transition-transform duration-[380ms]"
-              style={{ transform: `translateY(-50%) scaleX(${added ? 1 : 0})`, transformOrigin: "left", transitionTimingFunction: "var(--ease)" }}
+              className="absolute -inset-x-0.5 top-[55%] h-[3px] rounded-full bg-amber transition-transform duration-[380ms]"
+              style={{ transform: `translateY(-50%) scaleX(${struck ? 1 : 0})`, transformOrigin: "left", transitionTimingFunction: "var(--ease)" }}
             />
           </span>
           .
         </p>
-        <p className="mt-1 text-ink transition-opacity duration-300" style={{ opacity: added ? 1 : 0.15 }}>
-          Meet me at 12 <span className="rounded-[5px] bg-[#fbf4e2] px-1 text-[#8f6400]">Keizersgracht</span>.
+        <p className="mt-4 text-[13px] text-muted">With Words</p>
+        <p className="mt-1 text-[20px] leading-snug text-ink md:text-[21px]">
+          Meet me at 12 <span className="rounded-[6px] bg-[#fbf4e2] px-1 text-[#8f6400]">Keizersgracht</span>.
         </p>
       </div>
     </div>
@@ -157,7 +138,7 @@ export function AiPanel() {
           </span>
         </div>
         <p className="mt-1.5 text-right text-[12px] text-[#8a8a8a]">{p.model}</p>
-        <div className="mt-3 overflow-hidden transition-[height,opacity] duration-[260ms]" style={{ height: i ? 40 : 0, opacity: i ? 1 : 0 }}>
+        <div className="mt-3 h-10 transition-opacity duration-[260ms]" style={{ opacity: i ? 1 : 0 }}>
           <div className="flex gap-2">
             <span className="flex h-10 min-w-0 flex-1 items-center justify-between gap-2 rounded-[12px] px-3 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.12)]">
               <span className="truncate font-mono text-[12px]">{i === 2 ? "sk-••••••••••7f2c" : "sk-ant-••••••••••abcd"}</span>

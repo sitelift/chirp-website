@@ -66,6 +66,7 @@ export class Flock {
   /** Where the flock circles, as fractions of the canvas; and its size. */
   centerY = 0.5;
   spread = 1;
+  wander = 1;
   /** Which side birds re-enter from after pouring into the cursor. */
   entrySide = -1;
 
@@ -149,7 +150,7 @@ export class Flock {
     const cy1 = Math.cos(yaw), sy1 = Math.sin(yaw);
     const cp = Math.cos(pitch), sp = Math.sin(pitch);
     const cr = Math.cos(roll), sr = Math.sin(roll);
-    const cx = w * (0.5 + 0.15 * Math.sin(T * 0.13) + 0.05 * Math.sin(T * 0.31));
+    const cx = w * (0.5 + this.wander * (0.15 * Math.sin(T * 0.13) + 0.05 * Math.sin(T * 0.31)));
     const cy = h * (this.centerY + 0.05 * Math.sin(T * 0.17 + 1.1));
     const focal = 2.6;
 

@@ -44,59 +44,71 @@ function Rich({ text }: { text: string }) {
 
 export default function Examples() {
   const ref = useRef<HTMLDivElement>(null);
+  const timers = useRef<number[]>([]);
   const [index, setIndex] = useState(0);
-  const [phase, setPhase] = useState(0);
-  const [auto, setAuto] = useState(true);
-  const [visible, setVisible] = useState(false);
+  // Finished by default: phase 2 shows the struck input and the pasted result.
+  const [phase, setPhase] = useState(2);
 
-  useEffect(() => {
-    const io = new IntersectionObserver(([e]) => setVisible(e.isIntersecting), { threshold: 0.3 });
-    io.observe(ref.current!);
-    return () => io.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!visible) return;
+  const clear = () => {
+    timers.current.forEach(clearTimeout);
+    timers.current = [];
+  };
+  const play = (i: number) => {
+    clear();
+    setIndex(i);
     setPhase(0);
-    const timers = [window.setTimeout(() => setPhase(1), 1200), window.setTimeout(() => setPhase(2), 3800)];
-    if (auto) timers.push(window.setTimeout(() => setIndex((i) => (i + 1) % CASES.length), 11000));
-    return () => timers.forEach(clearTimeout);
-  }, [index, auto, visible]);
+    timers.current.push(window.setTimeout(() => setPhase(1), 700));
+    timers.current.push(window.setTimeout(() => setPhase(2), 2100));
+  };
+
+  useEffect(() => {
+    // Leaving the view always finishes the example, so it can't freeze blank.
+    const io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) {
+        clear();
+        setPhase(2);
+      }
+    });
+    io.observe(ref.current!);
+    return () => {
+      io.disconnect();
+      clear();
+    };
+  }, []);
 
   const c = CASES[index];
 
   return (
     <div ref={ref}>
-      <div className="flex flex-wrap gap-2" role="tablist" aria-label="Examples">
+      <div className="flex flex-wrap items-center gap-2" role="tablist" aria-label="Examples">
         {CASES.map((x, i) => (
           <button
             key={x.label}
             type="button"
             role="tab"
             aria-selected={i === index}
-            onClick={() => {
-              setAuto(false);
-              setIndex(i);
-            }}
-            className="h-9 rounded-full px-4 text-[15px] transition-colors duration-200 ease-out"
-            style={i === index ? { background: "#292929", color: "#fff" } : { background: "#ebe6d9", color: "#292929" }}
+            onClick={() => play(i)}
+            className="h-10 rounded-full px-4 text-[15px] transition-colors duration-200 ease-out"
+            style={i === index ? { background: "#292929", color: "#fff" } : { background: "#fff", color: "#292929", boxShadow: "inset 0 0 0 1px rgba(0,0,0,.12)" }}
           >
             {x.label}
           </button>
         ))}
+        <button type="button" onClick={() => play(index)} className="ml-auto h-10 px-2 text-[15px] text-muted underline decoration-black/25 underline-offset-4 hover:text-ink">
+          Replay
+        </button>
       </div>
 
-      <div className="mt-6 flex flex-col gap-5" role="tabpanel">
-        <div className="rounded-[20px] bg-[#1a1917] p-7 md:p-9">
+      <div className="mt-5 grid gap-4 md:grid-cols-2 [&>*]:min-w-0" role="tabpanel">
+        <div className="rounded-[20px] bg-[#1a1917] p-6 md:p-7">
           <p className="font-[family-name:var(--font-ui)] text-[13px] text-[#a3a29e]">What you said</p>
-          <Spoken key={index} said={c.said} phase={phase > 0 ? 1 : 0} className="mt-3 font-serif text-[21px] leading-[1.45] text-white md:text-[23px]" />
+          <Spoken key={index} said={c.said} phase={phase > 0 ? 1 : 0} className="mt-3 font-serif text-[19px] leading-[1.45] text-white md:text-[21px]" />
         </div>
         <Window title={c.app}>
-          <div className="min-h-[250px] px-7 pb-8 pt-3 md:px-9">
+          <div className="min-h-[220px] px-6 pb-6 pt-1">
             <p
-              key={index}
-              className="whitespace-pre-line font-[family-name:var(--font-ui)] [overflow-wrap:anywhere] text-[17px] leading-[1.55] text-ink transition-[opacity,transform] duration-300"
-              style={{ opacity: phase > 1 ? 1 : 0, transform: phase > 1 ? "none" : "translateY(6px)", transitionTimingFunction: "var(--ease)" }}
+              className="whitespace-pre-line font-[family-name:var(--font-ui)] [overflow-wrap:anywhere] text-[16px] leading-[1.55] text-ink transition-opacity duration-300"
+              style={{ opacity: phase > 1 ? 1 : 0 }}
             >
               <Rich text={c.meant} />
             </p>

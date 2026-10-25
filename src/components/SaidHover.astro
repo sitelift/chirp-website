@@ -84,8 +84,13 @@
     const cr = chip.getBoundingClientRect();
     const left = Math.max(12, Math.min(innerWidth - cr.width - 12, r.left + r.width / 2 - cr.width / 2));
     const above = r.top - cr.height - 10;
-    chip.style.left = `${left}px`;
-    chip.style.top = `${above > 8 ? above : r.bottom + 10}px`;
+    if (el.dataset.saidPos === "right" && r.right + 16 + cr.width < innerWidth - 12) {
+      chip.style.left = `${r.right + 16}px`;
+      chip.style.top = `${r.top + r.height / 2 - cr.height / 2}px`;
+    } else {
+      chip.style.left = `${left}px`;
+      chip.style.top = `${above > 8 ? above : r.bottom + 10}px`;
+    }
     chip.dataset.on = "";
     words.forEach((w, i) => timers.push(window.setTimeout(() => (w.dataset.in = ""), 40 + i * 70)));
     let k = 0;

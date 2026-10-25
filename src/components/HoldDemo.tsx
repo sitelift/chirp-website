@@ -41,7 +41,7 @@ export default function HoldDemo() {
   }, []);
 
   return (
-    <div ref={ref} className="flex h-full flex-col items-center justify-end" aria-hidden>
+    <div ref={ref} className="flex h-full flex-col items-center justify-center pt-2" aria-hidden>
       <span
         className="inline-flex h-16 items-center rounded-[14px] bg-white px-7 font-[family-name:var(--font-ui)] text-[22px] text-ink transition-[transform,box-shadow] duration-150 ease-out"
         style={{
@@ -51,10 +51,9 @@ export default function HoldDemo() {
       >
         Right Ctrl
       </span>
-      <div className="mt-12 flex h-9 items-end justify-center">
+      <div className="mb-10 mt-8 flex h-9 items-end justify-center">
         <Ink kind={f.ink} />
       </div>
-      <div className="mt-4 h-12 w-full bg-white/75" />
     </div>
   );
 }

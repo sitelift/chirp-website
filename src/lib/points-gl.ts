@@ -11,6 +11,7 @@ in float aBird;
 in float aTone;
 uniform vec2 uRes;
 uniform float uDpr;
+uniform float uScale;
 out float vAlpha;
 out float vSeed;
 out float vAngle;
@@ -21,7 +22,7 @@ void main() {
   gl_Position = vec4(clip.x, -clip.y, 0.0, 1.0);
   float dotSize = 1.6 + aDepth * 1.4 + aSeed * 0.6;
   float birdSize = 3.5 + aDepth * 3.0 + aSeed * 1.0;
-  gl_PointSize = mix(dotSize, birdSize, aBird) * uDpr;
+  gl_PointSize = mix(dotSize, birdSize, aBird) * uDpr * uScale;
   vAlpha = aAlpha;
   vSeed = aSeed;
   vAngle = aAngle;
@@ -75,6 +76,8 @@ export class PointsGL {
   uDpr: WebGLUniformLocation;
   uTime: WebGLUniformLocation;
   uColor: WebGLUniformLocation;
+  uScale: WebGLUniformLocation;
+  scale = 1;
   color: [number, number, number] = [0.16, 0.16, 0.16];
 
   constructor(canvas: HTMLCanvasElement, n: number, seed: Float32Array) {
@@ -88,6 +91,7 @@ export class PointsGL {
     this.uDpr = gl.getUniformLocation(prog, "uDpr")!;
     this.uTime = gl.getUniformLocation(prog, "uTime")!;
     this.uColor = gl.getUniformLocation(prog, "uColor")!;
+    this.uScale = gl.getUniformLocation(prog, "uScale")!;
     this.pos = new Float32Array(n * 2);
     this.attrs.aPos = attr(gl, prog, "aPos", 2, this.pos);
     for (const name of ["aDepth", "aAlpha", "aAngle", "aBird", "aTone"]) {
@@ -125,6 +129,7 @@ export class PointsGL {
     gl.uniform1f(this.uDpr, dpr);
     gl.uniform1f(this.uTime, t);
     gl.uniform3f(this.uColor, ...this.color);
+    gl.uniform1f(this.uScale, this.scale);
     upload(gl, this.attrs.aPos.buf, pos);
     upload(gl, this.attrs.aDepth.buf, f.depth);
     upload(gl, this.attrs.aAlpha.buf, f.alpha);

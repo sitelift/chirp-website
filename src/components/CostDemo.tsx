@@ -24,9 +24,9 @@ export default function CostDemo() {
     <div className="rounded-[28px] bg-white p-7 shadow-[0_0_0_1px_rgba(0,0,0,0.06)] md:p-12">
       <label className="block">
         <span className="flex items-baseline justify-between gap-4 text-[17px] text-muted">
-          <span>How much you dictate</span>
+          <span>Dictations per day</span>
           <span className="whitespace-nowrap text-ink">
-            <span className="font-serif text-[32px] tabular-nums">{perDay}</span> a day
+            <span className="font-serif text-[32px] tabular-nums">{perDay}</span>
           </span>
         </span>
         <input
@@ -52,8 +52,8 @@ export default function CostDemo() {
       </div>
 
       <p className="mt-6 text-[15px] leading-relaxed text-muted">
-        AI cleanup is Claude Haiku 5.5, paid to Anthropic, for {month.toLocaleString("en-US")} dictations a month. Subscriptions run from Superwhisper Pro to
-        Wispr Flow Pro.
+        A dictation here is a sentence or two. AI cleanup is Claude Haiku 5.5, paid to Anthropic, for {month.toLocaleString("en-US")} of them a month; the
+        range is with and without Anthropic's prompt cache. Subscriptions run from Superwhisper Pro to Wispr Flow Pro.
       </p>
     </div>
   );
@@ -72,7 +72,7 @@ function Row({ label, value, width, accent }: { label: string; value: string; wi
       <div className="mt-3 h-2.5 rounded-full bg-[#efebe2]">
         <div
           className="h-full rounded-full transition-[width] duration-300"
-          style={{ width: `${Math.max(1.2, width)}%`, background: accent ? "#f0b723" : "#8a8985", transitionTimingFunction: "var(--ease)" }}
+          style={{ width: `${width === 0 ? 0 : Math.max(1.2, width)}%`, background: accent ? "#f0b723" : "#8a8985", transitionTimingFunction: "var(--ease)" }}
         />
       </div>
     </div>

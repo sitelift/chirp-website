@@ -63,9 +63,10 @@ html {
   .t-h2 {
     font-family: var(--font-serif);
     font-weight: 400;
-    font-size: clamp(40px, 6.4vw, 96px);
+    font-size: clamp(36px, 5vw, 70px);
     line-height: 0.97;
     letter-spacing: -0.03em;
+    text-wrap: balance;
   }
   .t-h3 {
     font-family: var(--font-serif);

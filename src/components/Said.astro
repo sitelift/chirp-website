@@ -10,8 +10,8 @@ const tokens = said.split(" ").map((t) => ({ text: t.replace(/^~/, ""), drop: t.
 let k = 0;
 ---
 
-<p class={`said flex items-start gap-3 text-[18px] leading-[1.45] text-ink/70 md:text-[20px] ${cls}`} data-said-line>
-  <span class="mt-[0.32em] flex h-[0.8em] shrink-0 items-center gap-[3px]" aria-hidden="true">
+<p class={`said flex items-start gap-3 font-serif text-[22px] leading-[1.35] text-ink/75 md:text-[27px] ${cls}`} data-said-line>
+  <span class="mt-[0.3em] flex h-[0.75em] shrink-0 items-center gap-[3px]" aria-hidden="true">
     {[0.45, 0.8, 1, 0.65].map((h) => <span class="w-[3px] rounded-full bg-amber" style={`height:${h * 100}%`} />)}
   </span>
   <span>
@@ -42,15 +42,15 @@ let k = 0;
     left: -0.05em;
     right: -0.05em;
     top: 55%;
-    height: 3px;
-    border-radius: 3px;
-    background: #f0b723;
+    height: 4px;
+    border-radius: 4px;
+    background: #e3a50f;
     transform: translateY(-50%) scaleX(0);
     transform-origin: left;
     transition: transform 380ms var(--ease) calc(var(--d) + 250ms);
   }
   [data-said-line].is-in .said-drop {
-    color: rgb(41 41 41 / 0.4);
+    color: rgb(41 41 41 / 0.35);
   }
   [data-said-line].is-in .said-drop::after {
     transform: translateY(-50%) scaleX(1);
